@@ -98,12 +98,6 @@
     <None Include="Properties\AndroidManifest.xml" />
     <None Include="Assets\AboutAssets.txt" />
     <None Include="packages.config" />
-    <None Include="Resources\image018.png" />
-    <None Include="Resources\image012.png" />
-    <None Include="Resources\image015.png" />
-    <None Include="Resources\image019.png" />
-    <None Include="Resources\image017.png" />
-    <None Include="Resources\power.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Tabbar.axml" />
@@ -118,6 +112,7 @@
     <AndroidResource Include="Resources\drawable\image017.png" />
     <AndroidResource Include="Resources\drawable\image018.png" />
     <AndroidResource Include="Resources\drawable\image019.png" />
+    <AndroidResource Include="Resources\drawable\power.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Android.Support.Vector.Drawable.23.3.0\build\Xamarin.Android.Support.Vector.Drawable.targets" Condition="Exists('..\packages\Xamarin.Android.Support.Vector.Drawable.23.3.0\build\Xamarin.Android.Support.Vector.Drawable.targets')" />
