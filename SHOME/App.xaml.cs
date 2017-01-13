@@ -9,14 +9,30 @@ namespace SHOME
 
 		public App()
 		{
-			
+
+			if (Device.OS == TargetPlatform.iOS)
+			{
+				if (!IsUserLoggedIn)
+				{
+					MainPage = new NavigationPage(new LoginPage());
+				}
+				else {
+					MainPage = new NavigationPage(new SHOME.MenuPage());
+				}
+
+			}
+			else 
+			{
+				MainPage = new MenuPage();
+			}
+			/*
 			if (!IsUserLoggedIn)
 			{
 				MainPage = new NavigationPage(new LoginPage());
 			}
 			else {
 				MainPage = new NavigationPage(new SHOME.MenuPage());
-			}
+			}*/
 		}
 
 		protected override void OnStart()

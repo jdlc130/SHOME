@@ -11,7 +11,7 @@ namespace SHOME
 			Title = "SHOME";
 
 
-			Children.Add(new SleepPage()
+			Children.Add(new GardenPage()
 			{
 				Title = "Sleep",
 				Icon = "image019.png"
@@ -32,7 +32,7 @@ namespace SHOME
 
 			});
 
-			Children.Add(new GardenPage()
+			Children.Add(new Scroll()
 		{
 			Title = "Garden",
 			Icon = "image015.png"
