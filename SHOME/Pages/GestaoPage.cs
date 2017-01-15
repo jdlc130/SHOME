@@ -15,9 +15,9 @@ namespace SHOME
                 var Value = value;
             }
 
-            public string Titulo { set; get; }
+            public string Titulo { private  set; get; }
 
-            public string Value { set; get; }
+            public string Value { private  set; get; }
 
         };
 
@@ -26,8 +26,8 @@ namespace SHOME
 
             Label header = new Label
             {
-                Text = "Manage",
-                FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label)),
+                Text = "Power level",
+                FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
                 HorizontalOptions = LayoutOptions.Center
             };
 
@@ -35,7 +35,7 @@ namespace SHOME
             List<Values> people = new List<Values>
             {
                 new Values("Home appliances", "65%"),
-                new Values("Otros", "35%"),
+                new Values("Nivel de energia", "35%"),
             };
 
             // Create the ListView.
@@ -51,7 +51,7 @@ namespace SHOME
                 {
                     // Create views with bindings for displaying each property.
                     Label Tittle_lbl = new Label();
-                    Tittle_lbl.SetBinding(Label.TextProperty, "Tittle");
+                    Tittle_lbl.SetBinding(Label.TextProperty, "Titulo");
 
                     Label Value_lbl = new Label();
                     Value_lbl.SetBinding(Label.TextProperty, "Value");
@@ -62,7 +62,6 @@ namespace SHOME
                         View = new StackLayout
                         {
                             VerticalOptions = LayoutOptions.Center,
-                            Spacing = 0,
                             Children =
                             {
                                 Tittle_lbl,
@@ -70,6 +69,7 @@ namespace SHOME
                             }
                         }
                     };
+
                 })
 
             };
@@ -78,14 +78,15 @@ namespace SHOME
             {
                 Text = "Suggestions"
             };
+            suggestion_btn.Clicked += Onsuggestion_btnClicked;
 
             Content = new StackLayout
             {
                 Children =
                 {
-                    suggestion_btn,
                     header,
-                    listView
+                    listView,
+                    suggestion_btn
                 }
             };
 
@@ -93,7 +94,7 @@ namespace SHOME
 
         void Onsuggestion_btnClicked(object sender, EventArgs e)
         {
-            DisplayAlert("Suggestions", "You have been alerted", "OK");
+            DisplayAlert("Suggestion", "You have been alerted", "OK");
         }
     }
 }
