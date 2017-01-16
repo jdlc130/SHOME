@@ -11,7 +11,7 @@ namespace SHOME
 			Title = "SHOME";
 
 
-			Children.Add(new GardenPage()
+			Children.Add(new GestaoPage()
 			{
 				Title = "Sleep",
 				Icon = "image019.png"
