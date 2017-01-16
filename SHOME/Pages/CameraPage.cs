@@ -20,7 +20,7 @@ namespace SHOME
             var CameraNest = new WebView
             {
                 Source = new UrlWebViewSource {
-                    Url = "https://video.nest.com/live/Ch1Vdige8J"
+                    Url = "https://video.nest.com/live/GRuDvinrXP"
                 },
                 VerticalOptions = LayoutOptions.FillAndExpand
             };
