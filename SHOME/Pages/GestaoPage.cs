@@ -18,7 +18,6 @@ namespace SHOME
             public string Titulo { private  set; get; }
 
             public string Value { private  set; get; }
-
         };
 
         public GestaoPage()
@@ -26,7 +25,7 @@ namespace SHOME
 
             Label header = new Label
             {
-                Text = "Power level",
+                Text = "Energy Manager",
                 FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
                 HorizontalOptions = LayoutOptions.Center
             };
@@ -50,10 +49,10 @@ namespace SHOME
                 ItemTemplate = new DataTemplate(() =>
                 {
                     // Create views with bindings for displaying each property.
-                    Label Tittle_lbl = new Label();
+                    var Tittle_lbl = new Label();
                     Tittle_lbl.SetBinding(Label.TextProperty, "Titulo");
 
-                    Label Value_lbl = new Label();
+                    var Value_lbl = new Label();
                     Value_lbl.SetBinding(Label.TextProperty, "Value");
 
                     // Return an assembled ViewCell.
