@@ -74,7 +74,7 @@ namespace SHOME
                                     new StackLayout
                                     {
                                         VerticalOptions = LayoutOptions.Center,
-                                        HorizontalOptions = LayoutOptions.End,
+                                        HorizontalOptions = LayoutOptions.EndAndExpand,
                                         Children =
                                         {
                                           power_btn
@@ -120,10 +120,10 @@ namespace SHOME
 
             var lll = new Label
             {
-                Text = string.Format("Switch is now {0}", e.Value)
+                Text = string.Format("Is now {0}", e.Value)
             };
 
-            DisplayAlert("Suggestion", lll.Text, "OK");
+            DisplayAlert("Power", lll.Text, "OK");
         }
     }
 }

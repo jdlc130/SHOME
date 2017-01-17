@@ -7,74 +7,114 @@ namespace SHOME
 	public class LightsPage : ContentPage
 	{
 
-
-        class Values
+        // Dictionary to get Color from color name.
+        Dictionary<string, Color> nameToColor = new Dictionary<string, Color>
         {
-            public Values(string titulo, string value)
-            {
-                var Titulo = titulo;
-                var Value = value;
-            }
-
-            public string Titulo { set; get; }
-
-            public string Value { set; get; }
+            { "Blue", Color.Blue },   { "Fucshia", Color.Pink },
+            { "Green", Color.Green }, { "Yellow", Color.Yellow },
+            { "White", Color.White }
         };
 
         public LightsPage()
         {
 
-            Label header = new Label
+            Image header = new Image
             {
-                Text = "Manage",
-                FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label)),
+                Source = "lights.png",
                 HorizontalOptions = LayoutOptions.Center
             };
 
-            // Define some data.
-            List<Values> people = new List<Values>
+            Label light_lbl = new Label
             {
-                new Values("Home appliances", "65%"),
-                new Values("Otros", "35%"),
+                Text = "Principal",
+                FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
+                HorizontalOptions = LayoutOptions.Start,
+                VerticalOptions = LayoutOptions.Start
             };
 
-            // Create the ListView.
-            ListView listView = new ListView
+            Switch power_btn = new Switch
             {
-                // Source of data items.
-                ItemsSource = people,
+                HorizontalOptions = LayoutOptions.Center,
+                VerticalOptions = LayoutOptions.EndAndExpand
+            };
+            power_btn.Toggled += power_btn_Toggled;
 
-                // Define template for displaying each item.
-                // (Argument of DataTemplate constructor is called for 
-                //      each item; it must return a Cell derivative.)
-                ItemTemplate = new DataTemplate(() =>
+            Slider intensity_btn = new Slider
+            {
+                Minimum = 0,
+                Maximum = 100,
+                VerticalOptions = LayoutOptions.CenterAndExpand
+            };
+            intensity_btn.ValueChanged += Onintensity_btnValueChanged;
+
+            Picker picker = new Picker
+            {
+                Title = "Color",
+                VerticalOptions = LayoutOptions.CenterAndExpand
+            };
+
+            foreach (string colorName in nameToColor.Keys)
+            {
+                picker.Items.Add(colorName);
+            }
+
+            // Create BoxView for displaying picked Color
+            BoxView boxView = new BoxView
+            {
+                WidthRequest = 150,
+                HeightRequest = 150,
+                HorizontalOptions = LayoutOptions.Center,
+                VerticalOptions = LayoutOptions.CenterAndExpand
+            };
+
+            picker.SelectedIndexChanged += (sender, args) =>
+            {
+                if (picker.SelectedIndex == -1)
                 {
-                    // Create views with bindings for displaying each property.
-                    Label Tittle_lbl = new Label();
-                    Tittle_lbl.SetBinding(Label.TextProperty, "Tittle");
-
-                    Label Value_lbl = new Label();
-                    Value_lbl.SetBinding(Label.TextProperty, "Value");
-
-
-                    // Return an assembled ViewCell.
-                    return new ViewCell
-                    {
-                        View = new StackLayout
-                        {
-                            VerticalOptions = LayoutOptions.Center,
-                            Spacing = 0,
-                            Children =
-                            {
-                                Tittle_lbl,
-                                Value_lbl
-                            }
-                        }
-                    };
-                })
-
+                    boxView.Color = Color.Default;
+                }
+                else
+                {
+                    string colorName = picker.Items[picker.SelectedIndex];
+                    boxView.Color = nameToColor[colorName];
+                }
             };
 
+
+            Content = new StackLayout
+            {
+                Children =
+                {
+                    header,
+                    light_lbl,
+                    power_btn,
+                    intensity_btn,
+                    picker,
+                    boxView
+                }
+            };
+
+        }
+
+
+        void power_btn_Toggled(object sender, ToggledEventArgs e)
+        {
+            var lll = new Label
+            {
+                Text = string.Format("Is now {0}", e.Value)
+            };
+
+            DisplayAlert("Power", lll.Text, "OK");
+        }
+
+        void Onintensity_btnValueChanged(object sender, ValueChangedEventArgs e)
+        {
+            var lll = new Label
+            {
+                Text = string.Format("Is now {0:F1}", e.NewValue)
+            };
+
+            DisplayAlert("Intensity", lll.Text, "OK");
         }
 
 
