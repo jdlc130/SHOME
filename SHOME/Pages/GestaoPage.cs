@@ -4,29 +4,29 @@ using Xamarin.Forms;
 
 namespace SHOME
 {
-	public class GestaoPage : ContentPage
-	{
+    public class GestaoPage : ContentPage
+    {
 
         class Values
         {
-            public Values(string titulo, string value)
+            public Values(string titulo, string value, Boolean power)
             {
-                var Titulo = titulo;
-                var Value = value;
+                this.Titulo = titulo;
+                this.Value = value;
+                this.Power = power;
             }
 
-            public string Titulo { private  set; get; }
-
-            public string Value { private  set; get; }
-
+            public string Titulo { private set; get; }
+            public string Value { private set; get; }
+            public Boolean Power { private set; get; }
         };
 
         public GestaoPage()
-		{
+        {
 
             Label header = new Label
             {
-                Text = "Power level",
+                Text = "Energy Manager",
                 FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
                 HorizontalOptions = LayoutOptions.Center
             };
@@ -34,8 +34,8 @@ namespace SHOME
             // Define some data.
             List<Values> people = new List<Values>
             {
-                new Values("Home appliances", "65%"),
-                new Values("Nivel de energia", "35%"),
+                new Values("Home appliances", "65%", true),
+                new Values("Nivel de energia", "35%", false),
             };
 
             // Create the ListView.
@@ -50,23 +50,38 @@ namespace SHOME
                 ItemTemplate = new DataTemplate(() =>
                 {
                     // Create views with bindings for displaying each property.
-                    Label Tittle_lbl = new Label();
+                    var Tittle_lbl = new Label();
                     Tittle_lbl.SetBinding(Label.TextProperty, "Titulo");
 
-                    Label Value_lbl = new Label();
+                    var Value_lbl = new Label();
                     Value_lbl.SetBinding(Label.TextProperty, "Value");
+
+                    var power_btn = new Switch();
+                    power_btn.SetBinding(Switch.IsToggledProperty, "Power");
+                    power_btn.Toggled += power_btn_Toggled;
 
                     // Return an assembled ViewCell.
                     return new ViewCell
                     {
                         View = new StackLayout
                         {
+                            Padding = new Thickness(0, 5),
+                            Orientation = StackOrientation.Horizontal,
                             VerticalOptions = LayoutOptions.Center,
                             Children =
-                            {
-                                Tittle_lbl,
-                                Value_lbl
-                            }
+                                {
+                                    Tittle_lbl,
+                                    new StackLayout
+                                    {
+                                        VerticalOptions = LayoutOptions.Center,
+                                        HorizontalOptions = LayoutOptions.End,
+                                        Children =
+                                        {
+                                          power_btn
+
+                                        }
+                                    }
+                                }
                         }
                     };
 
@@ -94,8 +109,21 @@ namespace SHOME
 
         void Onsuggestion_btnClicked(object sender, EventArgs e)
         {
+
+            /* BDD INTERACTION */
+
             DisplayAlert("Suggestion", "You have been alerted", "OK");
+        }
+
+        void power_btn_Toggled(object sender, ToggledEventArgs e)
+        {
+
+            var lll = new Label
+            {
+                Text = string.Format("Switch is now {0}", e.Value)
+            };
+
+            DisplayAlert("Suggestion", lll.Text, "OK");
         }
     }
 }
-
