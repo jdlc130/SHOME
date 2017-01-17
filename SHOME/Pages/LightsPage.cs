@@ -10,7 +10,7 @@ namespace SHOME
         // Dictionary to get Color from color name.
         Dictionary<string, Color> nameToColor = new Dictionary<string, Color>
         {
-            { "Blue", Color.Blue },   { "Fucshia", Color.Pink },
+            { "Blue", Color.Blue },   { "Pink", Color.Pink },
             { "Green", Color.Green }, { "Yellow", Color.Yellow },
             { "White", Color.White }
         };
