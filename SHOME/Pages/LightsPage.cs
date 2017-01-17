@@ -7,38 +7,36 @@ namespace SHOME
 	public class LightsPage : ContentPage
 	{
 
-        class Person
+
+        class Values
         {
-            public Person(string name, DateTime birthday, Color favoriteColor)
+            public Values(string titulo, string value)
             {
-                this.Name = name;
-                this.Birthday = birthday;
-                this.FavoriteColor = favoriteColor;
+                var Titulo = titulo;
+                var Value = value;
             }
 
-            public string Name { private set; get; }
+            public string Titulo { set; get; }
 
-            public DateTime Birthday { private set; get; }
+            public string Value { set; get; }
 
-            public Color FavoriteColor { private set; get; }
         };
 
         public LightsPage()
         {
+
             Label header = new Label
             {
-                Text = "ListView",
+                Text = "Manage",
                 FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label)),
                 HorizontalOptions = LayoutOptions.Center
             };
 
             // Define some data.
-            List<Person> people = new List<Person>
+            List<Values> people = new List<Values>
             {
-                new Person("Abigail", new DateTime(1975, 1, 15), Color.Aqua),
-                new Person("Bob", new DateTime(1976, 2, 20), Color.Black),
-                new Person("Yvonne", new DateTime(1987, 1, 10), Color.Purple),
-                new Person("Zachary", new DateTime(1988, 2, 5), Color.Red)
+                new Values("Home appliances", "65%"),
+                new Values("Otros", "35%"),
             };
 
             // Create the ListView.
@@ -53,54 +51,33 @@ namespace SHOME
                 ItemTemplate = new DataTemplate(() =>
                 {
                     // Create views with bindings for displaying each property.
-                    var nameLabel = new Label();
-                    nameLabel.SetBinding(Label.TextProperty, "Name");
+                    Label Tittle_lbl = new Label();
+                    Tittle_lbl.SetBinding(Label.TextProperty, "Tittle");
 
-                    var birthdayLabel = new Label();
-                    birthdayLabel.SetBinding(Label.TextProperty,
-                        new Binding("Birthday", BindingMode.OneWay,
-                            null, null, "Born {0:d}"));
-
-                    var boxView = new BoxView();
-                    boxView.SetBinding(BoxView.ColorProperty, "FavoriteColor");
+                    Label Value_lbl = new Label();
+                    Value_lbl.SetBinding(Label.TextProperty, "Value");
 
                     // Return an assembled ViewCell.
                     return new ViewCell
                     {
                         View = new StackLayout
                         {
-                            Padding = new Thickness(0, 5),
-                            Orientation = StackOrientation.Horizontal,
+                            VerticalOptions = LayoutOptions.Center,
+                            Spacing = 0,
                             Children =
-                                {
-                                    boxView,
-                                    new StackLayout
-                                    {
-                                        VerticalOptions = LayoutOptions.Center,
-                                        Spacing = 0,
-                                        Children =
-                                        {
-                                            nameLabel,
-                                            birthdayLabel
-                                        }
-                                        }
-                                }
+                            {
+                                Tittle_lbl,
+                                Value_lbl
+                            }
                         }
                     };
                 })
-            };
 
-            // Build the page.
-            Content = new StackLayout
-            {
-                Children =
-                {
-                    header,
-                    listView
-                }
             };
 
         }
+
+
     }
 }
 

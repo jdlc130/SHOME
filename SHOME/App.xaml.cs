@@ -1,5 +1,5 @@
 ﻿using Xamarin.Forms;
-
+using System.Collections.Generic;
 namespace SHOME
 {
 	public partial class App : Application
@@ -9,7 +9,17 @@ namespace SHOME
 
 		public App()
 		{
+	
 
+			Home home = new Home();
+			Division room = new Division("Quarto de JD", "bedroom");
+			home.add(room);
+			room = new Division("Sala de estar", "livingRoom");
+			home.add(room);
+
+
+			MainPage = new MenuPage();
+			/*
 			if (Device.OS == TargetPlatform.iOS)
 			{
 				if (!IsUserLoggedIn)
@@ -24,7 +34,7 @@ namespace SHOME
 			else 
 			{
 				MainPage = new MenuPage();
-			}
+			}*/
 			/*
 			if (!IsUserLoggedIn)
 			{

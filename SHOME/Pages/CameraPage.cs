@@ -21,7 +21,6 @@ namespace SHOME
             {
                 Source = new UrlWebViewSource {
                     Url = "https://video.nest.com/live/GRuDvinrXP"
-
                 },
                 VerticalOptions = LayoutOptions.FillAndExpand
             };

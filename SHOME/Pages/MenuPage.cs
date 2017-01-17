@@ -11,7 +11,7 @@ namespace SHOME
 			Title = "SHOME";
 
 
-			Children.Add(new GestaoPage()
+			Children.Add(new CameraPage()
 			{
 				Title = "Sleep",
 				Icon = "image019.png"

@@ -1,166 +1,201 @@
 ﻿using System;
-
+using System.Collections.Generic;
 using Xamarin.Forms;
 
 namespace SHOME
 {
 	public class EstarPage : ContentPage
 	{
-		public EstarPage()
+		public class Devices
 		{
-
-			Padding = new Thickness(0, Device.OnPlatform(20, 0, 0), 0, 0);
-			var grid = new Grid();
-			var grid1 = new Grid();
-			var grid2 = new Grid();
-
-			grid1.Children.Add(new Label() { Text = "Sala de estar" }, 0,0);
-			grid.Children.Add(new ScrollView
+			public string Name { get; set; }
+			public string Type { get; set; }
+			public Devices(string name, string type)
 			{
-				Content = grid1,
-				Orientation = ScrollOrientation.Horizontal,
-			}, 0, 1);
+				Name = name;
+				Type = type;
+			}
 
-			grid.Children.Add(new Label() { Text = "Zona de lazer" }, 0, 3);
-			grid.Children.Add(new ScrollView
+
+		}
+
+
+		public class Division
+		{
+			public string Name { get; set; }
+			public string Type { get; set; }
+			public Division(string name, string type)
 			{
-				Content = grid2,
-				Orientation = ScrollOrientation.Horizontal,
-			}, 0, 4);
+				Name = name;
+				Type = type;
+			}
+
+			List<Devices> _devices = new List<Devices>();
+
+			public List<Devices> devices
+			{
+				get { return _devices; }
+
+			}
+
+			public void addDivice(Devices dev)
+			{
+				_devices.Add(dev);
+			
+			}
+		}
+
+		List<Division> divisions = new List<Division>();
 
 	
 
-			grid1.Children.Add(new Image()
-			{
-			Source = Device.OnPlatform(
-			iOS: ImageSource.FromFile("lights1.png"),
-			Android: ImageSource.FromFile("lights1.png"),
-			WinPhone: ImageSource.FromFile("lights1.png"))
-			}, 0, 1);
-
-			grid1.Children.Add(new Image()
-			{
-				Source = Device.OnPlatform(
-			iOS: ImageSource.FromFile("Cameras.png"),
-			Android: ImageSource.FromFile("Cameras.png"),
-			WinPhone: ImageSource.FromFile("Cameras.png"))
-			}, 1, 1);
-
-			grid1.Children.Add(new Image()
-			{
-				Source = Device.OnPlatform(
-			iOS: ImageSource.FromFile("icon4.png"),
-			Android: ImageSource.FromFile("icon4.png"),
-			WinPhone: ImageSource.FromFile("icon4.png"))
-			},2, 1);
-
-			grid1.Children.Add(new Image()
-			{
-				Source = Device.OnPlatform(
-			iOS: ImageSource.FromFile("icon4.png"),
-			Android: ImageSource.FromFile("icon4.png"),
-			WinPhone: ImageSource.FromFile("icon4.png"))
-			}, 3, 1);
-
-			grid1.Children.Add(new Image()
-			{
-				Source = Device.OnPlatform(
-				iOS: ImageSource.FromFile("security.png"),
-				Android: ImageSource.FromFile("security.png"),
-				WinPhone: ImageSource.FromFile("security.png"))
-			}, 4, 1);
-
-			grid1.Children.Add(new Image()
-			{
-				Source = Device.OnPlatform(
-				iOS: ImageSource.FromFile("security.png"),
-				Android: ImageSource.FromFile("security.jpg"),
-				WinPhone: ImageSource.FromFile("security.png"))
-			}, 5, 1);
-
-			grid1.Children.Add(new Image()
-			{
-				Source = Device.OnPlatform(
-				iOS: ImageSource.FromFile("security.png"),
-				Android: ImageSource.FromFile("security.png"),
-				WinPhone: ImageSource.FromFile("security.png"))
-			}, 6, 1);
+		public EstarPage()
+		{
+			Division roomm = new Division("Quarto de JD", "bedroom");
+			divisions.Add(roomm);
+			Devices device1 = new Devices("Luzes", "lights");
+			roomm.addDivice(device1);
+		    device1 = new Devices("Camaras", "cctv");
+			roomm.addDivice(device1);
+			roomm.addDivice(device1);
+			roomm.addDivice(device1);
 
 
-
-			grid2.Children.Add(new Image()
-			{
-				Source = Device.OnPlatform(
-			iOS: ImageSource.FromFile("icon5.png"),
-			Android: ImageSource.FromFile("icon5.png"),
-			WinPhone: ImageSource.FromFile("icon5.png"))
-			}, 0, 0);
-
-			grid2.Children.Add(new Image()
-			{
-				Source = Device.OnPlatform(
-			iOS: ImageSource.FromFile("icon4.png"),
-			Android: ImageSource.FromFile("icon4.png"),
-			WinPhone: ImageSource.FromFile("icon4.png"))
-			}, 1, 0);
 		
-			grid2.Children.Add(new Image()
+			Division room = new Division("Sala de estar", "livingRoom");
+			divisions.Add(room);
+			Devices device = new Devices("Camaras", "cctv");
+			room.addDivice(device);
+			device = new Devices("Luzes", "lights");
+			room.addDivice(device);
+
+			room = new Division("Escritorio", "livingRoom");
+			divisions.Add(room);
+			Devices device2 = new Devices("Camaras", "cctv");
+			room.addDivice(device2);
+			device2 = new Devices("Luzes", "lights");
+			room.addDivice(device2);
+
+			room = new Division("Escritorio", "livingRoom");
+			divisions.Add(room);
+			device2 = new Devices("Luzes", "lights");
+			room.addDivice(device2);
+			device2 = new Devices("Luzes", "lights");
+			room.addDivice(device2);
+
+			room = new Division("Escritorio", "livingRoom");
+			divisions.Add(room);
+			device2 = new Devices("Luzes", "lights");
+			room.addDivice(device2);
+			device2 = new Devices("Luzes", "lights");
+			room.addDivice(device2);
+			device2 = new Devices("Luzes", "lights");
+			room.addDivice(device2);
+
+
+			var buttonLight = new Image() { Source = "lights.png" };
+
+			var buttonCctv = new Image() { Source = "cctv.png" };
+		
+
+			List<Image> buttonLights = new List<Image>();
+
+			var stack = new StackLayout(); ////
+			Padding = new Thickness(0, Device.OnPlatform(20, 0, 0), 0, 0);
+			//var grid = new Grid();
+			//var grid1 = new Grid();
+			//var grid2 = new Grid();
+		
+			var row = 0;
+			//var column = 0;
+
+			foreach (Division s in divisions)
 			{
-				Source = Device.OnPlatform(
-			iOS: ImageSource.FromFile("Cameras.png"),
-			Android: ImageSource.FromFile("Cameras.png"),
-			WinPhone: ImageSource.FromFile("Cameras.png"))
-			}, 2, 0);
+				var grid = new Grid();
 
-			grid2.Children.Add(new Image()
+				//var grid2 = new Grid();
+
+				stack.Children.Add(new Label() { Text = "\n\n\n\n"+s.Name, HorizontalTextAlignment = TextAlignment.Center });
+
+				/*grid2.Children.Add(new Label() { Text = s.Name , BackgroundColor = Color.Red }, column, row );
+				grid.Children.Add(grid2, column, row);
+				row++;*/
+
+				var rowGrid = 0;
+				var columnGrid  = 0;
+				foreach (Devices dev in s.devices) {
+					switch (dev.Type)
+					{
+						case "lights":
+							buttonLight = new Image() { Source = "lights.png" };
+							buttonLights.Add(buttonLight);
+							grid.Children.Add(buttonLight, columnGrid, rowGrid);
+						break;
+
+						case "cctv":
+							buttonCctv = new Image() { Source = "cctv.png" };
+							grid.Children.Add(buttonCctv, columnGrid, rowGrid);
+						break;
+					}
+					columnGrid++;
+
+				}
+				grid.BackgroundColor = Color.Transparent;
+				//grid.Opacity = 0.5;
+				stack.Children.Add(new ScrollView
+				{
+					Content = grid,
+					Orientation = ScrollOrientation.Horizontal,
+				});
+
+				/*grid.Children.Add(new ScrollView
+				{
+					Content = grid1,
+					Orientation = ScrollOrientation.Horizontal,
+				}, column, row);*/
+
+				row++;
+
+			}
+
+
+
+				var i = 0;
+ 				while(i < buttonLights.Count)
+			{  
+				
+				//	button.GestureRecognizers.Add(new TapGestureRecognizer(CameraPage));
+				buttonLights[i].GestureRecognizers.Add(new TapGestureRecognizer(sender =>
+				{
+
+
+
+				buttonLights[i].Opacity = 0.6;
+				buttonLights[i].FadeTo(1);
+				// Navigation.PushModalAsync(new LightsPage());
+
+
+					}));
+				i++;
+				}
+				 
+
+			buttonCctv.GestureRecognizers.Add(new TapGestureRecognizer(sender =>
 			{
-				Source = Device.OnPlatform(
-			iOS: ImageSource.FromFile("security.png"),
-			Android: ImageSource.FromFile("security.png"),
-			WinPhone: ImageSource.FromFile("security.png"))
-			}, 3, 0);
-
-			grid2.Children.Add(new Image()
-			{
-				Source = Device.OnPlatform(
-			iOS: ImageSource.FromFile("security.png"),
-			Android: ImageSource.FromFile("security.png"),
-			WinPhone: ImageSource.FromFile("security.png"))
-			}, 4, 0);
-
-			grid2.Children.Add(new Image()
-			{
-				Source = Device.OnPlatform(
-			iOS: ImageSource.FromFile("security.png"),
-			Android: ImageSource.FromFile("security.png"),
-			WinPhone: ImageSource.FromFile("security.png"))
-			}, 5, 0);
-
-			grid2.Children.Add(new Image()
-			{
-				Source = Device.OnPlatform(
-			iOS: ImageSource.FromFile("security.png"),
-			Android: ImageSource.FromFile("security.png"),
-			WinPhone: ImageSource.FromFile("security.png"))
-			}, 6, 0);
-
-			grid2.Children.Add(new Image()
-			{
-				Source = Device.OnPlatform(
-			iOS: ImageSource.FromFile("security.png"),
-			Android: ImageSource.FromFile("security.png"),
-			WinPhone: ImageSource.FromFile("security.png"))
-			}, 7, 0);
 
 
-			 
 
+				buttonCctv.Opacity = 0.6;
+				buttonCctv.FadeTo(1);
+				Navigation.PushModalAsync(new CameraPage());
+
+			}));
 
 
 
 			var scollVertical = new ScrollView()
 			{
-				Content = grid,
+				Content = stack,
 				Orientation = ScrollOrientation.Vertical,
 			};
 
