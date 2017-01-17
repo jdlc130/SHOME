@@ -9,33 +9,45 @@ namespace SHOME
 
         class Values
         {
-            public Values(string titulo, string value, Boolean power)
+            public Values(string titulo, Boolean power )
             {
                 this.Titulo = titulo;
-                this.Value = value;
                 this.Power = power;
+  
             }
 
             public string Titulo { private set; get; }
-            public string Value { private set; get; }
             public Boolean Power { private set; get; }
+
         };
 
         public GestaoPage()
         {
 
+            Padding = new Thickness(20, 20, 20, 20);
+
             Label header = new Label
             {
                 Text = "Energy Manager",
-                FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
+                FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label)),
                 HorizontalOptions = LayoutOptions.Center
+            };
+
+            var Energy = "60%";
+
+            var Tittle_energy_lbl = new Label()
+              {
+                Text = "Panel Energy Level" + "      " + Energy,
+                FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label))
             };
 
             // Define some data.
             List<Values> people = new List<Values>
             {
-                new Values("Home appliances", "65%", true),
-                new Values("Nivel de energia", "35%", false),
+                new Values("Washing Machine",  true),
+                new Values("Dishwasher",  false),
+                new Values("Machine Dryer",  false),
+                new Values("Cook Robot",  true),
             };
 
             // Create the ListView.
@@ -52,9 +64,6 @@ namespace SHOME
                     // Create views with bindings for displaying each property.
                     var Tittle_lbl = new Label();
                     Tittle_lbl.SetBinding(Label.TextProperty, "Titulo");
-
-                    var Value_lbl = new Label();
-                    Value_lbl.SetBinding(Label.TextProperty, "Value");
 
                     var power_btn = new Switch();
                     power_btn.SetBinding(Switch.IsToggledProperty, "Power");
@@ -100,6 +109,7 @@ namespace SHOME
                 Children =
                 {
                     header,
+                    Tittle_energy_lbl,
                     listView,
                     suggestion_btn
                 }
@@ -112,7 +122,7 @@ namespace SHOME
 
             /* BDD INTERACTION */
 
-            DisplayAlert("Suggestion", "You have been alerted", "OK");
+            DisplayAlert("We suggest you to plug in", "Washing Machine, Cook Robot", "Submit", "Cancel");
         }
 
         void power_btn_Toggled(object sender, ToggledEventArgs e)
@@ -123,7 +133,8 @@ namespace SHOME
                 Text = string.Format("Is now {0}", e.Value)
             };
 
-            DisplayAlert("Power", lll.Text, "OK");
+         /*   DisplayAlert("Power", lll.Text, "OK"); */
+
         }
     }
 }
