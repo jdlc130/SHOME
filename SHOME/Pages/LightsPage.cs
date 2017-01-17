@@ -29,15 +29,14 @@ namespace SHOME
                 Text = "Principal",
                 FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
                 HorizontalOptions = LayoutOptions.Start,
-                VerticalOptions = LayoutOptions.Start
             };
 
             Switch power_btn = new Switch
             {
-                HorizontalOptions = LayoutOptions.Center,
-                VerticalOptions = LayoutOptions.EndAndExpand
+                HorizontalOptions = LayoutOptions.EndAndExpand
             };
             power_btn.Toggled += power_btn_Toggled;
+
 
             Slider intensity_btn = new Slider
             {
