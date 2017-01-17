@@ -51,75 +51,91 @@ namespace SHOME
 
 		public EstarPage()
 		{
+		//BackgroundImage a = new BackgroundImage() { Source = "cctv.png" };
+			this.BackgroundImage = "Home.png";
+			var semiTransparentColor = new Color(0, 0, 0, 0.5);
+			this.BackgroundColor = semiTransparentColor;
+			//this.Opacity = 0.5;
+			//this.BackgroundImage = Opacity
+			//this.Opacity = 0.5;
+
+
+			/// Device
+			Devices deviceLock = new Devices("lock", "lock");
+			Devices deviceLights = new Devices("Luzes", "lights");
+			Devices deviceCctv = new Devices("Camaras", "cctv");
+			Devices deviceAudio = new Devices("audio", "audio");
+			Devices deviceBlinds = new Devices("blinds", "blinds");
+			Devices deviceAC = new Devices("ac", "ac");
+
+
+			// Division
 			Division roomm = new Division("Quarto de JD", "bedroom");
 			divisions.Add(roomm);
-			Devices device1 = new Devices("Luzes", "lights");
-			roomm.addDivice(device1);
-		    device1 = new Devices("Camaras", "cctv");
-			roomm.addDivice(device1);
-			roomm.addDivice(device1);
-			roomm.addDivice(device1);
+			roomm.addDivice(deviceLights);
+			roomm.addDivice(deviceCctv);
+			roomm.addDivice(deviceLock);
+			roomm.addDivice(deviceAudio);
+			roomm.addDivice(deviceAC);
+
+			roomm = new Division("Sala de estar", "livingRoom");
+			divisions.Add(roomm);
+			roomm.addDivice(deviceLights);
+			roomm.addDivice(deviceAC);
+			roomm.addDivice(deviceLock);
+			roomm.addDivice(deviceBlinds);
 
 
-		
-			Division room = new Division("Sala de estar", "livingRoom");
-			divisions.Add(room);
-			Devices device = new Devices("Camaras", "cctv");
-			room.addDivice(device);
-			device = new Devices("Luzes", "lights");
-			room.addDivice(device);
-
-			room = new Division("Escritorio", "livingRoom");
-			divisions.Add(room);
-			Devices device2 = new Devices("Camaras", "cctv");
-			room.addDivice(device2);
-			device2 = new Devices("Luzes", "lights");
-			room.addDivice(device2);
-
-			room = new Division("Escritorio", "livingRoom");
-			divisions.Add(room);
-			device2 = new Devices("Luzes", "lights");
-			room.addDivice(device2);
-			device2 = new Devices("Luzes", "lights");
-			room.addDivice(device2);
-
-			room = new Division("Escritorio", "livingRoom");
-			divisions.Add(room);
-			device2 = new Devices("Luzes", "lights");
-			room.addDivice(device2);
-			device2 = new Devices("Luzes", "lights");
-			room.addDivice(device2);
-			device2 = new Devices("Luzes", "lights");
-			room.addDivice(device2);
+			roomm = new Division("Escritorio", "livingRoom");
+			divisions.Add(roomm);
+			roomm.addDivice(deviceLights);
+			roomm.addDivice(deviceAudio);
 
 
-			var buttonLight = new Image() { Source = "lights.png" };
+			roomm = new Division("Quarto Joana", "bedroom");
+			divisions.Add(roomm);
+			roomm.addDivice(deviceCctv);
+			roomm.addDivice(deviceLock);
+			roomm.addDivice(deviceAudio);
 
-			var buttonCctv = new Image() { Source = "cctv.png" };
-		
+			//room = new Division("Escritorio", "livingRoom");
+			//divisions.Add(room);
+			//device2 = new Devices("Luzes", "lights");
+			//room.addDivice(device2);
+			//device2 = new Devices("Luzes", "lights");
+			//room.addDivice(device2);
+			//device2 = new Devices("Luzes", "lights");
+			//room.addDivice(device2);
+
+
+			//var buttonLight = new Image() { Source = "lights.png" };
+			//var buttonCctv = new Image() { Source = "cctv.png" };
+			//var buttonAC = new Image() { Source = "ac.png" };
+			//var buttonAudio = new Image() { Source = "audio.png" };
 
 			List<Image> buttonLights = new List<Image>();
+			List<Image> buttonCctvs = new List<Image>();
+			List<Image> buttonACs = new List<Image>();
+			List<Image> buttonListAudio = new List<Image>();
+			List<Image> buttonListBlinds = new List<Image>();
+			List<Image> buttonListLock = new List<Image>();
+
 
 			var stack = new StackLayout(); ////
 			Padding = new Thickness(0, Device.OnPlatform(20, 0, 0), 0, 0);
-			//var grid = new Grid();
-			//var grid1 = new Grid();
-			//var grid2 = new Grid();
-		
-			var row = 0;
-			//var column = 0;
+
 
 			foreach (Division s in divisions)
 			{
 				var grid = new Grid();
+				grid.BackgroundColor = new Color(0, 0, 0, 0.5);
+				grid.RowDefinitions = new RowDefinitionCollection {
+	new RowDefinition { Height = new GridLength(1, GridUnitType.Star) }
+};
 
-				//var grid2 = new Grid();
+				stack.Children.Add(new Label() { Text = "\n\n" , HorizontalTextAlignment = TextAlignment.Center });
+				stack.Children.Add(new Label() { Text = s.Name, HorizontalTextAlignment = TextAlignment.Center , BackgroundColor = new Color(74, 154, 220, 0.7)});
 
-				stack.Children.Add(new Label() { Text = "\n\n\n\n"+s.Name, HorizontalTextAlignment = TextAlignment.Center });
-
-				/*grid2.Children.Add(new Label() { Text = s.Name , BackgroundColor = Color.Red }, column, row );
-				grid.Children.Add(grid2, column, row);
-				row++;*/
 
 				var rowGrid = 0;
 				var columnGrid  = 0;
@@ -127,20 +143,44 @@ namespace SHOME
 					switch (dev.Type)
 					{
 						case "lights":
-							buttonLight = new Image() { Source = "lights.png" };
+							var buttonLight = new Image(){Source = "lights.png", WidthRequest = 70, HeightRequest = 70, Opacity = 2};
 							buttonLights.Add(buttonLight);
 							grid.Children.Add(buttonLight, columnGrid, rowGrid);
 						break;
 
 						case "cctv":
-							buttonCctv = new Image() { Source = "cctv.png" };
+							var buttonCctv = new Image() { Source = "cctv.png",  WidthRequest = 7, HeightRequest = 70 };
+							buttonCctvs.Add(buttonCctv);
 							grid.Children.Add(buttonCctv, columnGrid, rowGrid);
+						break;
+
+						case "ac":
+							var buttonAC = new Image() { Source = "ac.png", WidthRequest = 7, HeightRequest = 70 };
+							buttonACs.Add(buttonAC);
+							grid.Children.Add(buttonAC, columnGrid, rowGrid);
+						break;
+						
+						case "audio":
+							var buttonAudio = new Image() { Source = "audio.png", WidthRequest = 7, HeightRequest = 70 };
+							buttonListAudio.Add(buttonAudio);
+							grid.Children.Add(buttonAudio, columnGrid, rowGrid);
+						break;
+						case "blinds":
+							var buttonBlinds = new Image() { Source = "blinds.png", WidthRequest = 7, HeightRequest = 70 };
+							buttonListBlinds.Add(buttonBlinds);
+							grid.Children.Add(buttonBlinds, columnGrid, rowGrid);
+						break;
+						case "lock":
+							var buttonLock = new Image() { Source = "lock.png", WidthRequest = 7, HeightRequest = 70 };
+							buttonListLock.Add(buttonLock);
+							grid.Children.Add(buttonLock, columnGrid, rowGrid);
 						break;
 					}
 					columnGrid++;
 
 				}
-				grid.BackgroundColor = Color.Transparent;
+
+			
 				//grid.Opacity = 0.5;
 				stack.Children.Add(new ScrollView
 				{
@@ -148,13 +188,9 @@ namespace SHOME
 					Orientation = ScrollOrientation.Horizontal,
 				});
 
-				/*grid.Children.Add(new ScrollView
-				{
-					Content = grid1,
-					Orientation = ScrollOrientation.Horizontal,
-				}, column, row);*/
+			
 
-				row++;
+		
 
 			}
 
@@ -165,21 +201,19 @@ namespace SHOME
 			{  
 				
 				//	button.GestureRecognizers.Add(new TapGestureRecognizer(CameraPage));
-				buttonLights[i].GestureRecognizers.Add(new TapGestureRecognizer(sender =>
+				buttonLights[i].GestureRecognizers.Add(new TapGestureRecognizer
 				{
+					Command = new Command(() =>
+					{
+						Navigation.PushModalAsync(new LightsPage());
+					}),
+                NumberOfTapsRequired = 1
 
-
-
-				buttonLights[i].Opacity = 0.6;
-				buttonLights[i].FadeTo(1);
-				// Navigation.PushModalAsync(new LightsPage());
-
-
-					}));
+				});
 				i++;
 				}
 				 
-
+			/*
 			buttonCctv.GestureRecognizers.Add(new TapGestureRecognizer(sender =>
 			{
 
@@ -190,7 +224,7 @@ namespace SHOME
 				Navigation.PushModalAsync(new CameraPage());
 
 			}));
-
+*/
 
 
 			var scollVertical = new ScrollView()
@@ -200,6 +234,10 @@ namespace SHOME
 			};
 
 			Content = scollVertical;
+
+
+			   
+				
 
 		}
 	}
