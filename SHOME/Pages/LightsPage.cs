@@ -18,6 +18,8 @@ namespace SHOME
         public LightsPage()
         {
 
+            Padding = new Thickness(20, 20, 20, 20);
+
             Image header = new Image
             {
                 Source = "lights.png",
@@ -33,11 +35,10 @@ namespace SHOME
 
             Switch power_btn = new Switch
             {
-                HorizontalOptions = LayoutOptions.EndAndExpand
+                HorizontalOptions = LayoutOptions.End
             };
             power_btn.Toggled += power_btn_Toggled;
-
-
+            
             Slider intensity_btn = new Slider
             {
                 Minimum = 0,
@@ -103,14 +104,14 @@ namespace SHOME
                 Text = string.Format("Is now {0}", e.Value)
             };
 
-            DisplayAlert("Power", lll.Text, "OK");
+           DisplayAlert("Power", lll.Text, "OK");
         }
 
         void Onintensity_btnValueChanged(object sender, ValueChangedEventArgs e)
         {
             var lll = new Label
             {
-                Text = string.Format("Is now {0:F1}", e.NewValue)
+                Text = string.Format("Is now {0}", e.NewValue)
             };
 
             DisplayAlert("Intensity", lll.Text, "OK");
