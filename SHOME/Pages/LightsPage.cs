@@ -19,7 +19,6 @@ namespace SHOME
             public string Titulo { set; get; }
 
             public string Value { set; get; }
-
         };
 
         public LightsPage()
@@ -56,6 +55,7 @@ namespace SHOME
 
                     Label Value_lbl = new Label();
                     Value_lbl.SetBinding(Label.TextProperty, "Value");
+
 
                     // Return an assembled ViewCell.
                     return new ViewCell
