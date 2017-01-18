@@ -1,7 +1,7 @@
 ﻿using System;
 using Xamarin.Forms;
 
-namespace Carousel
+namespace SHOME
 {
 	public class MyCarouselPage : CarouselPage
     {

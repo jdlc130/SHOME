@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Color = Xamarin.Forms.Color;
 
-namespace Carousel
+namespace SHOME
 {
     public class Weather
     {
