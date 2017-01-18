@@ -36,9 +36,6 @@
     <EmbeddedResource Include="Pages\SignUpPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="Pages\Scroll.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -51,11 +48,7 @@
     <Compile Include="Pages\SHOMEPage.xaml.cs">
       <DependentUpon>SHOMEPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\IndexPage.cs" />
-    <Compile Include="Pages\SleepPage.cs" />
     <Compile Include="Pages\MenuPage.cs" />
-    <Compile Include="Pages\HomePage.cs" />
-    <Compile Include="Pages\GardenPage.cs" />
     <Compile Include="Pages\EstarPage.cs" />
     <Compile Include="Pages\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
@@ -66,9 +59,6 @@
       <DependentUpon>SignUpPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="SignUpPageCS.cs" />
-    <Compile Include="Pages\Scroll.xaml.cs">
-      <DependentUpon>Scroll.xaml</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">

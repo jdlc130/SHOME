@@ -140,6 +140,7 @@
     <AndroidResource Include="Resources\drawable\lock.png" />
     <AndroidResource Include="Resources\drawable\tv.png" />
     <AndroidResource Include="Resources\drawable\weather.png" />
+    <AndroidResource Include="Resources\drawable\Home.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\icon.png" />

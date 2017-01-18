@@ -11,28 +11,28 @@ namespace SHOME
 			Title = "SHOME";
 
 
-			Children.Add(new GestaoPage()
+			Children.Add(new EstarPage(1)
 			{
 				Title = "Sleep",
 				Icon = "image019.png"
 
 			});
 
-			Children.Add(new EstarPage()
+			Children.Add(new EstarPage(2)
 			{
 				Title = "Estar",
 				Icon = "image017.png"
 
 			});
 
-			Children.Add(new HomePage()
+			Children.Add(new EstarPage(3)
 			{
 				Title = "HOME",
 				Icon = "image012.png"
 
 			});
 
-			Children.Add(new Scroll()
+			Children.Add(new EstarPage(4)
 		{
 			Title = "Garden",
 			Icon = "image015.png"
