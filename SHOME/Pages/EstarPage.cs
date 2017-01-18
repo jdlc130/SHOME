@@ -59,7 +59,7 @@ namespace SHOME
 		public EstarPage(int tabb)
 		{
 	
-			this.BackgroundImage = "Home.png";
+			this.BackgroundImage = "home_n.png";
 			var semiTransparentColor = new Color(0, 0, 0, 0.5);
 			this.BackgroundColor = semiTransparentColor;
 
@@ -444,7 +444,7 @@ namespace SHOME
 				{
 					Command = new Command(() =>
 					{
-						Navigation.PushModalAsync(new GestaoPage());
+						Navigation.PushModalAsync(new ());
 					}),
 					NumberOfTapsRequired = 1
 

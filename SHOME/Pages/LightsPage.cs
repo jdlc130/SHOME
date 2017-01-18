@@ -18,6 +18,8 @@ namespace SHOME
         public LightsPage()
         {
 
+		
+
             Padding = new Thickness(20, 20, 20, 20);
 
             Image header = new Image
@@ -103,6 +105,8 @@ namespace SHOME
             {
                 Text = string.Format("Is now {0}", e.Value)
             };
+
+
 
            DisplayAlert("Power", lll.Text, "OK");
         }
