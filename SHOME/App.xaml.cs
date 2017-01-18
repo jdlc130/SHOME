@@ -19,7 +19,7 @@ namespace SHOME
 
 
 			MainPage = new MenuPage();
-			/*
+		
 			if (Device.OS == TargetPlatform.iOS)
 			{
 				if (!IsUserLoggedIn)
@@ -33,8 +33,15 @@ namespace SHOME
 			}
 			else 
 			{
-				MainPage = new MenuPage();
-			}*/
+				if (!IsUserLoggedIn)
+				{
+					MainPage = new NavigationPage(new LoginPage());
+				}
+				else {
+					MainPage = new NavigationPage(new SHOME.MenuPage());
+				}
+
+			}
 			/*
 			if (!IsUserLoggedIn)
 			{

@@ -72,6 +72,7 @@ namespace SHOME
 			Devices deviceAudio = new Devices("audio", "audio");
 			Devices deviceBlinds = new Devices("blinds", "blinds");
 			Devices deviceAC = new Devices("ac", "ac");
+			Devices deviceWeather = new Devices("weather", "weather");
 			Devices deviceIrrigation = new Devices("irrigation", "irrigation");
 			if (tabb == 1)
 			{
@@ -141,6 +142,7 @@ namespace SHOME
 				divisions.Add(roomm);
 				roomm.addDivice(deviceIrrigation);
 				roomm.addDivice(deviceAC);
+				roomm.addDivice(deviceWeather);
 
 				// Division
 				roomm = new Division("Quarto de Antonio", "bedroom");
@@ -241,7 +243,7 @@ namespace SHOME
 			List<Image> buttonListBlinds = new List<Image>();
 			List<Image> buttonListLock = new List<Image>();
 			List<Image> buttonListIrrigation = new List<Image>();
-
+			List<Image> buttonListWeather = new List<Image>();
 
 			var stack = new StackLayout(); ////
 			Padding = new Thickness(0, Device.OnPlatform(20, 0, 0), 0, 0);
@@ -252,9 +254,9 @@ namespace SHOME
 				var grid = new Grid();
 				grid.BackgroundColor = new Color(0, 0, 0, 0.5);
 				grid.RowDefinitions = new RowDefinitionCollection {
-				new RowDefinition { Height = new GridLength(1, GridUnitType.Star) }
+					new RowDefinition { Height = new GridLength(1, GridUnitType.Star) }
 			};
-
+				//grid.HorizontalOptions = LayoutOptions.StartAndExpand;
 				stack.Children.Add(new Label() { Text = "\n\n" , HorizontalTextAlignment = TextAlignment.Center });
 				stack.Children.Add(new Label() { Text = s.Name, HorizontalTextAlignment = TextAlignment.Center , BackgroundColor = new Color(74, 154, 220, 0.7)});
 
@@ -302,12 +304,17 @@ namespace SHOME
 							buttonListIrrigation.Add(buttonIrrigation);
 							grid.Children.Add(buttonIrrigation, columnGrid, rowGrid);
 						break;
-
+						case "weather":
+							var buttonWeather = new Image() { Source = "weather.png", WidthRequest = 7, HeightRequest = 70 };
+							buttonListWeather.Add(buttonWeather);
+							grid.Children.Add(buttonWeather, columnGrid, rowGrid);
+						break;
 
 					}
 					columnGrid++;
 
 				}
+
 
 			
 				//grid.Opacity = 0.5;
@@ -430,6 +437,20 @@ namespace SHOME
 				i++;
 			}
 
+			i = 0;
+			while (i < buttonListWeather.Count)
+			{
+				buttonListWeather[i].GestureRecognizers.Add(new TapGestureRecognizer
+				{
+					Command = new Command(() =>
+					{
+						Navigation.PushModalAsync(new GestaoPage());
+					}),
+					NumberOfTapsRequired = 1
+
+				});
+				i++;
+			}
 			/*
 			buttonCctv.GestureRecognizers.Add(new TapGestureRecognizer(sender =>
 			{

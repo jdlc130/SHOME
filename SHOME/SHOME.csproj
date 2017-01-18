@@ -48,7 +48,6 @@
     <Compile Include="Pages\SHOMEPage.xaml.cs">
       <DependentUpon>SHOMEPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\SleepPage.cs" />
     <Compile Include="Pages\MenuPage.cs" />
     <Compile Include="Pages\EstarPage.cs" />
     <Compile Include="Pages\LoginPage.xaml.cs">
