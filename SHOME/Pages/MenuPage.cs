@@ -8,7 +8,7 @@ namespace SHOME
 	{
 		public MenuPage()
 		{
-			Title = "SHOME";
+			Title = "SHOMEd";
 
 
 			Children.Add(new EstarPage(1)
