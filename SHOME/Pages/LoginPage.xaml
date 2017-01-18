@@ -5,7 +5,18 @@
 	</ContentPage.ToolbarItems>
 	<ContentPage.Content>
 		<StackLayout VerticalOptions="StartAndExpand">
-			<Image Source="power.png" />
+			<Label Text="" />
+			<Label Text="" />
+			<Label Text="" />
+			<Label Text="" />
+						<Label Text="" />
+			<Label Text="" />
+			<Label Text="" />
+			<Label Text="" />
+						<Label Text="" />
+			<Label Text="" />
+			<Label Text="" />
+			<Label Text="" />
 			<Label Text="Username" />
 			<Entry x:Name="usernameEntry" Placeholder="username" />
 			<Label Text="Password" />

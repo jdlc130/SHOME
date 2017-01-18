@@ -444,7 +444,7 @@ namespace SHOME
 				{
 					Command = new Command(() =>
 					{
-						Navigation.PushModalAsync(new ());
+						Navigation.PushModalAsync(new MyCarouselPage());
 					}),
 					NumberOfTapsRequired = 1
 
