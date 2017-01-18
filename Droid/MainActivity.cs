@@ -53,7 +53,7 @@ namespace SHOME.Droid
         public void OnDismiss(IDialogInterface dialog)
         {
             //Activity done and should be closed.
-            Finish();
+            //Finish(); //Closes the app.
         }
 
         public bool BindService(Intent p0, IServiceConnection p1, int p2)
@@ -130,7 +130,6 @@ namespace SHOME.Droid
                 var builder = new AlertDialog.Builder(this);
                 builder.SetTitle("Bluetooth LE not available");
                 builder.SetMessage("Sorry, this device does not support Bluetooth LE.");
-                //TODO DO SOMETHING WHEN SMARTPHONE DON'T HAVE BLUETHOOT
                 builder.SetPositiveButton(Android.Resource.String.Ok, (EventHandler<DialogClickEventArgs>) null);
                 builder.SetOnDismissListener(this);
                 builder.Show();
