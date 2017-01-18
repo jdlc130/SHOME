@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SHOME.CreateEvent"
+            BackgroundColor="White">
+  <ScrollView>
+    <StackLayout
+      Orientation="Vertical"
+      VerticalOptions="Center">
+      
+      <Label x:Name="title" 
+             Text="Criar Evento"
+             TextColor="Black"
+             FontSize="30">                    
+      </Label>
+      
+      <Label x:Name="lblName" Text="Nome"></Label>
+      <Entry x:Name="entName"></Entry>
+
+      <Label x:Name="lblDescription" Text="Descrição"></Label>
+      <Entry x:Name="entDescription"></Entry>
+
+      <Label x:Name ="lblData"
+             Text="Escolha a data"/>
+
+      <DatePicker x:Name="DataPicker"
+                  MinimumDate="01/12/2017"/>
+
+      <Label x:Name ="lblhorai"
+             Text="Escolha a hora de inicio"/>
+      <TimePicker x:Name="TimePickeri"/>
+
+      <Label x:Name ="lblhoraf"
+             Text="Escolha a hora de fim"/>
+      <TimePicker x:Name="TimePickerf"/>
+
+      <Label x:Name="lblDivision" Text="Divisão"></Label>
+      <Picker x:Name="DivisionPicker"/>
+
+      <Label x:Name="lblDevice" Text="Aparelho"></Label>
+      <Picker x:Name="DevicePicker"/>
+
+    </StackLayout>
+  </ScrollView>
+</ContentPage>

@@ -42,5 +42,7 @@
 	</array>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/AppIcon.appiconset</string>
+  <key>NSLocationAlwaysUsageDescription</key>
+  <string>Get division at SHOME</string>
 </dict>
 </plist>
