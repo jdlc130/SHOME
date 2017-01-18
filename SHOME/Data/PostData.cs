@@ -9,7 +9,7 @@ namespace SHOME.Data
 {
     public class PostData
     {
-        public async Task<JsonValue> FetchAsync(string url)
+        public static async Task<JsonValue> FetchAsync(string url)
         {
             // Create an HTTP web request using the URL:
             var request = (HttpWebRequest)WebRequest.Create(new Uri(url));
