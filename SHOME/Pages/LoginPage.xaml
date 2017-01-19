@@ -7,7 +7,8 @@
 		<StackLayout VerticalOptions="StartAndExpand">
 			<Label Text="" />
 			<Label Text="" />
-			<Label Text="" /><Label Text="" />
+			<Label Text="" />
+			<Label Text="" />
 			<Label Text="" />
 			<Label Text="" />
 			<Label Text="" />

@@ -2266,8 +2266,8 @@ namespace SHOME.Droid
 			// aapt resource value: 0x7f0200b6
 			public const int mr_ic_play_light = 2130837686;
 			
-			// aapt resource value: 0x7f0200bb
-			public const int notification_template_icon_bg = 2130837691;
+			// aapt resource value: 0x7f0200bc
+			public const int notification_template_icon_bg = 2130837692;
 			
 			// aapt resource value: 0x7f0200b7
 			public const int power = 2130837687;
@@ -2280,6 +2280,9 @@ namespace SHOME.Droid
 			
 			// aapt resource value: 0x7f0200ba
 			public const int weather = 2130837690;
+			
+			// aapt resource value: 0x7f0200bb
+			public const int wind = 2130837691;
 			
 			static Drawable()
 			{

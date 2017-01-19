@@ -61,6 +61,8 @@
       <DependentUpon>SignUpPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="SignUpPageCS.cs" />
+    <Compile Include="Pages\MyCarouselPage.cs" />
+    <Compile Include="Pages\Weather.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="HolisticWare.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
