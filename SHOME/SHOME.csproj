@@ -41,7 +41,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Data\Helper.cs" />
     <Compile Include="Data\PostData.cs" />
     <Compile Include="Pages\GestaoPage.cs" />
     <Compile Include="Pages\CameraPage.cs" />

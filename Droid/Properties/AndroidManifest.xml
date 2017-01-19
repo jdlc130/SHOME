@@ -7,6 +7,7 @@
   <uses-permission android:name="android.permission.BLUETOOTH" />
   <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
   <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+  <uses-permission android:name="android.permission.INTERNET"/>
 
   <application android:label="SHOME">
     <service android:enabled="true" android:exported="false" android:isolatedProcess="false" android:label="Beacon"

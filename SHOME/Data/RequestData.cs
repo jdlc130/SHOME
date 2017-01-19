@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
-using System.IO;
 using System.Json;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -9,9 +9,20 @@ namespace SHOME.Data
 {
     public class RequestData
     {
-        // Gets data from the passed URL.
-        public async Task<JsonValue> FetchAsync(string url)
+        public static async Task SyncTask(params object[] parameters)
         {
+            await FetchAsync(parameters);
+        }
+
+        /// <summary>
+        /// Gets data from the passed URL.
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        private static async Task<JsonValue> FetchAsync(params object[] parameters)
+        {
+            var url = parameters.Aggregate("http://" + "montalegre.m-iti.org:22941", (current, parameter) => current + ("/" + parameter));
+
             // Create an HTTP web request using the URL:
             var request = (HttpWebRequest)WebRequest.Create(new Uri(url));
             request.ContentType = "application/json";
@@ -32,11 +43,17 @@ namespace SHOME.Data
                 }
             }
         }
-
-        // Parse data.
-        private void ParseData(JsonValue json)
+        
+        /// <summary>
+        /// Parse data.
+        /// </summary>
+        /// <param name="json"></param>
+        /// <param name="searchString"></param>
+        public static string ParseData(JsonValue json, string searchString)
         {
-            //
+            JsonValue.Parse(json);
+
+            return "";
         }
     }
 }

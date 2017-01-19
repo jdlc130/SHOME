@@ -42,6 +42,7 @@
       <HintPath>..\packages\AndroidAltBeaconLibrary.2.7.0\lib\AndroidAltBeaconLibrary.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Java.Interop" />
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />

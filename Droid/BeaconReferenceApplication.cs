@@ -18,10 +18,7 @@ namespace SHOME.Droid
         private Region _backgroundRegion;
 
         private BeaconManager _beaconManager;
-        private BackgroundPowerSaver backgroundPowerSaver;
-        private bool haveDetectedBeaconsSinceBoot;
-
-        private RegionBootstrap regionBootstrap;
+        private bool _haveDetectedBeaconsSinceBoot;
 
         public BeaconReferenceApplication()
         {
@@ -43,7 +40,7 @@ namespace SHOME.Droid
             // In this example, this class sends a notification to the user whenever a Beacon
             // matching a Region (defined above) are first seen.
             Log.Debug(TAG, "did enter region.");
-            if (!haveDetectedBeaconsSinceBoot)
+            if (!_haveDetectedBeaconsSinceBoot)
             {
                 Log.Debug(TAG, "auto launching MonitoringActivity");
 
@@ -55,7 +52,7 @@ namespace SHOME.Droid
                 // to keep multiple copies of this activity from getting created if the user has
                 // already manually launched the app.
                 StartActivity(intent);
-                haveDetectedBeaconsSinceBoot = true;
+                _haveDetectedBeaconsSinceBoot = true;
             }
             else
             {
@@ -92,12 +89,12 @@ namespace SHOME.Droid
             Log.Debug(TAG, "setting up background monitoring for beacons and power saving");
             // wake up the app when a beacon is seen
             _backgroundRegion = new Region("backgroundRegion", null, null, null);
-            regionBootstrap = new RegionBootstrap(this, _backgroundRegion);
+            new RegionBootstrap(this, _backgroundRegion);
 
             // simply constructing this class and holding a reference to it in your custom Application
             // class will automatically cause the BeaconLibrary to save battery whenever the application
             // is not visible.  This reduces bluetooth power usage by about 60%
-            backgroundPowerSaver = new BackgroundPowerSaver(this);
+            new BackgroundPowerSaver(this);
         }
 
         private void SendNotification()

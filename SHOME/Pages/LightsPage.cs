@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using SHOME.Data;
 using Xamarin.Forms;
 
-namespace SHOME
+namespace SHOME.Pages
 {
 	public class LightsPage : ContentPage
 	{

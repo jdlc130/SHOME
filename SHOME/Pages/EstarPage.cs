@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using SHOME.Pages;
 using Xamarin.Forms;
 
 namespace SHOME
