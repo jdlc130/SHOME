@@ -37,6 +37,8 @@ namespace SHOME.Pages
             {
                 HorizontalOptions = LayoutOptions.End
             };
+            // TODO
+            PostData.SyncTask("ToggleDevice", 17, 1);
             power_btn.Toggled += power_btn_Toggled;
             
             Slider intensity_btn = new Slider
