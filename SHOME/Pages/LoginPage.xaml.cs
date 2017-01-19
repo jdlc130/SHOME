@@ -10,7 +10,7 @@ namespace SHOME
 		public LoginPage()
 		{
 			InitializeComponent();
-
+			this.BackgroundImage = "login.png";
 
 		}
 

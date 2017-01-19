@@ -60,7 +60,7 @@ namespace SHOME
 		public EstarPage(int tabb)
 		{
 	
-			this.BackgroundImage = "Home.png";
+			this.BackgroundImage = "home_n.png";
 			var semiTransparentColor = new Color(0, 0, 0, 0.5);
 			this.BackgroundColor = semiTransparentColor;
 
