@@ -13,6 +13,8 @@ namespace SHOME.Pages
         public LockPage()
         {
             InitializeComponent();
+
+            
         }
     }
 }

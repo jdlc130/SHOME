@@ -136,23 +136,7 @@ namespace SHOME.Pages
             {
                 Text = string.Format("Is now {0}", e.Value)
             };
-			if (e.Value)
-			{
-
-
-
-			var json = WebServicesData.SyncTask("POST", "ToggleDevice", 17, 1);
-				//var result = WebServicesData.SimpleParseData(json, "Status");
-
-			}
-			else
-			{ 
-			WebServicesData.SyncTask("POST","ToggleDevice", 17, 0);
-			}
-
-
-
-           DisplayAlert("Power", lll.Text, "OK");
+            DisplayAlert("Power", lll.Text, "OK");
         }
 
 
