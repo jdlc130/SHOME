@@ -11,7 +11,6 @@ namespace SHOME
 		{
 			InitializeComponent();
 			this.BackgroundImage = "login.png";
-
 		}
 
 		async void OnSignUpButtonClicked(object sender, EventArgs e)
