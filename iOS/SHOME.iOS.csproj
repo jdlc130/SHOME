@@ -141,15 +141,7 @@
     <BundleResource Include="Resources\image019.png" />
     <BundleResource Include="Resources\image012.png" />
     <BundleResource Include="Resources\power.png" />
-    <BundleResource Include="Resources\LightIcon.png" />
-    <BundleResource Include="Resources\icon2.png" />
-    <BundleResource Include="Resources\video-surveillance-icon2-270x2.png" />
     <BundleResource Include="Resources\lights.png" />
-    <BundleResource Include="Resources\icon5.png" />
-    <BundleResource Include="Resources\icon4.png" />
-    <BundleResource Include="Resources\Cameras.png" />
-    <BundleResource Include="Resources\security.png" />
-    <BundleResource Include="Resources\lights1.png" />
     <BundleResource Include="Resources\ac.png" />
     <BundleResource Include="Resources\audio.png" />
     <BundleResource Include="Resources\blinds.png" />
@@ -161,6 +153,30 @@
     <BundleResource Include="Resources\Home.png" />
     <BundleResource Include="Resources\home_n.png" />
     <BundleResource Include="Resources\login.png" />
+    <BundleResource Include="Resources\bedroom.png" />
+    <BundleResource Include="Resources\garden.png" />
+    <BundleResource Include="Resources\homeIcon.png" />
+    <BundleResource Include="Resources\kitchen.png" />
+    <BundleResource Include="Resources\lounge.png" />
+    <BundleResource Include="Resources\ac_background.png" />
+    <BundleResource Include="Resources\Altbeacon.png" />
+    <BundleResource Include="Resources\energy_consumption_background.png" />
+    <BundleResource Include="Resources\header_energyManagement.png" />
+    <BundleResource Include="Resources\header_lights.png" />
+    <BundleResource Include="Resources\header_weather.png" />
+    <BundleResource Include="Resources\high_consumption.png" />
+    <BundleResource Include="Resources\icon_airQuality.png" />
+    <BundleResource Include="Resources\icon_energyComsuption.png" />
+    <BundleResource Include="Resources\icon_humidity.png" />
+    <BundleResource Include="Resources\icon_rain.png" />
+    <BundleResource Include="Resources\icon_temperature.png" />
+    <BundleResource Include="Resources\icon_wind.png" />
+    <BundleResource Include="Resources\icon.png" />
+    <BundleResource Include="Resources\lights_header.png" />
+    <BundleResource Include="Resources\low_consumption.png" />
+    <BundleResource Include="Resources\medium_consumption.png" />
+    <BundleResource Include="Resources\bedroom_background.png" />
+    <BundleResource Include="Resources\lounge_background.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.2.3.3.180\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.2.3.3.180\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />

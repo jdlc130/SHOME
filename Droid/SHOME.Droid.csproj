@@ -118,6 +118,8 @@
     <AndroidResource Include="Resources\drawable\homeIcon.png" />
     <AndroidResource Include="Resources\drawable\kitchen.png" />
     <AndroidResource Include="Resources\drawable\lounge.png" />
+    <AndroidResource Include="Resources\drawable\bedroom_background.png" />
+    <AndroidResource Include="Resources\drawable\lounge_background.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Tabbar.axml" />
