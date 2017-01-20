@@ -11,37 +11,32 @@ namespace SHOME
 		{
 	
 
-			Home home = new Home();
-			Division room = new Division("Quarto de JD", "bedroom");
-			home.add(room);
-			room = new Division("Sala de estar", "livingRoom");
-			home.add(room);
 
+		//	MainPage = new MenuPage();
+		//MainPage = new NavigationPage(new LoginPage());
+			MainPage = new NavigationPage(new SHOME.MenuPage());
+			//if (Device.OS == TargetPlatform.iOS)
+			//{
+			//	if (!IsUserLoggedIn)
+			//	{
+			//		MainPage = new NavigationPage(new LoginPage());
+			//	}
+			//	else {
+			//		MainPage = new NavigationPage(new SHOME.MenuPage());
+			//	}
 
-			MainPage = new MenuPage();
-		
-			if (Device.OS == TargetPlatform.iOS)
-			{
-				if (!IsUserLoggedIn)
-				{
-					MainPage = new NavigationPage(new LoginPage());
-				}
-				else {
-					MainPage = new NavigationPage(new SHOME.MenuPage());
-				}
+			//}
+			//else 
+			//{
+			//	if (!IsUserLoggedIn)
+			//	{
+			//		MainPage = new NavigationPage(new LoginPage());
+			//	}
+			//	else {
+			//		MainPage = new NavigationPage(new SHOME.MenuPage());
+			//	}
 
-			}
-			else 
-			{
-				if (!IsUserLoggedIn)
-				{
-					MainPage = new NavigationPage(new LoginPage());
-				}
-				else {
-					MainPage = new NavigationPage(new SHOME.MenuPage());
-				}
-
-			}
+			//}
 			/*
 			if (!IsUserLoggedIn)
 			{

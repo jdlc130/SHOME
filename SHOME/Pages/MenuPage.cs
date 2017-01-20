@@ -1,6 +1,7 @@
 ﻿using System;
 
 using Xamarin.Forms;
+using SHOME.Pages;
 
 namespace SHOME
 {
@@ -20,7 +21,7 @@ namespace SHOME
 
 			Children.Add(new EstarPage(2)
 			{
-				Title = "Estar",
+				Title = "Lounge",
 				Icon = "image017.png"
 
 			});
@@ -38,9 +39,15 @@ namespace SHOME
 			Icon = "image015.png"
 
 		});
+			Children.Add( new EstarPage(4)
+			{
+				Title = "Kitchen",
+				Icon = "kitchen.png"
+
+			});
 
 
-
+		
 
 
 		}

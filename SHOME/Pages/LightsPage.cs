@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using SHOME.Data;
 using Xamarin.Forms;
+using System.Diagnostics;
+using System.Json;
 
 namespace SHOME.Pages
 {
@@ -12,7 +14,7 @@ namespace SHOME.Pages
         {
             { "Blue", Color.Blue },   { "Pink", Color.Pink },
             { "Green", Color.Green }, { "Yellow", Color.Yellow },
-            { "White", Color.White }
+			{ "White", Color.White },   { "Red", Color.Red }
         };
 
         public LightsPage()
@@ -37,8 +39,7 @@ namespace SHOME.Pages
             {
                 HorizontalOptions = LayoutOptions.End
             };
-            // TODO
-            PostData.SyncTask("ToggleDevice", 17, 1);
+           
             power_btn.Toggled += power_btn_Toggled;
             
             Slider intensity_btn = new Slider
@@ -79,7 +80,37 @@ namespace SHOME.Pages
                 {
                     string colorName = picker.Items[picker.SelectedIndex];
                     boxView.Color = nameToColor[colorName];
+
+					switch (colorName)
+					{
+						case "Blue":
+							WebServicesData.SyncTask("POST", "Light", "changeColor", 17, 46920);
+							break;
+
+						case "Yellow":
+							WebServicesData.SyncTask("POST", "Light", "changeColor", 17, 12750);
+							break;
+
+						case "Green":
+							WebServicesData.SyncTask("POST", "Light", "changeColor", 17, 25500);
+						break;
+						
+						case "Pink":
+							WebServicesData.SyncTask("POST", "Light", "changeColor", 17, 57670);
+						break;
+							
+						case "White":
+							WebServicesData.SyncTask("POST", "Light", "changeColor", 17, 31456);
+						break;
+						case "Red":
+							WebServicesData.SyncTask("POST", "Light", "changeColor", 17, 65280);
+						break;
+
+						
+					}
                 }
+
+
             };
 
 
@@ -105,11 +136,29 @@ namespace SHOME.Pages
             {
                 Text = string.Format("Is now {0}", e.Value)
             };
+			if (e.Value)
+			{
+
+
+
+			var json = WebServicesData.SyncTask("POST", "ToggleDevice", 17, 1);
+				//var result = WebServicesData.SimpleParseData(json, "Status");
+
+			}
+			else
+			{ 
+			WebServicesData.SyncTask("POST","ToggleDevice", 17, 0);
+			}
+
+
 
            DisplayAlert("Power", lll.Text, "OK");
         }
 
-        void Onintensity_btnValueChanged(object sender, ValueChangedEventArgs e)
+
+
+
+		void Onintensity_btnValueChanged(object sender, ValueChangedEventArgs e)
         {
             var lll = new Label
             {
