@@ -14,34 +14,34 @@ namespace SHOME
 
 			Children.Add(new EstarPage(1)
 			{
-				Title = "Sleep",
-				Icon = "image019.png"
+				
+				Icon = "bedroom.png"
 
 			});
 
 			Children.Add(new EstarPage(2)
 			{
-				Title = "Lounge",
-				Icon = "image017.png"
+
+				Icon = "lounge.png"
 
 			});
 
 			Children.Add(new EstarPage(3)
 			{
-				Title = "HOME",
-				Icon = "image012.png"
+
+				Icon = "homeIcon.png"
 
 			});
 
 			Children.Add(new EstarPage(4)
 		{
-			Title = "Garden",
-			Icon = "image015.png"
+		
+			Icon = "garden.png"
 
 		});
 			Children.Add( new EstarPage(4)
 			{
-				Title = "Kitchen",
+		
 				Icon = "kitchen.png"
 
 			});

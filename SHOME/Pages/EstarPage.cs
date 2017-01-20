@@ -81,9 +81,9 @@ namespace SHOME
         {
 
 
-            BackgroundImage = "home_n.png";
+            
             var semiTransparentColor = new Color(0, 0, 0, 0.5);
-            BackgroundColor = semiTransparentColor;
+           
 
             /// Device
             var deviceLock = new Devices("lock", "lock");
@@ -94,157 +94,160 @@ namespace SHOME
             var deviceAC = new Devices("ac", "ac");
             var deviceWeather = new Devices("weather", "weather");
             var deviceIrrigation = new Devices("irrigation", "irrigation");
-			//if (tabb == 1)
-			//{
-			//    // Division
-			//    var roomm = new Division("Quarto de Antonio", "bedroom");
-			//    Divisions.Add(roomm);
-			//    roomm.AddDivice(deviceLights);
-			//    roomm.AddDivice(deviceAC);
-
-			//    roomm = new Division("Quarto da Ana", "estar");
-			//    Divisions.Add(roomm);
-			//    roomm.AddDivice(deviceLights);
-			//    roomm.AddDivice(deviceLock);
-			//    roomm.AddDivice(deviceBlinds);
-			//    roomm.AddDivice(deviceAC);
-
-
-			//    roomm = new Division("Quarto Maria", "estar");
-			//    Divisions.Add(roomm);
-			//    roomm.AddDivice(deviceLights);
-			//    roomm.AddDivice(deviceAC);
-			//    roomm.AddDivice(deviceAudio);
-
-
-			//    roomm = new Division("Quarto Joana", "bedroom");
-			//    Divisions.Add(roomm);
-			//    roomm.AddDivice(deviceLock);
-			//    roomm.AddDivice(deviceAudio);
-			//}
-			//if (tabb == 2)
-			//{
-			//    // Division
-
-			//    var roomm = new Division("Sala de estar", "estar");
-			//    Divisions.Add(roomm);
-			//    roomm.AddDivice(deviceLights);
-			//    roomm.AddDivice(deviceAC);
-			//    roomm.AddDivice(deviceLock);
-			//    roomm.AddDivice(deviceBlinds);
-
-
-			//    roomm = new Division("Escritorio", "estar");
-			//    Divisions.Add(roomm);
-			//    roomm.AddDivice(deviceLights);
-			//    roomm.AddDivice(deviceCctv);
-			//    roomm.AddDivice(deviceLock);
-			//    roomm.AddDivice(deviceAudio);
-			//    roomm.AddDivice(deviceAC);
-			//}
-
-			//if (tabb == 3)
-			//{
-			//    // Division
-			//    var roomm = new Division("All", "bedroom");
-			//    Divisions.Add(roomm);
-			//    roomm.AddDivice(deviceIrrigation);
-			//    roomm.AddDivice(deviceAC);
-			//    roomm.AddDivice(deviceWeather);
-
-			//    // Division
-			//    roomm = new Division("Quarto de Antonio", "bedroom");
-			//    Divisions.Add(roomm);
-			//    roomm.AddDivice(deviceLights);
-			//    roomm.AddDivice(deviceAC);
-
-			//    roomm = new Division("Quarto da Ana", "estar");
-			//    Divisions.Add(roomm);
-			//    roomm.AddDivice(deviceLights);
-			//    roomm.AddDivice(deviceLock);
-			//    roomm.AddDivice(deviceBlinds);
-			//    roomm.AddDivice(deviceAC);
-
-
-			//    roomm = new Division("Quarto Maria", "estar");
-			//    Divisions.Add(roomm);
-			//    roomm.AddDivice(deviceLights);
-			//    roomm.AddDivice(deviceAC);
-			//    roomm.AddDivice(deviceAudio);
-
-
-			//    roomm = new Division("Quarto Joana", "bedroom");
-			//    Divisions.Add(roomm);
-			//    roomm.AddDivice(deviceLock);
-			//    roomm.AddDivice(deviceAudio);
-
-			//    // Division
-
-			//    roomm = new Division("Sala de estar", "estar");
-			//    Divisions.Add(roomm);
-			//    roomm.AddDivice(deviceLights);
-			//    roomm.AddDivice(deviceAC);
-			//    roomm.AddDivice(deviceLock);
-			//    roomm.AddDivice(deviceBlinds);
-
-
-			//    roomm = new Division("Escritorio", "estar");
-			//    Divisions.Add(roomm);
-			//    roomm.AddDivice(deviceLights);
-			//    roomm.AddDivice(deviceCctv);
-			//    roomm.AddDivice(deviceLock);
-			//    roomm.AddDivice(deviceAudio);
-			//    roomm.AddDivice(deviceAC);
-
-
-			//    // Division
-			//    roomm = new Division("Jardim da direita", "bedroom");
-			//    Divisions.Add(roomm);
-			//    roomm.AddDivice(deviceIrrigation);
-			//    roomm.AddDivice(deviceLights);
-			//    roomm.AddDivice(deviceCctv);
-			//    roomm.AddDivice(deviceLock);
-
-
-			//    roomm = new Division("Jardim principal", "estar");
-			//    Divisions.Add(roomm);
-			//    roomm.AddDivice(deviceIrrigation);
-			//    roomm.AddDivice(deviceLights);
-			//    roomm.AddDivice(deviceBlinds);
-
-
-			//    roomm = new Division("Entrada", "estar");
-			//    Divisions.Add(roomm);
-			//    roomm.AddDivice(deviceLock);
-			//}
-
-			//if (tabb == 4)
-			//{
-			//    // Division
-			//    var roomm = new Division("Jardim da direita", "bedroom");
-			//    Divisions.Add(roomm);
-			//    roomm.AddDivice(deviceIrrigation);
-			//    roomm.AddDivice(deviceLights);
-			//    roomm.AddDivice(deviceCctv);
-			//    roomm.AddDivice(deviceLock);
-
-
-			//    roomm = new Division("Jardim principal", "estar");
-			//    Divisions.Add(roomm);
-			//    roomm.AddDivice(deviceIrrigation);
-			//    roomm.AddDivice(deviceLights);
-			//    roomm.AddDivice(deviceBlinds);
-
-
-			//    roomm = new Division("Entrada", "estar");
-			//    Divisions.Add(roomm);
-			//    roomm.AddDivice(deviceLock);
-			//}
-
-
-
-			while (teste)
+			if (tabb == 1)
 			{
+
+				BackgroundImage = "bedroom_background.png";
+			    // Division
+			    var roomm = new Division("Quarto de Antonio", "bedroom");
+			    Divisions.Add(roomm);
+			    roomm.AddDivice(deviceLights);
+			    roomm.AddDivice(deviceAC);
+
+			    roomm = new Division("Quarto da Ana", "estar");
+			    Divisions.Add(roomm);
+			    roomm.AddDivice(deviceLights);
+			    roomm.AddDivice(deviceLock);
+			    roomm.AddDivice(deviceBlinds);
+			    roomm.AddDivice(deviceAC);
+
+
+			    roomm = new Division("Quarto Maria", "estar");
+			    Divisions.Add(roomm);
+			    roomm.AddDivice(deviceLights);
+			    roomm.AddDivice(deviceAC);
+			    roomm.AddDivice(deviceAudio);
+
+
+			    roomm = new Division("Quarto Joana", "bedroom");
+			    Divisions.Add(roomm);
+			    roomm.AddDivice(deviceLock);
+			    roomm.AddDivice(deviceAudio);
+			}
+			if (tabb == 2)
+			{
+				BackgroundImage = "lounge_background.png";
+			    // Division
+
+			    var roomm = new Division("Sala de estar", "estar");
+			    Divisions.Add(roomm);
+			    roomm.AddDivice(deviceLights);
+			    roomm.AddDivice(deviceAC);
+			    roomm.AddDivice(deviceLock);
+			    roomm.AddDivice(deviceBlinds);
+
+
+			    roomm = new Division("Escritorio", "estar");
+			    Divisions.Add(roomm);
+			    roomm.AddDivice(deviceLights);
+			    roomm.AddDivice(deviceCctv);
+			    roomm.AddDivice(deviceLock);
+			    roomm.AddDivice(deviceAudio);
+			    roomm.AddDivice(deviceAC);
+			}
+
+			if (tabb == 3)
+			{
+				BackgroundImage = "home_n.png";
+			    // Division
+			    var roomm = new Division("All", "bedroom");
+			    Divisions.Add(roomm);
+			    roomm.AddDivice(deviceIrrigation);
+			    roomm.AddDivice(deviceAC);
+			    roomm.AddDivice(deviceWeather);
+
+			    // Division
+			    roomm = new Division("Quarto de Antonio", "bedroom");
+			    Divisions.Add(roomm);
+			    roomm.AddDivice(deviceLights);
+			    roomm.AddDivice(deviceAC);
+
+			    roomm = new Division("Quarto da Ana", "estar");
+			    Divisions.Add(roomm);
+			    roomm.AddDivice(deviceLights);
+			    roomm.AddDivice(deviceLock);
+			    roomm.AddDivice(deviceBlinds);
+			    roomm.AddDivice(deviceAC);
+
+
+			    roomm = new Division("Quarto Maria", "estar");
+			    Divisions.Add(roomm);
+			    roomm.AddDivice(deviceLights);
+			    roomm.AddDivice(deviceAC);
+			    roomm.AddDivice(deviceAudio);
+
+
+			    roomm = new Division("Quarto Joana", "bedroom");
+			    Divisions.Add(roomm);
+			    roomm.AddDivice(deviceLock);
+			    roomm.AddDivice(deviceAudio);
+
+			    // Division
+
+			    roomm = new Division("Sala de estar", "estar");
+			    Divisions.Add(roomm);
+			    roomm.AddDivice(deviceLights);
+			    roomm.AddDivice(deviceAC);
+			    roomm.AddDivice(deviceLock);
+			    roomm.AddDivice(deviceBlinds);
+
+
+			    roomm = new Division("Escritorio", "estar");
+			    Divisions.Add(roomm);
+			    roomm.AddDivice(deviceLights);
+			    roomm.AddDivice(deviceCctv);
+			    roomm.AddDivice(deviceLock);
+			    roomm.AddDivice(deviceAudio);
+			    roomm.AddDivice(deviceAC);
+
+
+			    // Division
+			    roomm = new Division("Jardim da direita", "bedroom");
+			    Divisions.Add(roomm);
+			    roomm.AddDivice(deviceIrrigation);
+			    roomm.AddDivice(deviceLights);
+			    roomm.AddDivice(deviceCctv);
+			    roomm.AddDivice(deviceLock);
+
+
+			    roomm = new Division("Jardim principal", "estar");
+			    Divisions.Add(roomm);
+			    roomm.AddDivice(deviceIrrigation);
+			    roomm.AddDivice(deviceLights);
+			    roomm.AddDivice(deviceBlinds);
+
+
+			    roomm = new Division("Entrada", "estar");
+			    Divisions.Add(roomm);
+			    roomm.AddDivice(deviceLock);
+			}
+
+			if (tabb == 4)
+			{
+			    // Division
+			    var roomm = new Division("Jardim da direita", "bedroom");
+			    Divisions.Add(roomm);
+			    roomm.AddDivice(deviceIrrigation);
+			    roomm.AddDivice(deviceLights);
+			    roomm.AddDivice(deviceCctv);
+			    roomm.AddDivice(deviceLock);
+
+
+			    roomm = new Division("Jardim principal", "estar");
+			    Divisions.Add(roomm);
+			    roomm.AddDivice(deviceIrrigation);
+			    roomm.AddDivice(deviceLights);
+			    roomm.AddDivice(deviceBlinds);
+
+
+			    roomm = new Division("Entrada", "estar");
+			    Divisions.Add(roomm);
+			    roomm.AddDivice(deviceLock);
+			}
+
+
+
+
 				var buttonLights = new List<Image>();
 				var buttonCctvs = new List<Image>();
 				var buttonACs = new List<Image>();
@@ -461,7 +464,7 @@ namespace SHOME
 
 				Content = scollVertical;
 			}
-        }
+        
 
       
     }
