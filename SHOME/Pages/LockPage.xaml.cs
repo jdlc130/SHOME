@@ -14,7 +14,7 @@ namespace SHOME.Pages
         {
             InitializeComponent();
 
-            
-        }
+
+		}
     }
 }

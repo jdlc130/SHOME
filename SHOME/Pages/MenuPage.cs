@@ -12,34 +12,34 @@ namespace SHOME
 			Title = "SHOME";
 
 
-			Children.Add(new EstarPage(1)
+			Children.Add(new ContentMenu("Bedroom")
 			{
 				
 				Icon = "bedroom.png"
 
 			});
 
-			Children.Add(new EstarPage(2)
+			Children.Add(new ContentMenu("Living Room")
 			{
 
 				Icon = "lounge.png"
 
 			});
 
-			Children.Add(new EstarPage(3)
+			Children.Add(new ContentMenu("Home")
 			{
 
 				Icon = "homeIcon.png"
 
 			});
 
-			Children.Add(new EstarPage(4)
+			Children.Add(new ContentMenu("Garden")
 		{
 		
 			Icon = "garden.png"
 
 		});
-			Children.Add( new EstarPage(4)
+			Children.Add( new ContentMenu("Kitchen")
 			{
 		
 				Icon = "kitchen.png"
