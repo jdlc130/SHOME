@@ -114,8 +114,8 @@ namespace SHOME.Pages
             var index = _codeInt[_color];
             var colorSlider = new Slider
             {
-                Minimum = 0.0,
-                Maximum = 5.4,
+                Minimum = 0,
+                Maximum = 5,
                 Value = index
             };
             colorSlider.ValueChanged += async (sender, e) =>
