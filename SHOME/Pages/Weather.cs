@@ -1,33 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-//using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xamarin.Forms;
-using Color = Xamarin.Forms.Color;
+﻿using Xamarin.Forms;
 
 namespace SHOME
 
 {
     public class Weather
     {
+        public Weather()
+        {
+            Temperature = Temperature;
+            Wind = Wind;
+            Humidity = Humidity;
+            Rain = Rain;
+            AirQualityDesc = " ";
+        }
+
         public float Temperature { get; set; }
         public float Wind { get; set; }
         public float Humidity { get; set; }
         public float Rain { get; set; }
         public string AirQualityDesc { get; set; }
-
-
-        public Weather()
-        {
-            this.Temperature = Temperature;
-            this.Wind = Wind;
-            this.Humidity = Humidity;
-            this.Rain = Rain;
-            this.AirQualityDesc = " ";
-
-        }
 
         //public class RainPage : ContentPage
         //{
@@ -59,7 +50,7 @@ namespace SHOME
         //            {
         //                imageR,
         //                lblchuva
-                        
+
         //            }
         //        };
         //    }
@@ -94,39 +85,36 @@ namespace SHOME
         {
             public HumidityPage()
             {
-                var imageR = new Image()
+                var imageR = new Image
                 {
                     Source = new FileImageSource
                     {
-                        File = Device.OnPlatform(iOS:"Images/humidity.png",
-                            Android: "humidity.png",
-                            WinPhone: "Images/humidity.png")
+                        File = Device.OnPlatform("Images/humidity.png",
+                            "humidity.png",
+                            "Images/humidity.png")
                     },
                     HorizontalOptions = LayoutOptions.Center,
                     VerticalOptions = LayoutOptions.Start
                 };
                 var lblhumidity = new Label
                 {
-                    Text = "85%" ,
+                    Text = "85%",
                     TextColor = Color.Gray,
                     FontSize = 40,
                     XAlign = TextAlignment.Center,
                     YAlign = TextAlignment.Center,
                     FontFamily = "Roboto Medium"
-
                 };
 
-                BackgroundColor =Color.White;
-                
+                BackgroundColor = Color.White;
+
                 Content = new StackLayout
                 {
                     Children =
                     {
                         imageR,
                         lblhumidity
-
                     }
-
                 };
             }
         }
@@ -136,20 +124,21 @@ namespace SHOME
             public TemperaturePage()
             {
                 BackgroundColor = Color.White;
-                var imageR = new Image()
+                var imageR = new Image
                 {
                     Source = new FileImageSource
                     {
-                        File = Device.OnPlatform(iOS: "Images/temperature.png",
-                            Android: "temperature.png",
-                            WinPhone: "Images/temperature.png")
+                        File = Device.OnPlatform("Images/temperature.png",
+                            "temperature.png",
+                            "Images/temperature.png")
                     },
                     HorizontalOptions = LayoutOptions.Center,
-                    VerticalOptions = LayoutOptions.Start};
+                    VerticalOptions = LayoutOptions.Start
+                };
 
                 var lblTemp = new Label
                 {
-                    Text = "25 Graus" ,
+                    Text = "25 Graus",
                     TextColor = Color.Gray,
                     FontSize = 40,
                     XAlign = TextAlignment.Center,
@@ -164,7 +153,6 @@ namespace SHOME
                         imageR,
                         lblTemp
                     }
-
                 };
             }
         }
@@ -174,13 +162,13 @@ namespace SHOME
             public WindPage()
             {
                 BackgroundColor = Color.White;
-                var imageR = new Image()
+                var imageR = new Image
                 {
                     Source = new FileImageSource
                     {
-                        File = Device.OnPlatform(iOS: "Images/wind.png",
-                            Android: "wind.png",
-                            WinPhone: "Images/wind.png")
+                        File = Device.OnPlatform("Images/wind.png",
+                            "wind.png",
+                            "Images/wind.png")
                     },
                     HorizontalOptions = LayoutOptions.Center,
                     VerticalOptions = LayoutOptions.Start
@@ -203,8 +191,6 @@ namespace SHOME
                         imageR,
                         lblwind
                     }
-
-
                 };
             }
         }

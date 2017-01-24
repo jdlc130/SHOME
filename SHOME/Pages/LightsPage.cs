@@ -1,158 +1,185 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using SHOME.Data;
 using Xamarin.Forms;
 using System.Diagnostics;
 using System.Json;
+using System.Threading.Tasks;
+using CoreGraphics;
+using UIKit;
 
 namespace SHOME.Pages
 {
-	public class LightsPage : ContentPage
-	{
-
+    public class LightsPage : ContentPage
+    {
         // Dictionary to get Color from color name.
-        Dictionary<string, Color> nameToColor = new Dictionary<string, Color>
+        private readonly Dictionary<int, Color> _codeToColor = new Dictionary<int, Color>
         {
-            { "Blue", Color.Blue },   { "Pink", Color.Pink },
-            { "Green", Color.Green }, { "Yellow", Color.Yellow },
-			{ "White", Color.White },   { "Red", Color.Red }
+            {46920, Color.Blue},
+            {57670, Color.Pink},
+            {25500, Color.Green},
+            {12750, Color.Yellow},
+            {31456, Color.White},
+            {65280, Color.Red}
+        };
+        private readonly Dictionary<int, int> _intCode = new Dictionary<int, int>
+        {
+            {0, 46920},
+            {1, 57670},
+            {2, 25500},
+            {3, 12750},
+            {4, 31456},
+            {5, 65280}
+        };
+        private readonly Dictionary<int, int> _codeInt = new Dictionary<int, int>
+        {
+            {46920, 0},
+            {57670, 1},
+            {25500, 2},
+            {12750, 3},
+            {31456, 4},
+            {65280, 5}
         };
 
-        public LightsPage()
+        private double _intensity;
+        private int _color;
+        private bool _state;
+        
+        public LightsPage(int id = 17)
         {
+            InitializeView(id);
+        }
 
-            Padding = new Thickness(20, 20, 20, 20);
-
-            Image header = new Image
+        private void Construtor(int id)
+        {
+            var header = new Image
             {
-                Source = "lights.png",
+                Source = "header_lights.png",
                 HorizontalOptions = LayoutOptions.Center
             };
-
-            Label light_lbl = new Label
-            {
-                Text = "Principal",
-                FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
-                HorizontalOptions = LayoutOptions.Start,
-            };
-
-            Switch power_btn = new Switch
-            {
-                HorizontalOptions = LayoutOptions.End
-            };
-           
-            power_btn.Toggled += power_btn_Toggled;
             
-            Slider intensity_btn = new Slider
+            var stateGrid = new Grid
+            {
+                Padding = new Thickness(10, 30, 10, 10),
+                BackgroundColor = new Color(0, 0, 0, 0),
+                RowDefinitions = new RowDefinitionCollection
+                {
+                    new RowDefinition {Height = new GridLength(1, GridUnitType.Star)}
+                }
+            };
+            var powerLabel = new Label
+            {
+                Text = "\t STATE",
+                FontFamily = "Roboto",
+                FontAttributes = FontAttributes.Bold,
+                FontSize = 18,
+                TextColor = Color.Gray
+            };
+            //Switch button
+            var powerBtn = new Switch
+            {
+                HorizontalOptions = LayoutOptions.End,
+                IsToggled = _state
+            };
+            powerBtn.Toggled += async (sender, e) =>
+            {
+                var json = await WebServicesData.SyncTask("POST", "ToggleDevice", id, e.Value ? 1 : 0);
+                if (json == null) return;
+                var state = int.Parse(json["Status"]);
+                _state = state == 1;
+            };
+
+            stateGrid.Children.Add(powerLabel, 0, 0);
+            stateGrid.Children.Add(powerBtn, 1, 0);
+
+            //Intensity Button
+            var intensitySlider = new Slider
             {
                 Minimum = 0,
                 Maximum = 100,
-                VerticalOptions = LayoutOptions.CenterAndExpand
+                Value = _intensity
             };
-            intensity_btn.ValueChanged += Onintensity_btnValueChanged;
-
-            Picker picker = new Picker
+            intensitySlider.ValueChanged += async (sender, e) =>
             {
-                Title = "Color",
-                VerticalOptions = LayoutOptions.CenterAndExpand
+                var json = await WebServicesData.SyncTask("POST", "Light", "changeBright", id, e.NewValue);
+                if (json == null) return;
+                _intensity = double.Parse(json["BrightLevel"]);
             };
-
-            foreach (string colorName in nameToColor.Keys)
+            var intensityStack = new StackLayout
             {
-                picker.Items.Add(colorName);
-            }
-
-            // Create BoxView for displaying picked Color
-            BoxView boxView = new BoxView
-            {
-                WidthRequest = 150,
-                HeightRequest = 150,
-                HorizontalOptions = LayoutOptions.Center,
-                VerticalOptions = LayoutOptions.CenterAndExpand
+                Padding = new Thickness(10, 10, 10, 10),
+                Children = { intensitySlider }
             };
 
-            picker.SelectedIndexChanged += (sender, args) =>
+            var index = _codeInt[_color];
+            var colorSlider = new Slider
             {
-                if (picker.SelectedIndex == -1)
+                Minimum = 0.0,
+                Maximum = 5.4,
+                Value = index
+            };
+            colorSlider.ValueChanged += async (sender, e) =>
+            {
+                JsonValue json = await WebServicesData.SyncTask("POST", "Light", "changeColor", id, _intCode[(int)e.NewValue]);
+                _color = int.Parse(json["Color"]);
+            };
+            var colorImage = new Image
+            {
+                Source = "color_picker.png",
+                Scale = 0.965
+            };
+
+
+            var colorGrid = new Grid
+            {
+                Padding = new Thickness(10, 10, 10, 10),
+                BackgroundColor = new Color(0, 0, 0, 0),
+                RowDefinitions = new RowDefinitionCollection
                 {
-                    boxView.Color = Color.Default;
+                    new RowDefinition {Height = new GridLength(1, GridUnitType.Star)}
                 }
-                else
-                {
-                    string colorName = picker.Items[picker.SelectedIndex];
-                    boxView.Color = nameToColor[colorName];
-
-					switch (colorName)
-					{
-						case "Blue":
-							WebServicesData.SyncTask("POST", "Light", "changeColor", 17, 46920);
-							break;
-
-						case "Yellow":
-							WebServicesData.SyncTask("POST", "Light", "changeColor", 17, 12750);
-							break;
-
-						case "Green":
-							WebServicesData.SyncTask("POST", "Light", "changeColor", 17, 25500);
-						break;
-						
-						case "Pink":
-							WebServicesData.SyncTask("POST", "Light", "changeColor", 17, 57670);
-						break;
-							
-						case "White":
-							WebServicesData.SyncTask("POST", "Light", "changeColor", 17, 31456);
-						break;
-						case "Red":
-							WebServicesData.SyncTask("POST", "Light", "changeColor", 17, 65280);
-						break;
-
-						
-					}
-                }
-
-
             };
-
-
+            colorGrid.Children.Add(colorImage, 0 , 0);
+            colorGrid.Children.Add(colorSlider, 0, 0);
+            
             Content = new StackLayout
             {
                 Children =
                 {
                     header,
-                    light_lbl,
-                    power_btn,
-                    intensity_btn,
-                    picker,
-                    boxView
+                    stateGrid,
+                    intensityStack,
+                    colorGrid
                 }
             };
-
         }
-
-
-        void power_btn_Toggled(object sender, ToggledEventArgs e)
+        
+        private async void InitializeView(int id)
         {
-            var lll = new Label
+            var json = await WebServicesData.SyncTask("GET", "GetDeviceStatus", id);
+            var index = 0;
+            while( index < json.Count )
             {
-                Text = string.Format("Is now {0}", e.Value)
-            };
-            DisplayAlert("Power", lll.Text, "OK");
+                var result = json[index];
+                var state = result["actuatorState"];
+                var parameter = result["parameterName"];
+                var parameterValue = result["parameterValue"];
+
+                _state = state != 0;
+                
+                if (parameter == "Color")
+                {
+                    _color = parameterValue;
+                }
+                else if (parameter == "Brightness")
+                {
+                    _intensity = parameterValue;
+                }
+                index++;
+            }
+            Construtor(id);
         }
-
-
-
-
-		void Onintensity_btnValueChanged(object sender, ValueChangedEventArgs e)
-        {
-            var lll = new Label
-            {
-                Text = string.Format("Is now {0}", e.NewValue)
-            };
-
-            DisplayAlert("Intensity", lll.Text, "OK");
-        }
-
-
+        
     }
 }
 

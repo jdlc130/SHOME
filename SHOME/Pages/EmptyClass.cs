@@ -1,10 +1,6 @@
-﻿using System;
-namespace SHOME
+﻿namespace SHOME
 {
-	public class EmptyClass
-	{
-		public EmptyClass()
-		{
-		}
-	}
+    public class EmptyClass
+    {
+    }
 }

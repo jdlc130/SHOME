@@ -45,7 +45,7 @@ namespace SHOME.Pages
                     new RowDefinition {Height = new GridLength(1, GridUnitType.Star)}
                 }
             };
-            
+
             Content = new StackLayout
             {
                 Children =
