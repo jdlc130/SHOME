@@ -65,7 +65,7 @@
     <Compile Include="Pages\MyCarouselPage.cs" />
     <Compile Include="Pages\Weather.cs" />
     <Compile Include="Pages\LightsPage.cs" />
-    <Compile Include="Pages\EstarPage.cs" />
+    <Compile Include="Pages\ContentMenu.cs" />
     <Compile Include="Pages\EmptyClass.cs" />
   </ItemGroup>
   <ItemGroup>

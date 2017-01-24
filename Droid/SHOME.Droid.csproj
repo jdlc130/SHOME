@@ -120,6 +120,12 @@
     <AndroidResource Include="Resources\drawable\lounge.png" />
     <AndroidResource Include="Resources\drawable\bedroom_background.png" />
     <AndroidResource Include="Resources\drawable\lounge_background.png" />
+    <AndroidResource Include="Resources\drawable\garden_background.png" />
+    <AndroidResource Include="Resources\drawable\kitchen_background.png" />
+    <AndroidResource Include="Resources\drawable\menu_background.png" />
+    <AndroidResource Include="Resources\drawable\energy_consumption.png" />
+    <AndroidResource Include="Resources\drawable\energy_management.png" />
+    <AndroidResource Include="Resources\drawable\header_lock.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Tabbar.axml" />
