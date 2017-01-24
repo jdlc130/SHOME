@@ -16,6 +16,10 @@ namespace SHOME.Pages
         private double[] _sortesDevices = new double[9];
         private double[] _devices = new double[9];
 
+        private Color _day = Color.FromRgb(211, 211, 211);
+        private Color _mouth = Color.FromRgb(211, 211, 211);
+        private Color _year = Color.Gray;
+
         private readonly string[] _devicesName = new string[]
         {
             "Coffe Machine Delta",
@@ -31,7 +35,7 @@ namespace SHOME.Pages
 
         public ConsumptionPage()
         {
-            //CalculatePower(DateTime.Now.DayOfYear + "-" + "01" + "01", DateTime.Now.DayOfYear + "-" + "12" + "31");
+            //CalculatePower(DateTime.Now.Date.Year + "-01" + "-01", DateTime.Now.Date.Year + "-12" + "-31");
 
             CalculatePower("2016-11-26", "2016-11-26");
         }
@@ -50,12 +54,15 @@ namespace SHOME.Pages
             }
             _powerTotal = _powerTotal/(index+1);
 
+            //Atribui imagem FALTA VER OS VALORES MINIMOS,MÁXIMOS E ALTOS DE CONSUMO
+
             CalculatePowerDevices(startTime, endTime);
         }
 
         private async void CalculatePowerDevices(string startTime, string endTime)
         {
             var deviceIndex = 1;
+            //TODO lento
             while (deviceIndex <= 1)
             {
                 var json = await WebServicesData.SyncTask("GET", "lucas/device", deviceIndex, startTime, endTime);
@@ -119,37 +126,51 @@ namespace SHOME.Pages
                 Text = "Day",
                 FontFamily = "Roboto",
                 FontSize = 18,
-                BackgroundColor = Color.FromRgb(211, 211, 211)
+                BackgroundColor = _day
             };
-            //day.Clicked += async (sender, e)
-            //{
-
-            //}
+            day.Clicked += (sender, e) =>
+            {
+                CalculatePower(DateTime.Now.Date.Year + "-" + DateTime.Now.Date.Month + "-" + DateTime.Now.Date.Day,
+                    DateTime.Now.Date.Year + "-" + DateTime.Now.Date.Month + "-" + DateTime.Now.Date.Day);
+                day.BackgroundColor = Color.Gray;
+                _day = day.BackgroundColor;
+                _mouth = Color.FromRgb(211, 211, 211);
+                _year = Color.FromRgb(211, 211, 211);
+            };
 
             var mouth = new Button
             {
                 Text = "Mouth",
                 FontFamily = "Roboto",
                 FontSize = 18,
-                BackgroundColor = Color.FromRgb(211, 211, 211)
+                BackgroundColor = _mouth
 
             };
-            //mouth.Clicked += async (sender, e)
-            //{
-
-            //}
+            mouth.Clicked += (sender, e) =>
+            {
+                CalculatePower(DateTime.Now.Date.Year + "-" + DateTime.Now.Date.Month + "-01",
+                    DateTime.Now.Date.Year + "-" + DateTime.Now.Date.Month + "-31");
+                mouth.BackgroundColor = Color.Gray;
+                _mouth = mouth.BackgroundColor;
+                _day = Color.FromRgb(211, 211, 211);
+                _year = Color.FromRgb(211, 211, 211);
+            };
 
             var year = new Button
             {
                 Text = "Year",
                 FontFamily = "Roboto",
                 FontSize = 18,
-                BackgroundColor = Color.Gray
+                BackgroundColor = _year
             };
-            //year.Clicked += async (sender, e)
-            //{
-
-            //}
+            year.Clicked += (sender, e) =>
+            {
+                CalculatePower(DateTime.Now.Date.Year + "-01" + "-01", DateTime.Now.Date.Year + "-12" + "-31");
+                year.BackgroundColor = Color.Gray;
+                _year = mouth.BackgroundColor;
+                _day = Color.FromRgb(211, 211, 211);
+                _mouth = Color.FromRgb(211, 211, 211);
+            };
 
             period.Children.Add(day, 0, 0);
             period.Children.Add(mouth, 1, 0);
@@ -165,7 +186,7 @@ namespace SHOME.Pages
 
             var divisions = new Grid
             {
-                Padding = new Thickness(20, 0, 20, 0),
+                Padding = new Thickness(20, 0, 20, 10),
                 BackgroundColor = new Color(0, 0, 0, 0),
                 RowDefinitions = new RowDefinitionCollection
                 {
@@ -181,9 +202,9 @@ namespace SHOME.Pages
             {
                 var index = Array.FindIndex(_devices, p => p ==_sortesDevices[_sortesDevices.Length - i - 1]);
                 divisions.Children.Add(
-                    new Label { Text = _devicesName[index], FontFamily = "Roboto", FontSize = 18, TextColor = Color.Gray}, 0, i );
+                    new Label { Text = _devicesName[index], FontFamily = "Roboto", FontSize = 16, TextColor = Color.Gray}, 0, i );
                 divisions.Children.Add(
-                    new Label { Text = _sortesDevices[_sortesDevices.Length - i - 1].ToString(), FontFamily = "Roboto", FontSize = 18, TextColor = Color.Black, HorizontalTextAlignment = TextAlignment.End}, 1, i);
+                    new Label { Text = _sortesDevices[_sortesDevices.Length - i - 1].ToString(), FontFamily = "Roboto", FontSize = 16, TextColor = Color.Black, HorizontalTextAlignment = TextAlignment.End}, 1, i);
             }
             
             Content = new StackLayout
