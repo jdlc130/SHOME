@@ -40,7 +40,7 @@ namespace SHOME
         }
 
         public static List<Division> Divisions { get; set; } = new List<Division>();
-        
+
         public async void DivisionData()
         {
             var aux = 0;
@@ -90,14 +90,14 @@ namespace SHOME
                 aux++;
             }
         }
-        
+
         public async void GetTemperature()
         {
             var aux = 0;
             var json = await WebServicesData.SyncTask("GET", "division");
             var size = json.Count;
         }
-        
+
         private bool IsValid()
         {
             if (string.IsNullOrEmpty(entName.Text))
@@ -108,13 +108,13 @@ namespace SHOME
 
             return true;
         }
-        
+
         private void OnBindingContextChanged(object sender, EventArgs eventArgs)
         {
             var dateTime = DataPicker;
             var _d = dateTime.Date;
         }
-        
+
         private void OnSave(object sender, EventArgs args)
         {
             var dateTime = DataPicker.Date;
@@ -199,7 +199,7 @@ namespace SHOME
                 }
             }
         }
-        
+
         public class Devices
         {
             public Devices(int id, int actuatorID, string name, string type)

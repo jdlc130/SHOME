@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 
 namespace SHOME.Pages
 {
-    class AddActuator : ContentPage
+    internal class AddActuator : ContentPage
     {
         public AddActuator()
         {
@@ -28,7 +23,7 @@ namespace SHOME.Pages
                 HorizontalOptions = LayoutOptions.Center,
                 VerticalOptions = LayoutOptions.Start
             };
-            
+
             var forms = new Grid
             {
                 Padding = new Thickness(50, 10, 50, 10),
@@ -43,6 +38,5 @@ namespace SHOME.Pages
                 ColumnSpacing = 5
             };
         }
-        
     }
 }
