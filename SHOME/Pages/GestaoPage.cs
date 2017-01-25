@@ -44,7 +44,7 @@ namespace SHOME
 
             var infoGrid = new Grid
             {
-                Padding = new Thickness(10, 10, 10, 10),
+                Padding = new Thickness(10, 10, 20, 10),
                 BackgroundColor = new Color(0, 0, 0, 0),
                 RowDefinitions = new RowDefinitionCollection
                 {
@@ -56,9 +56,9 @@ namespace SHOME
             };
             infoGrid.Children.Add(tittleEnergyLbl, 0, 0);
             infoGrid.Children.Add(energyValue, 1, 0);
-
-
+            
             // Create the ListView.
+            var value = -1;
             var listView = new ListView
             {
                 // Source of data items.
@@ -69,16 +69,13 @@ namespace SHOME
                 //      each item; it must return a Cell derivative.)
                 ItemTemplate = new DataTemplate(() =>
                 {
+                    value++;
+
                     // Create views with bindings for displaying each property.
                     var tittleLbl = new Label();
-                    tittleLbl.SetBinding(Label.TextProperty, "Titulo");
-
-                    var powerBtn = new Switch();
-                    powerBtn.SetBinding(Switch.IsToggledProperty, "Power");
-                    powerBtn.Toggled += (sender, e) =>
-                    {
-                        //TODO   
-                    };
+                    tittleLbl.SetBinding(Label.TextProperty, "Name");
+                    
+                    //devices[value].PowerSwitch.SetBinding(Switch.IsToggledProperty, "State");
 
                     // Return an assembled ViewCell.
                     return new ViewCell
@@ -97,16 +94,16 @@ namespace SHOME
                                     HorizontalOptions = LayoutOptions.EndAndExpand,
                                     Children =
                                     {
-                                        powerBtn
+                                        devices[value].PowerSwitch
                                     }
                                 }
                             }
                         }
                     };
-                })
+                }
+                )
             };
-
-
+            
             var view = new StackLayout
             {
                 Padding = new Thickness(10, 20, 10, 10),
@@ -140,26 +137,26 @@ namespace SHOME
 
             DisplayAlert("We suggest you to plug in", "Washing Machine, Cook Robot", "Submit", "Cancel");
         }
-        
-		public class Values
+
+        public class Values
         {
-            public Values(string titulo, bool power)
+            public Values(int id, string name, bool state)
             {
-                Titulo = titulo;
-                Power = power;
+                Name = name;
+                State = state;
+                ApplianceId = id;
             }
 
-            public string Titulo { private set; get; }
-            public bool Power { private set; get; }
+            public string Name { private set; get; }
+            public bool State { private set; get; }
+            public int ApplianceId { private set; get; }
+            public Switch PowerSwitch { set; get; }
         }
 
-		public List<Values> devices { get; set; } = new List<Values>();
-
-
-
+        public List<Values> devices { get; set; } = new List<Values>();
+        
 		public async void GetDevices()
 		{
-
 			var aux = 0;
 			var json = await WebServicesData.SyncTask("GET", "appliance");
 			var size = json.Count;
@@ -167,32 +164,22 @@ namespace SHOME
 			while (size > aux)
 			{
 				var result = json[aux];
-				//var auxPower = false;
-				//if (result["state"] == "1")
-				//{
-				//	auxPower = true;
-				//}
-				//else
-				//{ 
-				//	auxPower = false;
-				//}
-				var value = new Values(
-					result["applianceName"],
-					result["state"]
+			    var value = new Values(
+                    result["idAppliance"],
+                    result["applianceName"],
+			        result["state"]
+			    );
+			    value.PowerSwitch = new Switch {IsToggled = value.State};
+			    value.PowerSwitch.Toggled += async (sender, e) =>
+                {
+                    await WebServicesData.SyncTask("POST", "appliance", value.ApplianceId, e.Value ? 1 : 0);
+                };
 
-				);
-
-				devices.Add(value);
+                devices.Add(value);
 				aux++;
 			}
-
-
-
-
+            
 			Construtor();
-
-
 		}
-
     }
 }
