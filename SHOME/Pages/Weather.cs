@@ -1,198 +1,116 @@
 ﻿using Xamarin.Forms;
+using SHOME.Data;
 
 namespace SHOME
-
 {
-    public class Weather
+    public class Weather : ContentPage
     {
-        public Weather()
+        public string Temperature { get; set; }
+        public string Wind { get; set; }
+        public string WindD { get; set; }
+        public string Humidity { get; set; }
+		public string InsideTemperature { get; set; }
+       
+
+
+		public async void GetTemperature()
+		{
+
+			var aux = 0;
+			var json = await WebServicesData.SyncTask("GET", "temperature");
+			var size = json.Count;
+
+			var teste = json["Device_Num_7"];
+			var t = teste["states"];
+			var tee = t[0];
+			var ee = tee["value"];
+			InsideTemperature = ee;
+
+			Constructor();
+
+
+		}
+
+
+
+		public Weather()
         {
-            Temperature = Temperature;
-            Wind = Wind;
-            Humidity = Humidity;
-            Rain = Rain;
-            AirQualityDesc = " ";
+			
+			GetTemperature();
         }
 
-        public float Temperature { get; set; }
-        public float Wind { get; set; }
-        public float Humidity { get; set; }
-        public float Rain { get; set; }
-        public string AirQualityDesc { get; set; }
+		public void Constructor()
+		{ 
 
-        //public class RainPage : ContentPage
-        //{
-        //    public RainPage()
-        //    {
-        //        var imageR = new Image()
-        //        {
-        //            Source = new FileImageSource
-        //            {
-        //                File = Device.OnPlatform(iOS: "Images/weather3.png",
-        //                    Android: "weather3.png",
-        //                    WinPhone: "Images/weather3.png")
-        //            },
-        //            HorizontalOptions = LayoutOptions.Center,
-        //            VerticalOptions = LayoutOptions.CenterAndExpand
-        //        };
+			this.Temperature = " ";
+			this.Wind = " ";
+			this.WindD = " ";
+			this.Humidity = " ";
 
-        //        var lblchuva = new Label
-        //        {
-        //            Text = "Chuva",
-        //            TextColor = Color.Blue,
-        //            FontSize = 30,
-        //            XAlign = TextAlignment.Center
-        //        };
+			Image header = new Image { Source = "header_weather.png" };
+			var conditions = new Label
+			{
+				Text = "Enviromental conditions outside",
+				TextColor = Color.Teal,
+				HorizontalOptions = LayoutOptions.CenterAndExpand,
+				FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label))
+			};
+			var location = new Entry();
 
-        //        Content = new StackLayout
-        //        {
-        //            Children =
-        //            {
-        //                imageR,
-        //                lblchuva
+			Button buttonS = new Button { Text = "Submit" };
 
-        //            }
-        //        };
-        //    }
-        //}
+			var Temperature = new Label { };
+			var Wind = new Label { };
+			var Humidity = new Label { };
+			var WindDirection = new Label { };
 
-        //public class AirQualityDescPage : ContentPage
-        //{
-        //    public AirQualityDescPage()
-        //    {
-        //        var lblAirQuality= new Label
-        //        {
-        //            Text = "Air Quality",
-        //            TextColor = Color.Blue,
-        //            FontSize = 30,
-        //            XAlign = TextAlignment.Center
-        //        };
+			var TemperatureInside = new Label { };
+			TemperatureInside.Text = InsideTemperature;
+
+			buttonS.Clicked += async (sender, e) =>
+			{
+				if ((location) != null)
+				{
+					Weather weather = await WeatherCore.GetWeather(location.Text);
+					var temperture = weather.Temperature;
+
+					if (weather != null)
+					{
+						Temperature.Text = "Temperature: " + weather.Temperature;
+						Wind.Text = "Wind: " + weather.Wind;
+						WindDirection.Text = "Wind Direction: " + weather.WindD;
+						Humidity.Text = "Humidity: " + weather.Humidity;
+
+					}
+				}
+			};
+
+			var conditionsI = new Label
+			{
+				Text = "Enviromental conditions inside",
+				TextColor = Color.Teal,
+				HorizontalOptions = LayoutOptions.CenterAndExpand,
+				FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label))
+			};
+
+			Content = new StackLayout
+			{
+				Children =
+					{
+						header,
+					conditions,
+						location,
+						buttonS,
+					Temperature,
+					Wind,
+					Humidity,
+					WindDirection,
+					conditionsI,
+					TemperatureInside
+					}
+			};
 
 
-        //        Content = new StackLayout
-        //        {
-        //            Children =
-        //            {
-        //                lblAirQuality
-        //            }
-
-        //        };
-        //    }
-        //}
-
-
-        public class HumidityPage : ContentPage
-        {
-            public HumidityPage()
-            {
-                var imageR = new Image
-                {
-                    Source = new FileImageSource
-                    {
-                        File = Device.OnPlatform("Images/humidity.png",
-                            "humidity.png",
-                            "Images/humidity.png")
-                    },
-                    HorizontalOptions = LayoutOptions.Center,
-                    VerticalOptions = LayoutOptions.Start
-                };
-                var lblhumidity = new Label
-                {
-                    Text = "85%",
-                    TextColor = Color.Gray,
-                    FontSize = 40,
-                    XAlign = TextAlignment.Center,
-                    YAlign = TextAlignment.Center,
-                    FontFamily = "Roboto Medium"
-                };
-
-                BackgroundColor = Color.White;
-
-                Content = new StackLayout
-                {
-                    Children =
-                    {
-                        imageR,
-                        lblhumidity
-                    }
-                };
-            }
-        }
-
-        public class TemperaturePage : ContentPage
-        {
-            public TemperaturePage()
-            {
-                BackgroundColor = Color.White;
-                var imageR = new Image
-                {
-                    Source = new FileImageSource
-                    {
-                        File = Device.OnPlatform("Images/temperature.png",
-                            "temperature.png",
-                            "Images/temperature.png")
-                    },
-                    HorizontalOptions = LayoutOptions.Center,
-                    VerticalOptions = LayoutOptions.Start
-                };
-
-                var lblTemp = new Label
-                {
-                    Text = "25 Graus",
-                    TextColor = Color.Gray,
-                    FontSize = 40,
-                    XAlign = TextAlignment.Center,
-                    YAlign = TextAlignment.Center,
-                    FontFamily = "Roboto Medium"
-                };
-
-                Content = new StackLayout
-                {
-                    Children =
-                    {
-                        imageR,
-                        lblTemp
-                    }
-                };
-            }
-        }
-
-        public class WindPage : ContentPage
-        {
-            public WindPage()
-            {
-                BackgroundColor = Color.White;
-                var imageR = new Image
-                {
-                    Source = new FileImageSource
-                    {
-                        File = Device.OnPlatform("Images/wind.png",
-                            "wind.png",
-                            "Images/wind.png")
-                    },
-                    HorizontalOptions = LayoutOptions.Center,
-                    VerticalOptions = LayoutOptions.Start
-                };
-
-                var lblwind = new Label
-                {
-                    Text = "40 Km/h",
-                    TextColor = Color.Gray,
-                    FontSize = 40,
-                    XAlign = TextAlignment.Center,
-                    YAlign = TextAlignment.Center,
-                    FontFamily = "Roboto Medium"
-                };
-
-                Content = new StackLayout
-                {
-                    Children =
-                    {
-                        imageR,
-                        lblwind
-                    }
-                };
-            }
-        }
+		}
     }
 }

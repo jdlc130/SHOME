@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Xamarin.Forms;
+using SHOME.Data;
 
 namespace SHOME
 {
@@ -8,7 +9,7 @@ namespace SHOME
     {
         public GestaoPage()
         {
-            Construtor();
+            GetDevices();
 
         }
 
@@ -56,20 +57,12 @@ namespace SHOME
             infoGrid.Children.Add(tittleEnergyLbl, 0, 0);
             infoGrid.Children.Add(energyValue, 1, 0);
 
-            // Define some data.
-            var appliances = new List<Values>
-            {
-                new Values("Washing Machine", true),
-                new Values("Dishwasher", false),
-                new Values("Machine Dryer", false),
-                new Values("Cook Robot", true)
-            };
 
             // Create the ListView.
             var listView = new ListView
             {
                 // Source of data items.
-                ItemsSource = appliances,
+				ItemsSource = devices,
 
                 // Define template for displaying each item.
                 // (Argument of DataTemplate constructor is called for 
@@ -148,7 +141,7 @@ namespace SHOME
             DisplayAlert("We suggest you to plug in", "Washing Machine, Cook Robot", "Submit", "Cancel");
         }
         
-        private class Values
+		public class Values
         {
             public Values(string titulo, bool power)
             {
@@ -159,5 +152,47 @@ namespace SHOME
             public string Titulo { private set; get; }
             public bool Power { private set; get; }
         }
+
+		public List<Values> devices { get; set; } = new List<Values>();
+
+
+
+		public async void GetDevices()
+		{
+
+			var aux = 0;
+			var json = await WebServicesData.SyncTask("GET", "appliance");
+			var size = json.Count;
+
+			while (size > aux)
+			{
+				var result = json[aux];
+				//var auxPower = false;
+				//if (result["state"] == "1")
+				//{
+				//	auxPower = true;
+				//}
+				//else
+				//{ 
+				//	auxPower = false;
+				//}
+				var value = new Values(
+					result["applianceName"],
+					result["state"]
+
+				);
+
+				devices.Add(value);
+				aux++;
+			}
+
+
+
+
+			Construtor();
+
+
+		}
+
     }
 }

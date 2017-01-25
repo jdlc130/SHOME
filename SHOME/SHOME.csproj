@@ -36,6 +36,9 @@
     <EmbeddedResource Include="Pages\SignUpPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="Pages\CreateEvent.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -62,11 +65,17 @@
       <DependentUpon>SignUpPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="SignUpPageCS.cs" />
-    <Compile Include="Pages\MyCarouselPage.cs" />
     <Compile Include="Pages\Weather.cs" />
     <Compile Include="Pages\LightsPage.cs" />
     <Compile Include="Pages\ContentMenu.cs" />
     <Compile Include="Pages\EmptyClass.cs" />
+    <Compile Include="Pages\DataService.cs" />
+    <Compile Include="Pages\ListEventPage.cs" />
+    <Compile Include="Pages\LocksPage.cs" />
+    <Compile Include="Pages\WeatherCore.cs" />
+    <Compile Include="Pages\CreateEvent.xaml.cs">
+      <DependentUpon>CreateEvent.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="HolisticWare.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -104,6 +113,9 @@
     </Reference>
     <Reference Include="Xamarin.iOS">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\Xamarin.iOS\v1.0\Xamarin.iOS.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
