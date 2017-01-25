@@ -186,6 +186,9 @@ namespace SHOME
             if (Device.OS == TargetPlatform.iOS)
             {
             }
+            else
+            {
+            }
 
             switch (tab)
             {

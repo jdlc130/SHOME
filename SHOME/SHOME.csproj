@@ -45,6 +45,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Data\WebServicesData.cs" />
+    <Compile Include="Pages\AddActuator.cs" />
     <Compile Include="Pages\ConsumptionPage.cs" />
     <Compile Include="Pages\GestaoPage.cs" />
     <Compile Include="Pages\CameraPage.cs" />
