@@ -13,7 +13,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using Resource = Xamarin.Forms.Platform.Android.Resource;
 
-namespace SHOME
+namespace SHOME.Droid
 {
     [Activity(Label = "SHOME.Droid", Icon = "@drawable/icon", Theme = "@style/MyTheme", MainLauncher = true,
          ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
