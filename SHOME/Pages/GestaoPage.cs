@@ -8,25 +8,56 @@ namespace SHOME
     {
         public GestaoPage()
         {
-            Padding = new Thickness(20, 20, 20, 20);
+            Construtor();
 
-            var header = new Label
+        }
+
+        private void Construtor()
+        {
+            var header = new Image
             {
-                Text = "Energy Manager",
-                FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label)),
-                HorizontalOptions = LayoutOptions.Center
+                Source = new FileImageSource
+                {
+                    File = Device.OnPlatform(
+                        "Images/header_energyManagement.png",
+                        "header_energyManagement.png",
+                        "Images/header_energyManagement.png")
+                },
+                HorizontalOptions = LayoutOptions.Center,
+                VerticalOptions = LayoutOptions.Start
             };
 
-            var Energy = "60%";
 
-            var Tittle_energy_lbl = new Label
+            const string energy = "60%";
+            var tittleEnergyLbl = new Label
             {
-                Text = "Panel Energy Level" + "      " + Energy,
-                FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label))
+                Text = "Panel Energy Level",
+                FontSize = 18
             };
+            var energyValue = new Label
+            {
+                Text = energy,
+                FontSize = 18,
+                HorizontalTextAlignment = TextAlignment.End
+            };
+
+            var infoGrid = new Grid
+            {
+                Padding = new Thickness(10, 10, 10, 10),
+                BackgroundColor = new Color(0, 0, 0, 0),
+                RowDefinitions = new RowDefinitionCollection
+                {
+                    new RowDefinition
+                    {
+                        Height = new GridLength(1, GridUnitType.Auto)
+                    }
+                }
+            };
+            infoGrid.Children.Add(tittleEnergyLbl, 0, 0);
+            infoGrid.Children.Add(energyValue, 1, 0);
 
             // Define some data.
-            var people = new List<Values>
+            var appliances = new List<Values>
             {
                 new Values("Washing Machine", true),
                 new Values("Dishwasher", false),
@@ -38,7 +69,7 @@ namespace SHOME
             var listView = new ListView
             {
                 // Source of data items.
-                ItemsSource = people,
+                ItemsSource = appliances,
 
                 // Define template for displaying each item.
                 // (Argument of DataTemplate constructor is called for 
@@ -46,12 +77,15 @@ namespace SHOME
                 ItemTemplate = new DataTemplate(() =>
                 {
                     // Create views with bindings for displaying each property.
-                    var Tittle_lbl = new Label();
-                    Tittle_lbl.SetBinding(Label.TextProperty, "Titulo");
+                    var tittleLbl = new Label();
+                    tittleLbl.SetBinding(Label.TextProperty, "Titulo");
 
-                    var power_btn = new Switch();
-                    power_btn.SetBinding(Switch.IsToggledProperty, "Power");
-                    power_btn.Toggled += power_btn_Toggled;
+                    var powerBtn = new Switch();
+                    powerBtn.SetBinding(Switch.IsToggledProperty, "Power");
+                    powerBtn.Toggled += (sender, e) =>
+                    {
+                        //TODO   
+                    };
 
                     // Return an assembled ViewCell.
                     return new ViewCell
@@ -63,14 +97,14 @@ namespace SHOME
                             VerticalOptions = LayoutOptions.Center,
                             Children =
                             {
-                                Tittle_lbl,
+                                tittleLbl,
                                 new StackLayout
                                 {
                                     VerticalOptions = LayoutOptions.Center,
                                     HorizontalOptions = LayoutOptions.EndAndExpand,
                                     Children =
                                     {
-                                        power_btn
+                                        powerBtn
                                     }
                                 }
                             }
@@ -79,41 +113,41 @@ namespace SHOME
                 })
             };
 
-            var suggestion_btn = new Button
+
+            var view = new StackLayout
             {
-                Text = "Suggestions"
+                Padding = new Thickness(10, 20, 10, 10),
+                Children = { listView}
             };
-            suggestion_btn.Clicked += Onsuggestion_btnClicked;
+
+            var suggestionBtn = new Button
+            {
+                Text = "SUGGESTIONS",
+                FontFamily = "Roboto",
+                FontSize = 18,
+                VerticalOptions = LayoutOptions.End
+            };
+            suggestionBtn.Clicked += Onsuggestion;
 
             Content = new StackLayout
             {
                 Children =
                 {
                     header,
-                    Tittle_energy_lbl,
-                    listView,
-                    suggestion_btn
+                    infoGrid,
+                    view,
+                    suggestionBtn
                 }
             };
         }
 
-        private void Onsuggestion_btnClicked(object sender, EventArgs e)
+        private void Onsuggestion(object sender, EventArgs e)
         {
             /* BDD INTERACTION */
 
             DisplayAlert("We suggest you to plug in", "Washing Machine, Cook Robot", "Submit", "Cancel");
         }
-
-        private void power_btn_Toggled(object sender, ToggledEventArgs e)
-        {
-            var lll = new Label
-            {
-                Text = string.Format("Is now {0}", e.Value)
-            };
-
-            /*   DisplayAlert("Power", lll.Text, "OK"); */
-        }
-
+        
         private class Values
         {
             public Values(string titulo, bool power)

@@ -92,25 +92,13 @@ namespace SHOME
                 aux++;
             }
 
-            dd(tab);
+            Construtor(tab);
         }
 
-        public async void dd(string tab)
+        private async void Construtor(string tab)
         {
             var semiTransparentColor = new Color(0, 0, 0, 0.5);
-
-
-            /// Device
-            //var deviceLock = new Devices("lock", "lock");
-            //var deviceLights = new Devices("Luzes", "lights");
-            //var deviceCctv = new Devices("Camaras", "cctv");
-            //var deviceAudio = new Devices("audio", "audio");
-            //var deviceBlinds = new Devices("blinds", "blinds");
-            //var deviceAC = new Devices("ac", "ac");
-            //var deviceWeather = new Devices("weather", "weather");
-            //var deviceIrrigation = new Devices("irrigation", "irrigation");
-
-
+            
             switch (tab)
             {
                 case "Bedroom":
@@ -147,134 +135,167 @@ namespace SHOME
             var buttonListEnergyManagement = new List<Image>();
 
 
-            var stack = new StackLayout(); ////
+            var stack = new StackLayout();
             Padding = new Thickness(0, Device.OnPlatform(20, 0, 0), 0, 0);
-
-            //var tt = await RequestData.SyncTask("division");
-
-
+            
             foreach (var s in Divisions)
-                if ((s.Type == tab) || (tab == "Home"))
+            {
+                if ((s.Type != tab) && (tab != "Home")) continue;
+                var grid = new Grid
                 {
-                    var grid = new Grid();
-                    grid.BackgroundColor = new Color(0, 0, 0, 0.5);
-                    grid.RowDefinitions = new RowDefinitionCollection
+                    BackgroundColor = new Color(0, 0, 0, 0),
+                    RowDefinitions = new RowDefinitionCollection
                     {
-                        new RowDefinition {Height = new GridLength(1, GridUnitType.Star)}
-                    };
-                    //grid.HorizontalOptions = LayoutOptions.StartAndExpand;
-                    stack.Children.Add(new Label {Text = "\n\n", HorizontalTextAlignment = TextAlignment.Center});
-                    stack.Children.Add(new Label
-                    {
-                        Text = s.Name,
-                        HorizontalTextAlignment = TextAlignment.Center,
-                        BackgroundColor = new Color(74, 154, 220, 0.7)
-                    });
-
-
-                    var rowGrid = 0;
-                    var columnGrid = 0;
-                    foreach (var dev in s.devices)
-                    {
-                        switch (dev.Type)
-                        {
-                            case "Light":
-                                var buttonLight = new Image
-                                {
-                                    Source = "lights.png",
-                                    WidthRequest = 70,
-                                    HeightRequest = 70,
-                                    Opacity = 2
-                                };
-                                buttonLights.Add(buttonLight);
-                                grid.Children.Add(buttonLight, columnGrid, rowGrid);
-                                break;
-
-                            case "cctv":
-                                var buttonCctv = new Image {Source = "cctv.png", WidthRequest = 7, HeightRequest = 70};
-                                buttonCctvs.Add(buttonCctv);
-                                grid.Children.Add(buttonCctv, columnGrid, rowGrid);
-                                break;
-
-                            case "ac":
-                                var buttonAC = new Image {Source = "ac.png", WidthRequest = 7, HeightRequest = 70};
-                                buttonACs.Add(buttonAC);
-                                grid.Children.Add(buttonAC, columnGrid, rowGrid);
-                                break;
-
-                            case "audio":
-                                var buttonAudio = new Image {Source = "audio.png", WidthRequest = 7, HeightRequest = 70};
-                                buttonListAudio.Add(buttonAudio);
-                                grid.Children.Add(buttonAudio, columnGrid, rowGrid);
-                                break;
-                            case "blinds":
-                                var buttonBlinds = new Image
-                                {
-                                    Source = "blinds.png",
-                                    WidthRequest = 7,
-                                    HeightRequest = 70
-                                };
-                                buttonListBlinds.Add(buttonBlinds);
-                                grid.Children.Add(buttonBlinds, columnGrid, rowGrid);
-                                break;
-                            case "Lock":
-                                var buttonLock = new Image {Source = "lock.png", WidthRequest = 7, HeightRequest = 70};
-                                buttonListLock.Add(buttonLock);
-                                grid.Children.Add(buttonLock, columnGrid, rowGrid);
-                                break;
-                            case "irrigation":
-                                var buttonIrrigation = new Image
-                                {
-                                    Source = "irrigation.png",
-                                    WidthRequest = 7,
-                                    HeightRequest = 70
-                                };
-                                buttonListIrrigation.Add(buttonIrrigation);
-                                grid.Children.Add(buttonIrrigation, columnGrid, rowGrid);
-                                break;
-                            case "weather":
-                                var buttonWeather = new Image
-                                {
-                                    Source = "weather.png",
-                                    WidthRequest = 7,
-                                    HeightRequest = 70
-                                };
-                                buttonListWeather.Add(buttonWeather);
-                                grid.Children.Add(buttonWeather, columnGrid, rowGrid);
-                                break;
-                            case "EnergyConsumption":
-                                var buttonEnergyConsumption = new Image
-                                {
-                                    Source = "energy_consumption.png",
-                                    WidthRequest = 7,
-                                    HeightRequest = 70
-                                };
-                                buttonListEnergyConsumption.Add(buttonEnergyConsumption);
-                                grid.Children.Add(buttonEnergyConsumption, columnGrid, rowGrid);
-                                break;
-                            case "EnergyManagement":
-                                var buttonEnergyManagement = new Image
-                                {
-                                    Source = "energy_management.png",
-                                    WidthRequest = 7,
-                                    HeightRequest = 70
-                                };
-                                buttonListEnergyManagement.Add(buttonEnergyManagement);
-                                grid.Children.Add(buttonEnergyManagement, columnGrid, rowGrid);
-                                break;
-                        }
-                        columnGrid++;
+                        new RowDefinition {Height = new GridLength(1, GridUnitType.Auto)}
                     }
-
-
-                    //grid.Opacity = 0.5;
-                    stack.Children.Add(new ScrollView
+                };
+                stack.Children.Add(new Label
+                {
+                    Text = s.Name.ToUpper(),
+                    HorizontalTextAlignment = TextAlignment.Center,
+                    FontFamily = "Roboto",
+                    FontAttributes = FontAttributes.Bold,
+                    FontSize = 18,
+                    BackgroundColor = Color.Gray
+                });
+                
+                var rowGrid = 0;
+                var columnGrid = 0;
+                foreach (var dev in s.devices)
+                {
+                    switch (dev.Type)
                     {
-                        Content = grid,
-                        Orientation = ScrollOrientation.Horizontal
-                    });
+                        case "Light":
+                            var buttonLight = new Image
+                            {
+                                Source = "lights.png",
+                                WidthRequest = 70,
+                                HeightRequest = 70,
+                                Opacity = 2,
+                                VerticalOptions = LayoutOptions.Center
+                            };
+                            buttonLights.Add(buttonLight);
+                            grid.Children.Add(buttonLight, columnGrid, rowGrid);
+                            columnGrid++;
+                            break;
+                        case "cctv":
+                            var buttonCctv = new Image { Source = "cctv.png", WidthRequest = 7, HeightRequest = 70,
+                                VerticalOptions = LayoutOptions.Center
+                            };
+                            buttonCctvs.Add(buttonCctv);
+                            grid.Children.Add(buttonCctv, columnGrid, rowGrid);
+                            columnGrid++;
+                            break;
+                        case "ac":
+                            var buttonAc = new Image
+                            {
+                                Source = "ac.png", WidthRequest = 7, HeightRequest = 70,
+                                VerticalOptions = LayoutOptions.Center
+                            };
+                            buttonACs.Add(buttonAc);
+                            grid.Children.Add(buttonAc, columnGrid, rowGrid);
+                            columnGrid++;
+                            break;
+                        case "audio":
+                            var buttonAudio = new Image { Source = "audio.png", WidthRequest = 7, HeightRequest = 70,
+                                VerticalOptions = LayoutOptions.Center
+                            };
+                            buttonListAudio.Add(buttonAudio);
+                            grid.Children.Add(buttonAudio, columnGrid, rowGrid);
+                            columnGrid++;
+                            break;
+                        case "blinds":
+                            var buttonBlinds = new Image
+                            {
+                                Source = "blinds.png",
+                                WidthRequest = 7,
+                                HeightRequest = 70,
+                                VerticalOptions = LayoutOptions.Center
+                            };
+                            buttonListBlinds.Add(buttonBlinds);
+                            grid.Children.Add(buttonBlinds, columnGrid, rowGrid);
+                            columnGrid++;
+                            break;
+                        case "Lock":
+                            var buttonLock = new Image { Source = "lock.png", WidthRequest = 7, HeightRequest = 70,
+                                VerticalOptions = LayoutOptions.Center
+                            };
+                            buttonListLock.Add(buttonLock);
+                            grid.Children.Add(buttonLock, columnGrid, rowGrid);
+                            columnGrid++;
+                            break;
+                        case "irrigation":
+                            var buttonIrrigation = new Image
+                            {
+                                Source = "irrigation.png",
+                                WidthRequest = 7,
+                                HeightRequest = 70,
+                                VerticalOptions = LayoutOptions.Center
+                            };
+                            buttonListIrrigation.Add(buttonIrrigation);
+                            grid.Children.Add(buttonIrrigation, columnGrid, rowGrid);
+                            columnGrid++;
+                            break;
+                        case "weather":
+                            var buttonWeather = new Image
+                            {
+                                Source = "weather.png",
+                                WidthRequest = 7,
+                                HeightRequest = 70,
+                                VerticalOptions = LayoutOptions.Center
+                            };
+                            buttonListWeather.Add(buttonWeather);
+                            grid.Children.Add(buttonWeather, columnGrid, rowGrid);
+                            columnGrid++;
+                            break;
+                        case "EnergyConsumption":
+                            var buttonEnergyConsumption = new Image
+                            {
+                                Source = "energy_consumption.png",
+                                WidthRequest = 7,
+                                HeightRequest = 70,
+                                VerticalOptions = LayoutOptions.Center
+                            };
+                            buttonListEnergyConsumption.Add(buttonEnergyConsumption);
+                            grid.Children.Add(buttonEnergyConsumption, columnGrid, rowGrid);
+                            columnGrid++;
+                            break;
+                        case "EnergyManagement":
+                            var buttonEnergyManagement = new Image
+                            {
+                                Source = "energy_management.png",
+                                WidthRequest = 7,
+                                HeightRequest = 70,
+                                VerticalOptions = LayoutOptions.Center
+                            };
+                            buttonListEnergyManagement.Add(buttonEnergyManagement);
+                            grid.Children.Add(buttonEnergyManagement, columnGrid, rowGrid);
+                            columnGrid++;
+                            break;
+                        default:
+                            break;
+                    }
                 }
+                //TODO
+                /*
+                var addButton = new Image
+                {
+                    Source = "energy_management.png",
+                    WidthRequest = 7,
+                    HeightRequest = 70
+                };
+                buttonListEnergyManagement.Add(addButton);
+                grid.Children.Add(addButton, columnGrid, rowGrid);
+                */
 
+
+                stack.Children.Add(new ScrollView
+                {
+                    Content = grid,
+                    Orientation = ScrollOrientation.Horizontal
+                });
+                stack.Spacing = 20;
+            }
 
             var i = 0;
             while (i < buttonLights.Count)
@@ -385,19 +406,8 @@ namespace SHOME
                 });
                 i++;
             }
-            /*
-            buttonCctv.GestureRecognizers.Add(new TapGestureRecognizer(sender =>
-            {
-
-
-
-                buttonCctv.Opacity = 0.6;
-                buttonCctv.FadeTo(1);
-                Navigation.PushModalAsync(new CameraPage());
-
-            }));
-*/
-            //this.Opacity = 0.5;
+            
+            //TODO
 
             var scollVertical = new ScrollView
             {

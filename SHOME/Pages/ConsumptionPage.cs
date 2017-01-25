@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using SHOME.Data;
 using Xamarin.Forms;
 
@@ -17,7 +18,7 @@ namespace SHOME.Pages
         private double[] _devices = new double[9];
 
         private Color _day = Color.FromRgb(211, 211, 211);
-        private Color _mouth = Color.FromRgb(211, 211, 211);
+        private Color _month = Color.FromRgb(211, 211, 211);
         private Color _year = Color.Gray;
 
         private readonly string[] _devicesName = new string[]
@@ -54,7 +55,9 @@ namespace SHOME.Pages
             }
             _powerTotal = _powerTotal/(index+1);
 
-            //Atribui imagem FALTA VER OS VALORES MINIMOS,MÁXIMOS E ALTOS DE CONSUMO
+            if (_powerTotal > 2500) { _image = HighConsumption;}
+            else if (_powerTotal < 2500 && _powerTotal > 1500) { _image = MediumConsumption;}
+            else { _image = LowConsumption;}
 
             CalculatePowerDevices(startTime, endTime);
         }
@@ -63,19 +66,19 @@ namespace SHOME.Pages
         {
             var deviceIndex = 1;
             //TODO lento
-            while (deviceIndex <= 1)
+            while (deviceIndex <= 5)
             {
                 var json = await WebServicesData.SyncTask("GET", "lucas/device", deviceIndex, startTime, endTime);
                 var index = 0;
-                _devices[deviceIndex] = 0;
+                _devices[deviceIndex - 1] = 0;
                 while (index < json.Count)
                 {
                     var result = json[index];
                     var power = result["Power"];
-                    _devices[deviceIndex] += power;
+                    _devices[deviceIndex - 1] += power;
                     index++;
                 }
-                _devices[deviceIndex] = _devices[deviceIndex] / (index + 1);
+                _devices[deviceIndex - 1] = _devices[deviceIndex - 1] / (index + 1);
 
                 deviceIndex++;
             }
@@ -84,7 +87,7 @@ namespace SHOME.Pages
         
         private void SortDevices()
         {
-            _sortesDevices = _devices;
+            _sortesDevices = (double[])_devices.Clone();
             Array.Sort(_sortesDevices);
 
             Construtor();
@@ -92,8 +95,6 @@ namespace SHOME.Pages
 
         private void Construtor()
         {
-            _image = LowConsumption;
-
             var background = new Image
             {
                 Source = new FileImageSource
@@ -126,7 +127,8 @@ namespace SHOME.Pages
                 Text = "Day",
                 FontFamily = "Roboto",
                 FontSize = 18,
-                BackgroundColor = _day
+                BackgroundColor = _day,
+                HeightRequest = 0.5
             };
             day.Clicked += (sender, e) =>
             {
@@ -134,24 +136,24 @@ namespace SHOME.Pages
                     DateTime.Now.Date.Year + "-" + DateTime.Now.Date.Month + "-" + DateTime.Now.Date.Day);
                 day.BackgroundColor = Color.Gray;
                 _day = day.BackgroundColor;
-                _mouth = Color.FromRgb(211, 211, 211);
+                _month = Color.FromRgb(211, 211, 211);
                 _year = Color.FromRgb(211, 211, 211);
             };
 
-            var mouth = new Button
+            var month = new Button
             {
-                Text = "Mouth",
+                Text = "Month",
                 FontFamily = "Roboto",
                 FontSize = 18,
-                BackgroundColor = _mouth
+                BackgroundColor = _month
 
             };
-            mouth.Clicked += (sender, e) =>
+            month.Clicked += (sender, e) =>
             {
                 CalculatePower(DateTime.Now.Date.Year + "-" + DateTime.Now.Date.Month + "-01",
                     DateTime.Now.Date.Year + "-" + DateTime.Now.Date.Month + "-31");
-                mouth.BackgroundColor = Color.Gray;
-                _mouth = mouth.BackgroundColor;
+                month.BackgroundColor = Color.Gray;
+                _month = month.BackgroundColor;
                 _day = Color.FromRgb(211, 211, 211);
                 _year = Color.FromRgb(211, 211, 211);
             };
@@ -167,13 +169,13 @@ namespace SHOME.Pages
             {
                 CalculatePower(DateTime.Now.Date.Year + "-01" + "-01", DateTime.Now.Date.Year + "-12" + "-31");
                 year.BackgroundColor = Color.Gray;
-                _year = mouth.BackgroundColor;
+                _year = month.BackgroundColor;
                 _day = Color.FromRgb(211, 211, 211);
-                _mouth = Color.FromRgb(211, 211, 211);
+                _month = Color.FromRgb(211, 211, 211);
             };
 
             period.Children.Add(day, 0, 0);
-            period.Children.Add(mouth, 1, 0);
+            period.Children.Add(month, 1, 0);
             period.Children.Add(year, 2, 0);
 
 
