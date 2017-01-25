@@ -9,13 +9,10 @@ namespace SHOME
     public class ContentMenu : ContentPage
     {
 		
-		public static List<Division> Divisions { get; set; } = new List<Division>();
-		
-		public List<Division> getDivisions()
-		{
-			return Divisions;
-		}
+		public  List<Division> Divisions { get; set; } = new List<Division>();
+
 	
+		public int Status;
 		public class Devices
 		{
 			public Devices(int id, string name, string type)
@@ -58,36 +55,40 @@ namespace SHOME
 
 
 		//TODO se fizer sentido e for mais prático fazes aqui o foreach em vez de mandar o iterator.
-		public async void DivisionData(string tab, params object[] devices)
+		public async void DivisionData(string tab)
 		{
-			
-			var aux = 0;
+
+			var auxJson = 0;
 			var json = await WebServicesData.SyncTask("GET", "division");
+
 			var size = json.Count;
 			var sizeDivisionData = json.Count;
-
-			while (size > aux)
+			Status = 5;
+			while (size >= auxJson)
 			{
-				var result = json[aux];
-				//TODO em vez de "idDivision" é o type (SERVER DOWN)
-				var division = new Division(
-					result["idDivision"],
-					result["divisionName"],
-					result["typeDivision"],
-					result["BeaconId"]
-				);
-				Divisions.Add(division);
 
-				DevicesData(division.Id, division, tab, sizeDivisionData);
+
+					var result = json[Status];
+					//TODO em vez de "idDivision" é o type (SERVER DOWN)
+					var division = new Division(
+						result["idDivision"],
+						result["divisionName"],
+						result["typeDivision"],
+						result["BeaconId"]
+					);
+
+					Divisions.Add(division);
+				
+				// DevicesData(division.Id, division, tab, sizeDivisionData);
 				//var deviceLock = new Devices("lock", "lock");
 				//var deviceLights = new Devices("Luzes", "lights");
 				//var deviceCctv = new Devices("Camaras", "cctv");
-				sizeDivisionData--;
-				aux++;
+			
+				auxJson++;
 				//TODO FOREACH para adicionar devices
 			}
 				
-
+			dd(tab);
 
 		}
 
@@ -162,7 +163,8 @@ namespace SHOME
 				aux++;
 			}
 
-			if (sizeDivisionData <= 0)
+
+			if (Divisions[Status] == division)
 			{}
 				dd(tab);
 			
@@ -170,8 +172,8 @@ namespace SHOME
 			
 		public async void dd(string tab)
 		{
-			
-		
+			Content = null;
+
 			var semiTransparentColor = new Color(0, 0, 0, 0.5);
 
 
@@ -373,55 +375,58 @@ namespace SHOME
 
 		public ContentMenu(string tab)
         {
+
+				DivisionData(tab);
+
 		//	var deviceLock = new Devices("lock", "lock");
 		//	var deviceLights = new Devices("Luzes", "lights");
 
 		//	var deviceAudio = new Devices("audio", "audio");
 		//	var deviceBlinds = new Devices("blinds", "blinds");
 		//	var deviceAC = new Devices("ac", "ac");
-			var deviceWeather = new Devices(1000,"Weather", "weather");
-			var deviceEvents = new Devices(1008, "Events", "Events");
-			var deviceEnergyConsumption = new Devices(1001, "EnergyConsumption", "EnergyConsumption");
-			var deviceEnergyManagement = new Devices(1002, "EnergyManagement", "EnergyManagement");
-			var deviceCctv = new Devices(1003, "Camaras", "cctv");
-			var deviceIrrigation = new Devices(1004,"irrigation", "irrigation");
-			var buttonEvents = new Image { Source = "icon_events.png", WidthRequest = 7, HeightRequest = 70 };
-			var buttonWeather = new Image { Source = "weather.png", WidthRequest = 7, HeightRequest = 70 };
-			var buttonEnergyConsumption = new Image { Source = "energy_consumption.png", WidthRequest = 7, HeightRequest = 70 };
-			var buttonEnergyManagement = new Image { Source = "energy_management.png", WidthRequest = 7, HeightRequest = 70 };
+			//var deviceWeather = new Devices(1000,"Weather", "weather");
+			//var deviceEvents = new Devices(1008, "Events", "Events");
+			//var deviceEnergyConsumption = new Devices(1001, "EnergyConsumption", "EnergyConsumption");
+			//var deviceEnergyManagement = new Devices(1002, "EnergyManagement", "EnergyManagement");
+			//var deviceCctv = new Devices(1003, "Camaras", "cctv");
+			//var deviceIrrigation = new Devices(1004,"irrigation", "irrigation");
+			//var buttonEvents = new Image { Source = "icon_events.png", WidthRequest = 7, HeightRequest = 70 };
+			//var buttonWeather = new Image { Source = "weather.png", WidthRequest = 7, HeightRequest = 70 };
+			//var buttonEnergyConsumption = new Image { Source = "energy_consumption.png", WidthRequest = 7, HeightRequest = 70 };
+			//var buttonEnergyManagement = new Image { Source = "energy_management.png", WidthRequest = 7, HeightRequest = 70 };
 
 	
-		    // Division
-			var roomm = new Division(1000, "Sugest", "Home", null);
-			Divisions.Add(roomm);
+		 //   // Division
+			//var roomm = new Division(1000, "Sugest", "Home", null);
+			//Divisions.Add(roomm);
 
-		    roomm = new Division(1000, "All", "Home", null);
-		    Divisions.Add(roomm);
+		 //   roomm = new Division(1000, "All", "Home", null);
+		 //   Divisions.Add(roomm);
 
-			deviceWeather.buttons = buttonWeather;
-			deviceWeather.buttonState = 0;
-		    roomm.AddDivice(deviceWeather);
+			//deviceWeather.buttons = buttonWeather;
+			//deviceWeather.buttonState = 0;
+		 //   roomm.AddDivice(deviceWeather);
 
-			deviceEvents.buttons = buttonEvents;
-			deviceEvents.buttonState = 0;
-			roomm.AddDivice(deviceEvents);
+			//deviceEvents.buttons = buttonEvents;
+			//deviceEvents.buttonState = 0;
+			//roomm.AddDivice(deviceEvents);
 
 
 
-			deviceEnergyConsumption.buttons = buttonEnergyConsumption;
-			deviceEnergyConsumption.buttonState = 0;
-			roomm.AddDivice(deviceEnergyConsumption);
+			//deviceEnergyConsumption.buttons = buttonEnergyConsumption;
+			//deviceEnergyConsumption.buttonState = 0;
+			//roomm.AddDivice(deviceEnergyConsumption);
 
-			deviceEnergyManagement.buttons = buttonEnergyManagement;
-			deviceEnergyManagement.buttonState = 0;
-			roomm.AddDivice(deviceEnergyManagement);
+			//deviceEnergyManagement.buttons = buttonEnergyManagement;
+			//deviceEnergyManagement.buttonState = 0;
+			//roomm.AddDivice(deviceEnergyManagement);
 
 		
 
-			roomm.AddDivice(deviceCctv);
-			roomm.AddDivice(deviceIrrigation);
+			//roomm.AddDivice(deviceCctv);
+			//roomm.AddDivice(deviceIrrigation);
+			//Status = 0;
 
-			DivisionData(tab, "sdsd");
             
 			}
         
