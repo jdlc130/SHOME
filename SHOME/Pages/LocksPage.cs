@@ -11,16 +11,16 @@ namespace SHOME
             HorizontalOptions = LayoutOptions.Center
         };
 
+        private readonly Switch _powerBtn = new Switch
+        {
+            HorizontalOptions = LayoutOptions.Center
+        };
+
         public Image Imagelock = new Image
         {
             Source = "unlocked2.png",
             HorizontalOptions = LayoutOptions.Center,
             Scale = 0.5
-        };
-        
-        private readonly Switch _powerBtn = new Switch
-        {
-            HorizontalOptions = LayoutOptions.Center
         };
 
         public bool State;
@@ -29,7 +29,7 @@ namespace SHOME
         {
             GetState();
         }
-        
+
         public async void GetState()
         {
             var json = await WebServicesData.SyncTask("GET", "lockState");
@@ -68,7 +68,7 @@ namespace SHOME
                 }
             };
         }
-        
+
         private void power_btn_Toggled(object sender, ToggledEventArgs e)
         {
             var lll = new Label

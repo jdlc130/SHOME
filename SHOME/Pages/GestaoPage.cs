@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Xamarin.Forms;
+using System.Linq;
 using SHOME.Data;
+using Xamarin.Forms;
 
 namespace SHOME
 {
@@ -10,8 +11,12 @@ namespace SHOME
         public GestaoPage()
         {
             GetDevices();
-
         }
+
+        public string Suggestion { set; get; }
+        public int EnergyProduced { get; set; }
+
+        public List<Values> Devices { get; set; } = new List<Values>();
 
         private void Construtor()
         {
@@ -28,16 +33,14 @@ namespace SHOME
                 VerticalOptions = LayoutOptions.Start
             };
 
-
-            const string energy = "60%";
             var tittleEnergyLbl = new Label
             {
-                Text = "Panel Energy Level",
+                Text = "Produced Energy",
                 FontSize = 18
             };
             var energyValue = new Label
             {
-                Text = energy,
+                Text = EnergyProduced + " Wh",
                 FontSize = 18,
                 HorizontalTextAlignment = TextAlignment.End
             };
@@ -56,58 +59,56 @@ namespace SHOME
             };
             infoGrid.Children.Add(tittleEnergyLbl, 0, 0);
             infoGrid.Children.Add(energyValue, 1, 0);
-            
+
             // Create the ListView.
             var value = -1;
             var listView = new ListView
             {
                 // Source of data items.
-				ItemsSource = devices,
+                ItemsSource = Devices,
 
                 // Define template for displaying each item.
                 // (Argument of DataTemplate constructor is called for 
                 //      each item; it must return a Cell derivative.)
                 ItemTemplate = new DataTemplate(() =>
-                {
-                    value++;
-
-                    // Create views with bindings for displaying each property.
-                    var tittleLbl = new Label();
-                    tittleLbl.SetBinding(Label.TextProperty, "Name");
-                    
-                    //devices[value].PowerSwitch.SetBinding(Switch.IsToggledProperty, "State");
-
-                    // Return an assembled ViewCell.
-                    return new ViewCell
                     {
-                        View = new StackLayout
+                        value++;
+
+                        // Create views with bindings for displaying each property.
+                        var tittleLbl = new Label();
+                        tittleLbl.SetBinding(Label.TextProperty, "Name");
+
+                        // Return an assembled ViewCell.
+                        return new ViewCell
                         {
-                            Padding = new Thickness(0, 5),
-                            Orientation = StackOrientation.Horizontal,
-                            VerticalOptions = LayoutOptions.Center,
-                            Children =
+                            View = new StackLayout
                             {
-                                tittleLbl,
-                                new StackLayout
+                                Padding = new Thickness(0, 5),
+                                Orientation = StackOrientation.Horizontal,
+                                VerticalOptions = LayoutOptions.Center,
+                                Children =
                                 {
-                                    VerticalOptions = LayoutOptions.Center,
-                                    HorizontalOptions = LayoutOptions.EndAndExpand,
-                                    Children =
+                                    tittleLbl,
+                                    new StackLayout
                                     {
-                                        devices[value].PowerSwitch
+                                        VerticalOptions = LayoutOptions.Center,
+                                        HorizontalOptions = LayoutOptions.EndAndExpand,
+                                        Children =
+                                        {
+                                            Devices[value].PowerSwitch
+                                        }
                                     }
                                 }
                             }
-                        }
-                    };
-                }
+                        };
+                    }
                 )
             };
-            
+
             var view = new StackLayout
             {
                 Padding = new Thickness(10, 20, 10, 10),
-                Children = { listView}
+                Children = {listView}
             };
 
             var suggestionBtn = new Button
@@ -133,53 +134,89 @@ namespace SHOME
 
         private void Onsuggestion(object sender, EventArgs e)
         {
-            /* BDD INTERACTION */
+            SuggestionCreator();
+            var labelTitle = new Label
+            {
+                Text = "Please, consider",
+                FontFamily = "Roboto",
+                FontSize = 18
+            };
 
-            DisplayAlert("We suggest you to plug in", "Washing Machine, Cook Robot", "Submit", "Cancel");
+            var labelSuggestion = new Label
+            {
+                Text = Suggestion,
+                FontFamily = "Roboto",
+                FontSize = 14
+            };
+
+            DisplayAlert(labelTitle.Text,
+                labelSuggestion.Text,
+                "Ok");
+        }
+
+        public async void GetDevices()
+        {
+            var aux = 0;
+            var json = await WebServicesData.SyncTask("GET", "appliance");
+            var size = json.Count;
+
+            while (size > aux)
+            {
+                var result = json[aux];
+                var value = new Values(
+                    result["idAppliance"],
+                    result["applianceName"],
+                    result["consumo"],
+                    result["state"]
+                );
+                value.PowerSwitch = new Switch {IsToggled = value.State};
+                value.PowerSwitch.Toggled +=
+                    async (sender, e) =>
+                    {
+                        await WebServicesData.SyncTask("POST", "appliance", value.ApplianceId, e.Value ? 1 : 0);
+                        value.State = e.Value;
+                    };
+
+                Devices.Add(value);
+                aux++;
+            }
+            GetEnergy();
+        }
+
+        private async void GetEnergy()
+        {
+            var json = await WebServicesData.SyncTask("GET", "box");
+            EnergyProduced = json["power"];
+
+            Construtor();
+        }
+
+        private void SuggestionCreator()
+        {
+            var suggestion =
+                Devices.Where(appliance => (EnergyProduced - appliance.Consumption >= 0) && !appliance.State)
+                    .Aggregate("", (current, appliance) => current + appliance.Name + ";");
+            if (!string.IsNullOrEmpty(suggestion))
+                Suggestion = "Turning on " + suggestion;
+            else
+                Suggestion = "Turning off non-essential appliances.";
         }
 
         public class Values
         {
-            public Values(int id, string name, bool state)
+            public Values(int id, string name, int consuption, bool state)
             {
                 Name = name;
                 State = state;
                 ApplianceId = id;
+                Consumption = consuption;
             }
 
-            public string Name { private set; get; }
-            public bool State { private set; get; }
-            public int ApplianceId { private set; get; }
+            public string Name { set; get; }
+            public bool State { get; set; }
+            public int ApplianceId { get; }
+            public int Consumption { get; }
             public Switch PowerSwitch { set; get; }
         }
-
-        public List<Values> devices { get; set; } = new List<Values>();
-        
-		public async void GetDevices()
-		{
-			var aux = 0;
-			var json = await WebServicesData.SyncTask("GET", "appliance");
-			var size = json.Count;
-
-			while (size > aux)
-			{
-				var result = json[aux];
-			    var value = new Values(
-                    result["idAppliance"],
-                    result["applianceName"],
-			        result["state"]
-			    );
-			    value.PowerSwitch = new Switch {IsToggled = value.State};
-			    value.PowerSwitch.Toggled += async (sender, e) =>
-                {
-                    await WebServicesData.SyncTask("POST", "appliance", value.ApplianceId, e.Value ? 1 : 0);
-                };
-
-                devices.Add(value);
-				aux++;
-			}
-            
-			Construtor();
-		}
     }
 }
