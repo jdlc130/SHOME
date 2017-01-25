@@ -64,7 +64,8 @@ namespace SHOME
 			var aux = 0;
 			var json = await WebServicesData.SyncTask("GET", "division");
 			var size = json.Count;
-		
+			var sizeDivisionData = json.Count;
+
 			while (size > aux)
 			{
 				var result = json[aux];
@@ -77,11 +78,11 @@ namespace SHOME
 				);
 				Divisions.Add(division);
 
-				DevicesData(division.Id, division, tab);
+				DevicesData(division.Id, division, tab, sizeDivisionData);
 				//var deviceLock = new Devices("lock", "lock");
 				//var deviceLights = new Devices("Luzes", "lights");
 				//var deviceCctv = new Devices("Camaras", "cctv");
-
+				sizeDivisionData--;
 				aux++;
 				//TODO FOREACH para adicionar devices
 			}
@@ -90,7 +91,7 @@ namespace SHOME
 
 		}
 
-		public async void DevicesData(int id, Division division, string tab)
+		public async void DevicesData(int id, Division division, string tab, int sizeDivisionData)
 		{
 			var json = await WebServicesData.SyncTask("GET", "ActuatorsDevicesByDivision" , id);
 			var size = json.Count;
@@ -161,12 +162,15 @@ namespace SHOME
 				aux++;
 			}
 
-			dd(tab);
+			if (sizeDivisionData <= 0)
+			{}
+				dd(tab);
+			
 		}
 			
 		public async void dd(string tab)
 		{
-
+			
 		
 			var semiTransparentColor = new Color(0, 0, 0, 0.5);
 

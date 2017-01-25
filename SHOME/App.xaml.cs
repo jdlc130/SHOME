@@ -14,7 +14,7 @@ namespace SHOME
 
 		//	MainPage = new MenuPage();
 		//MainPage = new NavigationPage(new LoginPage());
-			MainPage = new NavigationPage(new SHOME.MenuPage());
+			MainPage = new NavigationPage(new MenuPage());
 			//if (Device.OS == TargetPlatform.iOS)
 			//{
 			//	if (!IsUserLoggedIn)
