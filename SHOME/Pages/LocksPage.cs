@@ -1,119 +1,91 @@
-﻿using System;
-
+﻿using SHOME.Data;
 using Xamarin.Forms;
-using System.Diagnostics;
-using System.Json;
-using SHOME.Data;
 
 namespace SHOME
 {
-	public class LocksPage : ContentPage
-	{
+    public class LocksPage : ContentPage
+    {
+        private readonly Image _header = new Image
+        {
+            Source = "header_lock.png",
+            HorizontalOptions = LayoutOptions.Center
+        };
 
-		public Boolean state;
-		public Image imagelock = new Image
-		{
-			Source = "unlock.png",
-			HorizontalOptions = LayoutOptions.Center
-		};
+        private readonly Switch _powerBtn = new Switch
+        {
+            HorizontalOptions = LayoutOptions.Center
+        };
 
-		Image header = new Image
-		{
-			Source = "header_lock.png",
-			HorizontalOptions = LayoutOptions.Center
-		};
+        public Image Imagelock = new Image
+        {
+            Source = "unlocked2.png",
+            HorizontalOptions = LayoutOptions.Center,
+            Scale = 0.5
+        };
 
+        public bool State;
 
-		Switch power_btn = new Switch
-		{
-			HorizontalOptions = LayoutOptions.Center
-		};
+        public LocksPage()
+        {
+            GetState();
+        }
 
+        public async void GetState()
+        {
+            var json = await WebServicesData.SyncTask("GET", "lockState");
+            var size = json.Count;
+            var result = json[0];
 
+            State = result["parameterValue"];
+            Update();
+        }
 
+        public void Update()
+        {
+            _powerBtn.IsToggled = State;
+            Imagelock.Source = State ? "locked2.png" : "unlocked2.png";
+            _powerBtn.Toggled += async (sender, e) =>
+            {
+                if (e.Value)
+                {
+                    await WebServicesData.SyncTask("POST", "Lock", 20, 1);
+                    Imagelock.Source = "locked2.png";
+                }
+                else
+                {
+                    await WebServicesData.SyncTask("POST", "Lock", 20, 0);
+                    Imagelock.Source = "unlocked2.png";
+                }
+            };
 
-		public LocksPage()
-		{
+            Content = new StackLayout
+            {
+                Children =
+                {
+                    _header,
+                    _powerBtn,
+                    Imagelock
+                }
+            };
+        }
 
-			//Padding = new Thickness(0, 20, 20, 20);
-
-
-
-			GetState();
-		}
-
-
-		public async void GetState()
-		{
-
-			var json = await WebServicesData.SyncTask("GET", "lockState");
-			var size = json.Count;
-
-
-				var result = json[0];
-
-				state = result["parameterValue"];
-
-		
-			
-
-		
-
-
-
-			update();
-
-
-		}
-
-
-
-		public void update()
-		{ 
-			power_btn.IsToggled = state;
-
-			power_btn.Toggled += power_btn_Toggled;
-
-		Content = new StackLayout
-		{
-			Children =
-				{
-					header,
-					power_btn,
-					imagelock
-				}
-		};
-		}
-
-
-		void power_btn_Toggled(object sender, ToggledEventArgs e)
-		{
-			var lll = new Label
-			{
-				Text = string.Format("Is now {0}", e.Value)
-			};
-			if (e.Value)
-			{
-
-				WebServicesData.SyncTask("POST", "Lock", 20, 1);
-
-				imagelock.Source = "lockk.png";
-
-			}
-			else
-			{
-				WebServicesData.SyncTask("POST", "Lock", 20, 0);
-
-		
-				imagelock.Source = "unlock.png";
-			
-			}
-
-
-
-			DisplayAlert("Power", lll.Text, "OK");
-		}
-
-	}
+        private void power_btn_Toggled(object sender, ToggledEventArgs e)
+        {
+            var lll = new Label
+            {
+                Text = $"Is now {e.Value}"
+            };
+            if (e.Value)
+            {
+                WebServicesData.SyncTask("POST", "Lock", 20, 1);
+                Imagelock.Source = "lockk.png";
+            }
+            else
+            {
+                WebServicesData.SyncTask("POST", "Lock", 20, 0);
+                Imagelock.Source = "unlock.png";
+            }
+            DisplayAlert("Power", lll.Text, "OK");
+        }
+    }
 }
-

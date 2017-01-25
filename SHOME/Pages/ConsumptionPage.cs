@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using SHOME.Data;
 using Xamarin.Forms;
 
@@ -10,18 +9,8 @@ namespace SHOME.Pages
         private const string LowConsumption = "low_consumption.png";
         private const string MediumConsumption = "medium_consumption.png";
         private const string HighConsumption = "high_consumption.png";
-        private string _image;
 
-        private double _powerTotal;
-
-        private double[] _sortesDevices = new double[9];
-        private double[] _devices = new double[9];
-
-        private Color _day = Color.FromRgb(211, 211, 211);
-        private Color _month = Color.FromRgb(211, 211, 211);
-        private Color _year = Color.Gray;
-
-        private readonly string[] _devicesName = new string[]
+        private readonly string[] _devicesName =
         {
             "Coffe Machine Delta",
             "Toaster",
@@ -34,13 +23,23 @@ namespace SHOME.Pages
             "TV Philips"
         };
 
+        private Color _day = Color.FromRgb(211, 211, 211);
+        private readonly double[] _devices = new double[9];
+        private string _image;
+        private Color _month = Color.FromRgb(211, 211, 211);
+
+        private double _powerTotal;
+
+        private double[] _sortesDevices = new double[9];
+        private Color _year = Color.Gray;
+
         public ConsumptionPage()
         {
             //CalculatePower(DateTime.Now.Date.Year + "-01" + "-01", DateTime.Now.Date.Year + "-12" + "-31");
 
             CalculatePower("2016-11-26", "2016-11-26");
         }
-        
+
         private async void CalculatePower(string startTime, string endTime)
         {
             var json = await WebServicesData.SyncTask("GET", "lucas/hourly", startTime, endTime);
@@ -53,11 +52,11 @@ namespace SHOME.Pages
                 _powerTotal += power;
                 index++;
             }
-            _powerTotal = _powerTotal/(index+1);
+            _powerTotal = _powerTotal/(index + 1);
 
-            if (_powerTotal > 2500) { _image = HighConsumption;}
-            else if (_powerTotal < 2500 && _powerTotal > 1500) { _image = MediumConsumption;}
-            else { _image = LowConsumption;}
+            if (_powerTotal > 2500) _image = HighConsumption;
+            else if ((_powerTotal < 2500) && (_powerTotal > 1500)) _image = MediumConsumption;
+            else _image = LowConsumption;
 
             CalculatePowerDevices(startTime, endTime);
         }
@@ -78,16 +77,16 @@ namespace SHOME.Pages
                     _devices[deviceIndex - 1] += power;
                     index++;
                 }
-                _devices[deviceIndex - 1] = _devices[deviceIndex - 1] / (index + 1);
+                _devices[deviceIndex - 1] = _devices[deviceIndex - 1]/(index + 1);
 
                 deviceIndex++;
             }
             SortDevices();
         }
-        
+
         private void SortDevices()
         {
-            _sortesDevices = (double[])_devices.Clone();
+            _sortesDevices = (double[]) _devices.Clone();
             Array.Sort(_sortesDevices);
 
             Construtor();
@@ -146,7 +145,6 @@ namespace SHOME.Pages
                 FontFamily = "Roboto",
                 FontSize = 18,
                 BackgroundColor = _month
-
             };
             month.Clicked += (sender, e) =>
             {
@@ -180,7 +178,7 @@ namespace SHOME.Pages
 
 
             var feedback = new Image
-            { 
+            {
                 Source = _image,
                 HorizontalOptions = LayoutOptions.Center,
                 Scale = 0.5
@@ -202,13 +200,21 @@ namespace SHOME.Pages
             };
             for (var i = 0; i < 4; i++)
             {
-                var index = Array.FindIndex(_devices, p => p ==_sortesDevices[_sortesDevices.Length - i - 1]);
+                var index = Array.FindIndex(_devices, p => p == _sortesDevices[_sortesDevices.Length - i - 1]);
                 divisions.Children.Add(
-                    new Label { Text = _devicesName[index], FontFamily = "Roboto", FontSize = 16, TextColor = Color.Gray}, 0, i );
+                    new Label {Text = _devicesName[index], FontFamily = "Roboto", FontSize = 16, TextColor = Color.Gray},
+                    0, i);
                 divisions.Children.Add(
-                    new Label { Text = _sortesDevices[_sortesDevices.Length - i - 1].ToString(), FontFamily = "Roboto", FontSize = 16, TextColor = Color.Black, HorizontalTextAlignment = TextAlignment.End}, 1, i);
+                    new Label
+                    {
+                        Text = _sortesDevices[_sortesDevices.Length - i - 1].ToString(),
+                        FontFamily = "Roboto",
+                        FontSize = 16,
+                        TextColor = Color.Black,
+                        HorizontalTextAlignment = TextAlignment.End
+                    }, 1, i);
             }
-            
+
             Content = new StackLayout
             {
                 Children =
