@@ -35,15 +35,14 @@ namespace SHOME.Pages
 
         public ConsumptionPage()
         {
-            //CalculatePower(DateTime.Now.Date.Year + "-01" + "-01", DateTime.Now.Date.Year + "-12" + "-31");
-
-            CalculatePower("2016-11-26", "2016-11-26");
+            CalculatePower(DateTime.Now.Date.Year + "-01" + "-01", DateTime.Now.Date.Year + "-12" + "-31");
         }
 
         private async void CalculatePower(string startTime, string endTime)
         {
             var json = await WebServicesData.SyncTask("GET", "lucas/hourly", startTime, endTime);
             var index = 0;
+            var counter = 0;
             _powerTotal = 0;
             while (index < json.Count)
             {
@@ -51,8 +50,9 @@ namespace SHOME.Pages
                 var power = result["Power"];
                 _powerTotal += power;
                 index++;
+                if (power != 0) counter++;
             }
-            _powerTotal = _powerTotal/(index + 1);
+            _powerTotal = _powerTotal/(counter + 1);
 
             if (_powerTotal > 2500) _image = HighConsumption;
             else if ((_powerTotal < 2500) && (_powerTotal > 1500)) _image = MediumConsumption;

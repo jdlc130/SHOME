@@ -46,7 +46,7 @@
     </Compile>
     <Compile Include="Data\WebServicesData.cs" />
     <Compile Include="IBBeacon.cs" />
-    <Compile Include="Pages\AddActuator.cs" />
+    <Compile Include="Pages\AddDevice.cs" />
     <Compile Include="Pages\ConsumptionPage.cs" />
     <Compile Include="Pages\GestaoPage.cs" />
     <Compile Include="Pages\CameraPage.cs" />
@@ -69,7 +69,6 @@
     <Compile Include="Pages\Weather.cs" />
     <Compile Include="Pages\LightsPage.cs" />
     <Compile Include="Pages\ContentMenu.cs" />
-    <Compile Include="Pages\EmptyClass.cs" />
     <Compile Include="Pages\DataService.cs" />
     <Compile Include="Pages\ListEventPage.cs" />
     <Compile Include="Pages\LocksPage.cs" />

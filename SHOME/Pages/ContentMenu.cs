@@ -307,7 +307,7 @@ namespace SHOME
 							dev.buttons = buttonADD;
 								dev.buttons.GestureRecognizers.Add(new TapGestureRecognizer
 							{
-									Command = new Command(() => { Navigation.PushAsync(new ListEventPage()); }),
+									Command = new Command(() => { Navigation.PushAsync(new AddDevice()); }),
 
 
 							});
