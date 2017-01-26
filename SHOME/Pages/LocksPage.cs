@@ -25,7 +25,7 @@ namespace SHOME
 
         public bool State;
 
-        public LocksPage()
+        public LocksPage(int device)
         {
             GetState();
         }
