@@ -10,7 +10,7 @@ namespace SHOME
 
         public Weather()
         {
-            GetTemperature();
+            GetTemperature(); 
         }
 
         public string Temperature { get; set; }
@@ -28,6 +28,7 @@ namespace SHOME
         public string HumidityT { get; set; }
         public string Rain { get; set; }
 
+        //Função para obter a temperatura do interior
         public async void GetTemperature()
         {
             var aux = 0;
@@ -37,22 +38,23 @@ namespace SHOME
             var device = json["Device_Num_7"];
             var state = device["states"];
             var position = state[0];
-            var value = position["value"];
-            InsideTemperature = value;
+            var value = position["value"]; //o valor da temperatura está guardado na posicao value
+            InsideTemperature = value; // a temperatura do interior é o valor obtido anteriormente
 
             Constructor();
         }
 
         public void Constructor()
         {
+            //weather inicialmente está vazio
             this.Temperature = " ";
             this.TempMax = " ";
             this.TempMin = " ";
             this.Wind = " ";
-            WindD = " ";
+            this.WindD = " ";
             this.Humidity = " ";
 
-            //forecast
+            //forecast inicialmente está vazio
             this.TempT = " ";
             this.TempTMax = " ";
             this.TempTMin = " ";
@@ -78,6 +80,7 @@ namespace SHOME
                 }
             };
             // Condições no Interior
+            // Criar a label com o titulo 
             var conditionsI = new Label
             {
                 Text = "Enviromental conditions inside",
@@ -86,6 +89,7 @@ namespace SHOME
                 FontSize = 18,
                 FontFamily = "Roboto"
             };
+            // label que apresenta o valor da temperatura no interior
             var temperatureInside = new Label
             {
                 Text = InsideTemperature + " ºC",
@@ -97,6 +101,7 @@ namespace SHOME
             TempInsGrid.Children.Add(temperatureInside, 0, 1);
 
             //Condições no Exterior
+            //Cria uma grelha 
             var TempExtGrid = new Grid
             {
                 Padding = new Thickness(20, 0, 20, 10),
@@ -109,6 +114,7 @@ namespace SHOME
                     }
                 }
             };
+            // Criar label para apresentar novamente um titulo das condiçoes no exterior
             var conditions = new Label
             {
                 Text = "Enviromental conditions outside",
@@ -118,18 +124,27 @@ namespace SHOME
                 FontSize = 18,
                 FontFamily = "Roboto"
             };
+            // Entrada para inserir a localização pretendida
             var location = new Entry();
+            // Botão de submeter
             var submit = new Button {Text = "Submit"};
+            
+            //Inserir as variaveis na grelha
             TempExtGrid.Children.Add(conditions, 0, 0);
             TempExtGrid.Children.Add(location, 0, 1);
             TempExtGrid.Children.Add(submit, 0, 2);
-            // Tempo
+            
+            // quando o botao submit 
             submit.Clicked += async (sender, e) =>
             {
+                // se a localiza~ção for vazia não retorna nada
                 if (location == null) return;
+                //variavel weather guarda a informação obtida da função getWeather 
+                //da localizaçao inserida
                 var weather = await WeatherCore.GetWeather(location.Text);
-                //var temperture = weather.Temperature;
-
+                
+                //se o weather for diferente de nulo é atribuido o valor a cada label para
+                //apresentar os vários parametros
                 if (weather != null)
                 {
                     TemperatureL.Text = "Temperature: " + weather.Temperature;
@@ -142,7 +157,11 @@ namespace SHOME
                 }
 
                 //Forecast
+                //variavel forecast guarda a informação obtida da função getForecast 
+                //da localizaçao inserida
                 var forecast = await WeatherCore.GetForecast(location.Text);
+                //se o forecast for diferente de nulo é atribuido os valores às label para 
+                //apresnetar os valores
                 if (forecast != null)
                 {
                     TempTL.Text = "Temperature: " + forecast.TempT;
@@ -153,6 +172,7 @@ namespace SHOME
                     ForeCastConstrutor();
                 }
             };
+            //label da temperatura
             TemperatureL = new Label
             {
                 Text = " ",
@@ -160,6 +180,7 @@ namespace SHOME
                 FontFamily = "Roboto",
                 FontSize = 14
             };
+            //label da temperatura min
             TempMinL = new Label
             {
                 Text = " ",
@@ -167,6 +188,7 @@ namespace SHOME
                 FontFamily = "Roboto",
                 FontSize = 14
             };
+            //label da temperatura max
             TempMaxL = new Label
             {
                 Text = " ",
@@ -174,6 +196,7 @@ namespace SHOME
                 FontFamily = "Roboto",
                 FontSize = 14
             };
+            //label da humidade
             HumidityL = new Label
             {
                 Text = " ",
@@ -181,6 +204,7 @@ namespace SHOME
                 FontFamily = "Roboto",
                 FontSize = 14
             };
+            //label do vento
             WindL = new Label
             {
                 Text = " ",
@@ -188,6 +212,7 @@ namespace SHOME
                 FontFamily = "Roboto",
                 FontSize = 14
             };
+            //label da direccao do vento
             WindDirectionL = new Label
             {
                 Text = " ",
@@ -195,6 +220,7 @@ namespace SHOME
                 FontFamily = "Roboto",
                 FontSize = 14
             };
+            // criar a grelha do weather
             WeatherGrid = new Grid
             {
                 Padding = new Thickness(20, 20, 20, 10),
@@ -207,7 +233,7 @@ namespace SHOME
                     }
                 }
             };
-
+            // label com o titulo do tempo para amanhã
             ForecastL = new Label
             {
                 Text = "Forecast for Tomorrow",
@@ -216,6 +242,7 @@ namespace SHOME
                 FontSize = 18,
                 FontFamily = "Roboto"
             };
+            // label com a temperatura para o dia seguinte
             TempTL = new Label
             {
                 Text = " ",
@@ -223,6 +250,7 @@ namespace SHOME
                 FontFamily = "Roboto",
                 FontSize = 14
             };
+            // label com a temperatura max para o dia seguinte
             TempTMaxL = new Label
             {
                 Text = " ",
@@ -230,6 +258,7 @@ namespace SHOME
                 FontFamily = "Roboto",
                 FontSize = 14
             };
+            // label com a temperatura min para o dia seguinte
             TempTMinL = new Label
             {
                 Text = " ",
@@ -237,6 +266,7 @@ namespace SHOME
                 FontFamily = "Roboto",
                 FontSize = 14
             };
+            // label com a humidade para o dia seguinte
             HumidityTL = new Label
             {
                 Text = " ",
@@ -244,6 +274,7 @@ namespace SHOME
                 FontFamily = "Roboto",
                 FontSize = 14
             };
+            // label com a chuva para o dia seguinte
             RainL = new Label
             {
                 Text = " ",
@@ -251,6 +282,7 @@ namespace SHOME
                 FontFamily = "Roboto",
                 FontSize = 14
             };
+            // criar a gelha para o forecast
             ForecastGrid = new Grid
             {
                 Padding = new Thickness(20, 20, 20, 10),
@@ -270,11 +302,12 @@ namespace SHOME
                 {
                     Children =
                     {
-                        header,
-                        TempInsGrid,
-                        TempExtGrid,
-                        WeatherGrid,
-                        ForecastGrid
+                        header, 
+                        TempInsGrid, //grelha com os dados da tem do interior
+                        TempExtGrid, //grelha com os dados da temp do exterior parte de preenchimento
+                        WeatherGrid, //grelha com os dados do tempo exterior após insercao da localizaçao 
+                        ForecastGrid //grelha com os dados da previsao tempo exterior
+                                     //após insercao da localizaçao
                     }
                 }
             };
@@ -285,6 +318,7 @@ namespace SHOME
 
         private void WeatherConstrutor()
         {
+            //inserção das diversas labels na grelha do weather
             WeatherGrid.Children.Add(TemperatureL, 0, 0);
             WeatherGrid.Children.Add(TempMinL, 0 , 1);
             WeatherGrid.Children.Add(TempMaxL, 0, 2);
@@ -295,6 +329,7 @@ namespace SHOME
 
         private void ForeCastConstrutor()
         {
+            //inserção das diversas labels na grelha do forecast
             ForecastGrid.Children.Add(ForecastL, 0, 0);
             ForecastGrid.Children.Add(TempTL, 0, 1);
             ForecastGrid.Children.Add(TempTMaxL, 0, 2);

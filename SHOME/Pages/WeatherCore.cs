@@ -8,12 +8,15 @@ namespace SHOME
         public static async Task<Weather> GetWeather(string city)
         {
             //Sign up for a free API key at http://openweathermap.org/appid
+            // a chave é obtida atraves do registo
             var key = "fc9f6c524fc093759cd28d41fda89a1b";
             var queryString = "http://" + "api.openweathermap.org/data/2.5/weather?q="
                               + city + "&units=metric&appid=" + key;
-
+            //variavel results guarda os dados obtidos através da query 
+            //na cidade inserida em unidades metric  
             var results = await DataService.GetDataFromService(queryString).ConfigureAwait(false);
-
+            // se for diferente de nulo é criado um weather onde tem os parametros que são resolhidos
+            // da variavel results 
             if (results != null)
             {
                 var weather = new Weather
@@ -29,7 +32,7 @@ namespace SHOME
                 var time = new DateTime(1970, 1, 1, 0, 0, 0, 0);
                 var sunrise = time.AddSeconds((double) results["sys"]["sunrise"]);
                 var sunset = time.AddSeconds((double) results["sys"]["sunset"]);
-                return weather;
+                return weather; //retorna o weather
             }
             return null;
         }
@@ -40,9 +43,13 @@ namespace SHOME
             var key = "fc9f6c524fc093759cd28d41fda89a1b";
             var queryString2 = "http://" + "api.openweathermap.org/data/2.5/forecast?q=" + city +
                                ",pt&units=metric&appid=" + key;
+            //variavel results2 guarda os dados obtidos através da query que obterá o forecast
+            //na cidade inserida em unidades metric  
 
             var results2 = await DataService.GetDataFromService(queryString2).ConfigureAwait(false);
-
+           
+            // se for diferente de nulo é criado um weather onde tem os parametros que são resolhidos
+            // da variavel results 
             if (results2 != null)
             {
                 var list = results2["list"];
@@ -65,7 +72,7 @@ namespace SHOME
                     HumidityT = (string)resultHumidityT + " %",
                     Rain = (string)resultRain  
                 };
-                return forecast;
+                return forecast; // retorna o forecast que é a variavel que tem o weather com a info toda
             }
             return null;
         }
