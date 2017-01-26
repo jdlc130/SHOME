@@ -52,7 +52,7 @@ namespace SHOME
 
 
 		//TODO se fizer sentido e for mais prático fazes aqui o foreach em vez de mandar o iterator.
-		public async void DivisionData(string tab, params object[] devices)
+		public async void DivisionData(string tab)
 		{
 
 			var aux = 0;
@@ -98,26 +98,20 @@ namespace SHOME
 				);
 				division.AddDivice(device);
 				aux++;
+				if (size == aux)
+				{
+					var deviceAdd = new Devices(1010, "ADD", "ADD");
+					division.AddDivice(deviceAdd);
+
+				}
 			}
 
-			dd(tab);
+			Construtor(tab);
 		}
 
-		public async void dd(string tab)
+		public async void Construtor(string tab)
 		{
 			var semiTransparentColor = new Color(0, 0, 0, 0.5);
-
-
-			/// Device
-			//var deviceLock = new Devices("lock", "lock");
-			//var deviceLights = new Devices("Luzes", "lights");
-			//var deviceCctv = new Devices("Camaras", "cctv");
-			//var deviceAudio = new Devices("audio", "audio");
-			//var deviceBlinds = new Devices("blinds", "blinds");
-			//var deviceAC = new Devices("ac", "ac");
-			//var deviceWeather = new Devices("weather", "weather");
-			//var deviceIrrigation = new Devices("irrigation", "irrigation");
-
 
 
 			switch (tab)
@@ -164,7 +158,7 @@ namespace SHOME
 			var stack = new StackLayout(); ////
 			Padding = new Thickness(0, Device.OnPlatform(20, 0, 0), 0, 0);
 
-			//var tt = await RequestData.SyncTask("division");
+
 
 
 			foreach (var s in Divisions)
@@ -296,6 +290,30 @@ namespace SHOME
 								grid.Children.Add(buttonEvents, columnGrid, rowGrid);
 								columnGrid++;
 							break;
+							
+							case "Settings":
+								var buttonSettings = new Image { Source = "icon_settings.png", WidthRequest = 7, HeightRequest = 70 };
+								dev.buttons = buttonSettings;
+								dev.buttons.GestureRecognizers.Add(new TapGestureRecognizer
+								{
+									Command = new Command(() => { Navigation.PushModalAsync(new ListEventPage()); }),
+
+								});
+								grid.Children.Add(buttonSettings, columnGrid, rowGrid);
+								columnGrid++;
+							break;
+							case "ADD":
+							var buttonADD = new Image { Source = "icon_addDevice.png", WidthRequest = 7, HeightRequest = 70 };
+							dev.buttons = buttonADD;
+								dev.buttons.GestureRecognizers.Add(new TapGestureRecognizer
+							{
+									Command = new Command(() => { Navigation.PushAsync(new ListEventPage()); }),
+
+
+							});
+							grid.Children.Add(buttonADD, columnGrid, rowGrid);
+							columnGrid++;
+							break;
 
 
 
@@ -304,7 +322,7 @@ namespace SHOME
 					}
 
 
-					//grid.Opacity = 0.5;
+			
 					stack.Children.Add(new ScrollView
 					{
 						Content = grid,
@@ -327,20 +345,13 @@ namespace SHOME
 
 
 
-		//public int tabb;
-		//public EstarPage(int tab)
-		//{
-		//	tabb = tab;
-		//}
+
 
 		public ContentMenu(string tab)
 		{
-			//	var deviceLock = new Devices("lock", "lock");
-			//	var deviceLights = new Devices("Luzes", "lights");
 
-			//	var deviceAudio = new Devices("audio", "audio");
-			//	var deviceBlinds = new Devices("blinds", "blinds");
-			//	var deviceAC = new Devices("ac", "ac");
+	
+			var deviceSettings = new Devices(1009, "Settings", "Settings");
 			var deviceEvents = new Devices(1008, "Events", "Events");
 			var deviceWeather = new Devices(1000, "Weather", "weather");
 			var deviceEnergyConsumption = new Devices(1001, "EnergyConsumption", "EnergyConsumption");
@@ -352,14 +363,17 @@ namespace SHOME
 			// Division
 			var roomm = new Division(1000, "All", "Home", null);
 			Divisions.Add(roomm);
+
 			roomm.AddDivice(deviceWeather);
 			roomm.AddDivice(deviceEnergyConsumption);
 			roomm.AddDivice(deviceEnergyManagement);
 			roomm.AddDivice(deviceCctv);
 			roomm.AddDivice(deviceIrrigation);
 			roomm.AddDivice(deviceEvents);
+			roomm.AddDivice(deviceSettings);
 
-			DivisionData(tab, "sdsd");
+
+			DivisionData(tab);
 
 		}
 

@@ -11,18 +11,18 @@ namespace SHOME
 		{
 
 
-			MainPage = new NavigationPage(new SHOME.MenuPage());
+			//MainPage = new NavigationPage(new SHOME.MenuPage());
 			//	MainPage = new MenuPage();
 			//MainPage = new NavigationPage(new LoginPage());
-			//MainPage = new NavigationPage(new MenuPage());
+		
 
-				//if (!IsUserLoggedIn)
-				//{
-				//	MainPage = new NavigationPage(new LoginPage());
-				//}
-				//else {
-				//	MainPage = new NavigationPage(new SHOME.MenuPage());
-				//}
+				if (!IsUserLoggedIn)
+				{
+					MainPage = new NavigationPage(new LoginPage());
+				}
+				else {
+					MainPage = new NavigationPage(new SHOME.MenuPage());
+				}
 			
 			//}
 			//else 
