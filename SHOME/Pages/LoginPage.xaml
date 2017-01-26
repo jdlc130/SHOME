@@ -11,7 +11,9 @@
 			<Entry x:Name="usernameEntry" Placeholder="Username"   />
 
 			<Entry x:Name="passwordEntry" Placeholder="Password" IsPassword="true" />
-			<Button Text="Login" Clicked="OnLoginButtonClicked" />
+			<Button Text="            Login            " Clicked="OnLoginButtonClicked" BackgroundColor = "White"   BorderWidth="1"
+					HorizontalOptions="EndAndExpand"
+              BorderColor="Black" />
 			<Label x:Name="messageLabel" />
 		</StackLayout>
 

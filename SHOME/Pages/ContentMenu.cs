@@ -12,6 +12,7 @@ namespace SHOME
 
         public ContentMenu(string tab)
         {
+			// Fixed devices
             var deviceSettings = new Devices(1009, "Settings", "Settings", "" , 1);
             var deviceEvents = new Devices(1008, "Events", "Events", "", 1);
             var deviceWeather = new Devices(1000, "Weather", "weather", "", 1);
@@ -21,7 +22,7 @@ namespace SHOME
             var deviceIrrigation = new Devices(1004, "irrigation", "irrigation", "", 1);
 
 
-            // Division
+            // Division HOME
             var roomm = new Division(1000, "All", "Home", null);
             Divisions.Add(roomm);
 
@@ -37,6 +38,7 @@ namespace SHOME
             DivisionData(tab);
         }
 
+		// Function get divisions
         public async void DivisionData(string tab)
         {
             var aux = 0;
@@ -60,15 +62,17 @@ namespace SHOME
             }
         }
 
+		// Function set Clicks
 		public async void SetClicks(string type, int actuator)
 		{
-			//http://montalegre.m-iti.org:22941/updateClicks/actuator/16
-			var aux = 0;
+			
 			var json = await WebServicesData.SyncTask("POST", "updateClicks", type , actuator);
 
 
 		}
 
+
+		// Function get devices
         public async void DevicesData(int id, Division division, string tab)
         {
             var json = await WebServicesData.SyncTask("GET", "ActuatorsDevicesByDivision", id);
@@ -88,7 +92,7 @@ namespace SHOME
 
                 division.AddDivice(device);
                 aux++;
-                if (size == aux)
+                if (size == aux) //add in end
                 {
                     var deviceAdd = new Devices(1010, "ADD", "ADD" , "" ,1);
                     division.AddDivice(deviceAdd);
@@ -98,8 +102,11 @@ namespace SHOME
             Construtor(tab);
         }
 
+
+		// View construtor 
         public async void Construtor(string tab)
         {
+			// Add background to view 
             switch (tab)
             {
                 case "Bedroom":
@@ -119,23 +126,16 @@ namespace SHOME
                     break;
             }
 
-            var buttonLights = new List<Image>();
-            var buttonCctvs = new List<Image>();
-            var buttonACs = new List<Image>();
-            var buttonListAudio = new List<Image>();
-            var buttonListBlinds = new List<Image>();
-            var buttonListLock = new List<Image>();
-            var buttonListIrrigation = new List<Image>();
-            var buttonListWeather = new List<Image>();
-            var buttonListEnergyConsumption = new List<Image>();
-            var buttonListEnergyManagement = new List<Image>();
+          
 
             var stack = new StackLayout();
             Padding = new Thickness(0, Device.OnPlatform(20, 0, 0), 0, 0);
 
+			// Add divisions to view 
             foreach (var s in Divisions)
                 if ((s.Type == tab) || (tab == "Home"))
                 {
+					// Create grid
                     var grid = new Grid
                     {
                         BackgroundColor = new Color(0, 0, 0, 0),
@@ -145,6 +145,7 @@ namespace SHOME
                         }
                     };
 
+					// Label division
                     stack.Children.Add(new Label
                     {
                         Text = s.Name.ToUpper(),
@@ -157,10 +158,13 @@ namespace SHOME
 
                     var rowGrid = 0;
                     var columnGrid = 0;
+
+				// Add icons and buttons to view 
                     foreach (var dev in s.devices)
                         switch (dev.Type)
                         {
                             case "Light":
+								// Create icon
                                 var buttonLight = new Image
                                 {
                                     Source = "lights.png",
@@ -168,14 +172,16 @@ namespace SHOME
                                     HeightRequest = 70,
                                     Opacity = 2
                                 };
+								// Save icon
                                 dev.buttons = buttonLight;
+								// Button
 								dev.buttons.GestureRecognizers.Add( new TapGestureRecognizer
 								{
 							Command = new Command(() => { SetClicks("division", s.Id); SetClicks("actuator", dev.Id); Navigation.PushAsync(new LightsPage(dev.Id));  })
 									
                                 });
-                                grid.Children.Add(buttonLight, columnGrid, rowGrid);
-
+                                grid.Children.Add(buttonLight, columnGrid, rowGrid); // Add icon to grid
+								// Label divice
 								var lab = (new Label
 								{
 									Text =  dev.Description.Substring(0, 10),
@@ -188,15 +194,18 @@ namespace SHOME
                                 break;
 
                             case "CCTV":
+								// Create icon
                                 var buttonCctv = new Image {Source = "cctv.png", WidthRequest = 7, HeightRequest = 70};
-                                dev.buttons = buttonCctv;
-                                dev.buttons.GestureRecognizers.Add(new TapGestureRecognizer
+								// Save icon
+								dev.buttons = buttonCctv;
+								// Button
+								dev.buttons.GestureRecognizers.Add(new TapGestureRecognizer
                                 {
                                     Command = new Command(() => { SetClicks("division", s.Id); SetClicks("actuator", dev.Id); Navigation.PushAsync(new CameraPage()); })
                                 });
 
 								
-                                grid.Children.Add(buttonCctv, columnGrid, rowGrid);
+                                grid.Children.Add(buttonCctv, columnGrid, rowGrid); // Add icon to grid
 
 
 								var labCCTV = (new Label
@@ -211,40 +220,46 @@ namespace SHOME
                                 break;
 
                             case "Ac":
+								// Create icon
                                 var buttonAC = new Image {Source = "ac.png", WidthRequest = 7, HeightRequest = 70};
-                                buttonACs.Add(buttonAC);
-                                grid.Children.Add(buttonAC, columnGrid, rowGrid);
+                
+                                grid.Children.Add(buttonAC, columnGrid, rowGrid); // Add icon to grid
                                 columnGrid++;
                                 break;
 
                             case "Audio":
+								// Create icon
                                 var buttonAudio = new Image {Source = "audio.png", WidthRequest = 7, HeightRequest = 70};
-                                buttonListAudio.Add(buttonAudio);
-                                grid.Children.Add(buttonAudio, columnGrid, rowGrid);
+                                
+                                grid.Children.Add(buttonAudio, columnGrid, rowGrid); // Add icon to grid
 
 
                                 columnGrid++;
                                 break;
                             case "Blinds":
+								// Create icon
                                 var buttonBlinds = new Image
                                 {
                                     Source = "blinds.png",
                                     WidthRequest = 7,
                                     HeightRequest = 70
                                 };
-                                buttonListBlinds.Add(buttonBlinds);
-                                grid.Children.Add(buttonBlinds, columnGrid, rowGrid);
+                               
+                                grid.Children.Add(buttonBlinds, columnGrid, rowGrid); // Add icon to grid
 
                                 columnGrid++;
                                 break;
                             case "Lock":
+								// Create icon
                                 var buttonLock = new Image {Source = "lock.png", WidthRequest = 7, HeightRequest = 70};
-                                dev.buttons = buttonLock;
-                                dev.buttons.GestureRecognizers.Add(new TapGestureRecognizer
+								// Save icon
+								dev.buttons = buttonLock;
+								// Button
+								dev.buttons.GestureRecognizers.Add(new TapGestureRecognizer
                                 {
                                     Command = new Command(() => {SetClicks("division", s.Id); SetClicks("actuator", dev.Id); Navigation.PushAsync(new LocksPage(dev.Id)); })
                                 });
-                                grid.Children.Add(buttonLock, columnGrid, rowGrid);
+                                grid.Children.Add(buttonLock, columnGrid, rowGrid); // Add icon to grid
 
 								var labLock = (new Label
 								{
@@ -257,14 +272,15 @@ namespace SHOME
                                 columnGrid++;
                                 break;
                             case "Irrigations":
+								// Create icon
                                 var buttonIrrigation = new Image
                                 {
                                     Source = "irrigation.png",
                                     WidthRequest = 7,
                                     HeightRequest = 70
                                 };
-                                buttonListIrrigation.Add(buttonIrrigation);
-                                grid.Children.Add(buttonIrrigation, columnGrid, rowGrid);
+                                
+                                grid.Children.Add(buttonIrrigation, columnGrid, rowGrid); // Add icon to grid
 
 								var labIrrigations = (new Label
 								{
@@ -276,96 +292,121 @@ namespace SHOME
                                 columnGrid++;
                                 break;
                             case "weather":
+								// Create icon
                                 var buttonWeather = new Image
                                 {
                                     Source = "weather.png",
                                     WidthRequest = 7,
                                     HeightRequest = 70
                                 };
-                                dev.buttons = buttonWeather;
-                                dev.buttons.GestureRecognizers.Add(new TapGestureRecognizer
+								// Save icon
+								dev.buttons = buttonWeather;
+								// Button
+								dev.buttons.GestureRecognizers.Add(new TapGestureRecognizer
                                 {
                                     Command = new Command(() => { Navigation.PushAsync(new Weather()); })
                                 });
-                                grid.Children.Add(buttonWeather, columnGrid, rowGrid);
+                                grid.Children.Add(buttonWeather, columnGrid, rowGrid); // Add icon to grid
                                 columnGrid++;
                                 break;
                             case "EnergyConsumption":
+								// Create icon
                                 var buttonEnergyConsumption = new Image
                                 {
                                     Source = "energy_consumption.png",
                                     WidthRequest = 7,
                                     HeightRequest = 70
                                 };
-                                dev.buttons = buttonEnergyConsumption;
-                                dev.buttons.GestureRecognizers.Add(new TapGestureRecognizer
+								// Save icon
+								dev.buttons = buttonEnergyConsumption;
+								// Button
+								dev.buttons.GestureRecognizers.Add(new TapGestureRecognizer
                                 {
                                     Command = new Command(() => { Navigation.PushAsync(new ConsumptionPage()); })
                                 });
-                                grid.Children.Add(buttonEnergyConsumption, columnGrid, rowGrid);
+                                grid.Children.Add(buttonEnergyConsumption, columnGrid, rowGrid); // Add icon to grid
                                 columnGrid++;
                                 break;
                             case "EnergyManagement":
+								// Create icon
                                 var buttonEnergyManagement = new Image
                                 {
                                     Source = "energy_management.png",
                                     WidthRequest = 7,
                                     HeightRequest = 70
                                 };
-                                buttonListEnergyManagement.Add(buttonEnergyManagement);
-                                grid.Children.Add(buttonEnergyManagement, columnGrid, rowGrid);
+								// Save icon
+								dev.buttons = buttonEnergyManagement;
+								// Button
+								dev.buttons.GestureRecognizers.Add(new TapGestureRecognizer
+								{
+							Command = new Command(() => { Navigation.PushAsync(new GestaoPage()); })
+								});
+                                grid.Children.Add(buttonEnergyManagement, columnGrid, rowGrid); // Add icon to grid
+
                                 columnGrid++;
                                 break;
                             case "Events":
+								// Create icon
                                 var buttonEvents = new Image
                                 {
                                     Source = "icon_events.png",
                                     WidthRequest = 7,
                                     HeightRequest = 70
                                 };
-                                dev.buttons = buttonEvents;
-                                dev.buttons.GestureRecognizers.Add(new TapGestureRecognizer
+								// Save icon
+								dev.buttons = buttonEvents;
+								// Button
+								dev.buttons.GestureRecognizers.Add(new TapGestureRecognizer
                                 {
                                     Command = new Command(() => { Navigation.PushAsync(new ListEventPage()); }),
 
                                 });
-                                grid.Children.Add(buttonEvents, columnGrid, rowGrid);
+                                grid.Children.Add(buttonEvents, columnGrid, rowGrid); // Add icon to grid
                                 columnGrid++;
                                 break;
 
                             case "Settings":
+								// Create icon
                                 var buttonSettings = new Image
                                 {
                                     Source = "icon_settings.png",
                                     WidthRequest = 7,
                                     HeightRequest = 70
                                 };
-                                dev.buttons = buttonSettings;
-                                dev.buttons.GestureRecognizers.Add(new TapGestureRecognizer
+								// Save icon
+								dev.buttons = buttonSettings;
+								// Button
+								dev.buttons.GestureRecognizers.Add(new TapGestureRecognizer
                                 {
                                     Command = new Command(() => { Navigation.PushAsync(new SettingsPage()); })
                                 });
-                                grid.Children.Add(buttonSettings, columnGrid, rowGrid);
+                                grid.Children.Add(buttonSettings, columnGrid, rowGrid); // Add icon to grid
                                 columnGrid++;
                                 break;
                             case "ADD":
+								// Create icon
                                 var buttonADD = new Image
                                 {
                                     Source = "icon_addDevice.png",
                                     WidthRequest = 7,
                                     HeightRequest = 70
                                 };
-                                dev.buttons = buttonADD;
-                                dev.buttons.GestureRecognizers.Add(new TapGestureRecognizer
+								// Save icon
+								dev.buttons = buttonADD;
+								
+								// Button
+								dev.buttons.GestureRecognizers.Add(new TapGestureRecognizer
                                 {
                                     Command = new Command(() => { Navigation.PushAsync(new AddDevice(s.Id)); })
                                 });
-                                grid.Children.Add(buttonADD, columnGrid, rowGrid);
+                                grid.Children.Add(buttonADD, columnGrid, rowGrid); // Add icon to grid
                                 columnGrid++;
                                 break;
                         }
 
 
+				// Horizontal ScrollView
                     stack.Children.Add(new ScrollView
                     {
                         Content = grid,
@@ -373,7 +414,7 @@ namespace SHOME
                     });
                 }
 
-
+			// Vertical ScrollView
             var scollVertical = new ScrollView
             {
                 Content = stack,
@@ -384,7 +425,7 @@ namespace SHOME
 
         }
 
-
+		// Devices definition
         public class Devices
         {
             public Devices(int id, string name, string type, string description , int idActuator)
@@ -405,6 +446,7 @@ namespace SHOME
             public Image buttons { get; set; } = new Image();
         }
 
+		// Division definition
         public class Division
         {
             public Division(int id, string name, string type, string beaconId)

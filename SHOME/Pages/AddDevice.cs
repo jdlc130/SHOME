@@ -18,13 +18,7 @@ namespace SHOME.Pages
         {
             var header = new Image
             {
-                Source = new FileImageSource
-                {
-                    File = Device.OnPlatform(
-                        "Images/header_addDevice.png",
-                        "header_addDevice.png",
-                        "Images/header_addDevice.png")
-                },
+                Source = "header_addDevice.png",
                 HorizontalOptions = LayoutOptions.Center,
                 VerticalOptions = LayoutOptions.Start
             };

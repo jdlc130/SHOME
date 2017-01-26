@@ -10,6 +10,7 @@ namespace SHOME
         {
             InitializeComponent();
             BackgroundImage = "login.png";
+
         }
 
         private async void OnSignUpButtonClicked(object sender, EventArgs e)
@@ -24,17 +25,19 @@ namespace SHOME
                 Username = usernameEntry.Text,
                 Password = passwordEntry.Text
             };
-			//GetUser( user);
+	
 			bool correct;
+
+			// User validation
 			if (user.Username != null && user.Password != null)
 			{
+				//Request to server
 				var json = await WebServicesData.SyncTask("GET", "login", usernameEntry.Text, passwordEntry.Text);
 
 				if (json == "correct")
 					correct = true;
 				else
-					correct = false;
-				
+					correct = false;	
 			} 
 			else
 				correct = false;
@@ -48,7 +51,7 @@ namespace SHOME
             else
             {
                 messageLabel.Text = "Login failed";
-              //  passwordEntry.Text = string.Empty;
+                passwordEntry.Text = string.Empty;
             }
         }
 

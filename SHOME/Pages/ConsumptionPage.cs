@@ -96,13 +96,7 @@ namespace SHOME.Pages
         {
             var background = new Image
             {
-                Source = new FileImageSource
-                {
-                    File = Device.OnPlatform(
-                        "Images/header_energyConsumption.png",
-                        "header_energyConsumption.png",
-                        "Images/header_energyConsumption.png")
-                },
+                Source = "header_energyConsumption.png",
                 HorizontalOptions = LayoutOptions.Center,
                 VerticalOptions = LayoutOptions.Start
             };

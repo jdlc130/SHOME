@@ -15,13 +15,13 @@ namespace SHOME
 
         public App()
         {
-            Ibeacon = ServiceLocator.Current.GetService<IBBeaconIterface>();
+           /* Ibeacon = ServiceLocator.Current.GetService<IBBeaconIterface>();
             Ibeacon.EnteredRegion += IbeaconEnteredRegion;
-            Ibeacon.ExitedRegion += IbeaconExitedRegion;
-            Ibeacon.EnteredRange += IbeaconEnteredRange;
+        	 Ibeacon.ExitedRegion += IbeaconExitedRegion;
+            Ibeacon.EnteredRange += IbeaconEnteredRange;*/
             Currentbeacon = new IBBeacon() {Proximity = 1};
 
-			//MainPage = new NavigationPage(new SHOME.MenuPage());
+		
 			   if (!IsUserLoggedIn)
 					{
 						MainPage = new NavigationPage(new LoginPage());
@@ -31,7 +31,7 @@ namespace SHOME
 					}
 			
         }
-
+		/*
         protected override void OnStart()
         {
             var beacons = SampleData.Exhibits.Select(exhibit => new IBBeacon()
@@ -110,6 +110,6 @@ namespace SHOME
             //return ServiceLocator.Current.GetService<NavigationPage>();
 	        return new NavigationPage(new MenuPage());
 
-	    }
+	    } */
 	}
 }

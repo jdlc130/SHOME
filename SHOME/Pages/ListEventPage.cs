@@ -12,15 +12,9 @@ namespace SHOME
 
         public ListEventPage()
         {
-            Header = new Image
-            {
-                Source = new FileImageSource
-                {
-                    File = Device.OnPlatform(
-                        "Images/header_events.png",
-                        "header_events.png",
-                        "Images/header_events.png")
-                },
+			Header = new Image
+			{
+				Source = "header_events.png",
                 HorizontalOptions = LayoutOptions.Center,
                 VerticalOptions = LayoutOptions.Start
             };

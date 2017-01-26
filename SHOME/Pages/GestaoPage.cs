@@ -22,13 +22,7 @@ namespace SHOME
         {
             var header = new Image
             {
-                Source = new FileImageSource
-                {
-                    File = Device.OnPlatform(
-                        "Images/header_energyManagement.png",
-                        "header_energyManagement.png",
-                        "Images/header_energyManagement.png")
-                },
+                Source = "header_energyManagement.png",
                 HorizontalOptions = LayoutOptions.Center,
                 VerticalOptions = LayoutOptions.Start
             };
