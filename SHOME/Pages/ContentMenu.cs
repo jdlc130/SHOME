@@ -358,7 +358,7 @@ namespace SHOME
                                 dev.buttons = buttonADD;
                                 dev.buttons.GestureRecognizers.Add(new TapGestureRecognizer
                                 {
-                                    Command = new Command(() => { Navigation.PushAsync(new AddDevice(dev.Id)); })
+                                    Command = new Command(() => { Navigation.PushAsync(new AddDevice(s.Id)); })
                                 });
                                 grid.Children.Add(buttonADD, columnGrid, rowGrid);
                                 columnGrid++;

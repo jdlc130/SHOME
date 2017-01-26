@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Json;
 using System.Linq;
 using SHOME.Data;
@@ -62,10 +63,13 @@ namespace SHOME.Pages
             addButton.Clicked += async (sender, e) =>
             {
                 if (!IsValid(devIf, devCodeIf, devOrderIf, devModelIf)) return;
+                var refer = DateTime.Now.Date.Year + "-" + DateTime.Now.Date.Month + "-" + DateTime.Now.Date.Day;
+                var division = divisionId;
                 var json = await WebServicesData.SyncTask("POST", "insertdevice", 
                     devIf.Text, devDesIf.Text, devCodeIf.Text, devModelIf.Text, devOrder.Text,
-                    0, 1, 0, 0, DateTime.Now.Date.Year + "-" + DateTime.Now.Date.Month + "-" + DateTime.Now.Date.Day, 0, 0, divisionId);
-                AtuatorConstrutor(0);
+                    1, 1, 1, 3, DateTime.Now.Date.Year + "-" + DateTime.Now.Date.Month + "-" + DateTime.Now.Date.Day, 1, 1, divisionId);
+                var result = json["id"];
+                AtuatorConstrutor(result);
             };
 
             forms.Children.Add(devLabel, 0 , 0);
@@ -140,7 +144,8 @@ namespace SHOME.Pages
             {
                 if (!IsValid(actIf, actDescrIf)) return;
                 var json = await WebServicesData.SyncTask("POST", "insertactuator",
-                    actIf.Text, actDescrIf.Text, DateTime.Now.Date, DateTime.Now.Date,
+                    actIf.Text, actDescrIf.Text, DateTime.Now.Date.Year + "-" + DateTime.Now.Date.Month + "-" + DateTime.Now.Date.Day, 
+                    DateTime.Now.Date.Year + "-" + DateTime.Now.Date.Month + "-" + DateTime.Now.Date.Day,
                     "High", 1, id, 0);
                 await DisplayAlert("SUCCESS", "Actuator " + actIf.Text + " added!", "Ok");
             };
