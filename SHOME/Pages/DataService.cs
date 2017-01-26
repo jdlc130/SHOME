@@ -7,7 +7,7 @@ namespace SHOME
 {
     public class DataService
     {
-        public static async Task<JContainer> getDataFromService(string queryString)
+        public static async Task<JContainer> GetDataFromService(string queryString)
         {
             var client = new HttpClient();
             var response = await client.GetAsync(queryString);
