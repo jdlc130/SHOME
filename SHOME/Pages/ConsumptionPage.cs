@@ -9,6 +9,7 @@ namespace SHOME.Pages
         private const string LowConsumption = "low_consumption.png";
         private const string MediumConsumption = "medium_consumption.png";
         private const string HighConsumption = "high_consumption.png";
+        private readonly double[] _devices = new double[9];
 
         private readonly string[] _devicesName =
         {
@@ -24,7 +25,6 @@ namespace SHOME.Pages
         };
 
         private Color _day = Color.FromRgb(211, 211, 211);
-        private readonly double[] _devices = new double[9];
         private string _image;
         private Color _month = Color.FromRgb(211, 211, 211);
 

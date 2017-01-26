@@ -8,8 +8,10 @@ using Android.Content;
 using Android.Content.PM;
 using Android.OS;
 using Android.Util;
+using SHOME.Droid;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
+using Resource = Xamarin.Forms.Platform.Android.Resource;
 
 namespace SHOME.Droid
 {
@@ -17,7 +19,7 @@ namespace SHOME.Droid
          ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : FormsAppCompatActivity, IDialogInterfaceOnDismissListener, IBeaconConsumer
     {
-        private readonly List<Beacon> _data;
+        public List<Beacon> Data;
         private readonly RangeNotifier _rangeNotifier;
 
         private BeaconManager _beaconManager;
@@ -30,7 +32,7 @@ namespace SHOME.Droid
         public MainActivity()
         {
             _rangeNotifier = new RangeNotifier();
-            _data = new List<Beacon>();
+            Data = new List<Beacon>();
         }
 
         public void OnBeaconServiceConnect()
@@ -73,7 +75,7 @@ namespace SHOME.Droid
 
             LoadApplication(new App());
 
-            foreach (var beacon in _data)
+            foreach (var beacon in Data)
             {
                 //TODO Precisas disto.
                 var id = beacon.Id1;
@@ -140,8 +142,8 @@ namespace SHOME.Droid
         {
             if ((allBeacons == null) || (allBeacons.Count == 0)) return;
 
-            var delete = _data.Where(d => allBeacons.All(ab => ab.Id1.ToString() != d.Id1.ToString())).ToList();
-            _data.RemoveAll(d => delete.Any(del => del.Id1.ToString() == d.Id1.ToString()));
+            var delete = Data.Where(d => allBeacons.All(ab => ab.Id1.ToString() != d.Id1.ToString())).ToList();
+            Data.RemoveAll(d => delete.Any(del => del.Id1.ToString() == d.Id1.ToString()));
 
             if (delete.Count > 0)
                 delete = null;
@@ -163,11 +165,11 @@ namespace SHOME.Droid
                 var newBeacons = new List<Beacon>();
 
                 foreach (var beacon in beacons)
-                    if (_data.Exists(b => b.Id1.ToString() == beacon.Id1.ToString()))
+                    if (Data.Exists(b => b.Id1.ToString() == beacon.Id1.ToString()))
                     {
                         //Update Data
-                        var index = _data.FindIndex(b => b.Id1.ToString() == beacon.Id1.ToString());
-                        _data[index] = beacon;
+                        var index = Data.FindIndex(b => b.Id1.ToString() == beacon.Id1.ToString());
+                        Data[index] = beacon;
                     }
                     else
                     {
@@ -177,10 +179,10 @@ namespace SHOME.Droid
                 RunOnUiThread(() =>
                 {
                     foreach (var beacon in newBeacons)
-                        _data.Add(beacon);
+                        Data.Add(beacon);
 
                     if (newBeacons.Count > 0)
-                        _data.Sort((x, y) => x.Distance.CompareTo(y.Distance));
+                        Data.Sort((x, y) => x.Distance.CompareTo(y.Distance));
                 });
             });
         }

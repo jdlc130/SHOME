@@ -1,16 +1,16 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="SHOME.CreateEvent">
-<ScrollView>
+  <ScrollView>
     <StackLayout
       Orientation="Vertical"
       VerticalOptions="Center">
-      
-      <Label x:Name="title" 
+
+      <Label x:Name="title"
              Text="Criar Evento"
              TextColor="Black"
-             FontSize="30">                    
+             FontSize="30">
       </Label>
-      
+
       <Label x:Name="lblName" Text="Nome"></Label>
       <Entry x:Name="entName"></Entry>
 
@@ -37,7 +37,10 @@
       <Label x:Name="lblDevice" Text="Aparelho"></Label>
       <Picker x:Name="DevicePicker" />
 
-	 <Button x:Name="button" Clicked="OnSave" Text="Save"/>
+      <Label x:Name="lblState" Text="Estado"></Label>
+      <Picker x:Name="StatePicker" />
+
+      <Button x:Name="button" Clicked="OnSave" Text="Save"/>
     </StackLayout>
   </ScrollView>
 </ContentPage>

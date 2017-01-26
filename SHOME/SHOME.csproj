@@ -36,15 +36,16 @@
     <EmbeddedResource Include="Pages\SignUpPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="Pages\CreateEvent.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\CreateEvent.xaml.cs">
+      <DependentUpon>CreateEvent.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Data\WebServicesData.cs" />
+    <Compile Include="Pages\AddActuator.cs" />
     <Compile Include="Pages\ConsumptionPage.cs" />
     <Compile Include="Pages\GestaoPage.cs" />
     <Compile Include="Pages\CameraPage.cs" />
@@ -73,9 +74,6 @@
     <Compile Include="Pages\ListEventPage.cs" />
     <Compile Include="Pages\LocksPage.cs" />
     <Compile Include="Pages\WeatherCore.cs" />
-    <Compile Include="Pages\CreateEvent.xaml.cs">
-      <DependentUpon>CreateEvent.xaml</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="HolisticWare.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -125,6 +123,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Pages\LockPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Pages\CreateEvent.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
