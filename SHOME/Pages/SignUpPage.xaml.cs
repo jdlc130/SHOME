@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Xamarin.Forms;
+using SHOME.Data;
 
 namespace SHOME
 {
@@ -11,6 +12,7 @@ namespace SHOME
             InitializeComponent();
         }
 
+	
         private async void OnSignUpButtonClicked(object sender, EventArgs e)
         {
             var user = new User
@@ -20,9 +22,27 @@ namespace SHOME
                 Email = emailEntry.Text
             };
 
-            // Sign up logic goes here
+			// Sign up logic goes here
+			bool signUpSucceeded;
+			if (!string.IsNullOrWhiteSpace(user.Username) && !string.IsNullOrWhiteSpace(user.Password) &&
+			   !string.IsNullOrWhiteSpace(user.Email) && user.Email.Contains("@"))
+			{
+					var json = await WebServicesData.SyncTask("POST", "insertuser", user.Username, user.Email, user.Password, "1234656789", "2017-01-18", "B", "0", "2017-01-31", "1", "1");
 
-            var signUpSucceeded = AreDetailsValid(user);
+				if (json == "Inserido")
+					signUpSucceeded = true;
+				else
+					signUpSucceeded = false;
+			}
+			else
+			{
+				signUpSucceeded = false;
+			}
+
+
+
+
+        
             if (signUpSucceeded)
             {
                 var rootPage = Navigation.NavigationStack.FirstOrDefault();
@@ -35,14 +55,17 @@ namespace SHOME
             }
             else
             {
-                messageLabel.Text = "Sign up failed";
+				DisplayAlert("Sign", "Sign up failed", "Ok");
+              
             }
         }
 
-        private bool AreDetailsValid(User user)
+		private async void AreDetailsValid(User user)
         {
-            return !string.IsNullOrWhiteSpace(user.Username) && !string.IsNullOrWhiteSpace(user.Password) &&
-                   !string.IsNullOrWhiteSpace(user.Email) && user.Email.Contains("@");
+			
+			
+				var json = await WebServicesData.SyncTask("POST", "insertuser", user.Username, user.Email, user.Password, "1234656789", "2017-01-18", "B", "0", "2017-01-31", "1","1");
+			
         }
     }
 }

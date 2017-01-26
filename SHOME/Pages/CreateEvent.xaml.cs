@@ -27,16 +27,31 @@ namespace SHOME
                 //DisplayAlert("Power", ourPickedItem, "OK");
                 //var teste  = Divisions[ourPickedItem];
             };
-            // Falta criar um acesso à bd
-            // Buscar todas as divisões
-            //DivisionPicker.Items.Add("Cozinha");
-            //DivisionPicker.Items.Add("Quarto Principal");
-            //DivisionPicker.Items.Add("Sala");
-            //DivisionPicker.Items.Add("Entrada");
 
-            // Buscar todas as aparelhos que estão em cada divisão
-            //DevicePicker.Items.Add("Luzes");
-            //DevicePicker.Items.Add("Fechadura");
+            DevicePicker.SelectedIndexChanged += (sender, args) =>
+            {
+                var ourPickedDevice = DevicePicker.Items[DevicePicker.SelectedIndex];
+
+                StatePicker.Items.Clear();
+
+                if (ourPickedDevice == "YaleLock")
+                {
+                    StatePicker.Items.Add("Open");
+                    StatePicker.Items.Add("Close");
+
+                }
+                else if (ourPickedDevice == "Philips Hue")
+                {
+                    StatePicker.Items.Add("Turn On");
+                    StatePicker.Items.Add("Turn Off");
+                }
+                else
+                {
+                    DisplayAlert("Device", "Sorry, you can't create an event for this device", "OK");
+                }
+
+            };
+  
         }
 
         public static List<Division> Divisions { get; set; } = new List<Division>();
@@ -91,12 +106,8 @@ namespace SHOME
             }
         }
 
-        public async void GetTemperature()
-        {
-            var aux = 0;
-            var json = await WebServicesData.SyncTask("GET", "division");
-            var size = json.Count;
-        }
+        // State
+
 
         private bool IsValid()
         {
@@ -121,13 +132,26 @@ namespace SHOME
             var Time = TimePickeri.Time;
             var TimeF = TimePickerf.Time;
             //var dd = _d.Day;
+            var ourPickedState = StatePicker.Items[StatePicker.SelectedIndex];
 
-
+            var state = 0;
+            switch (ourPickedState)
+            {
+                case "Open":
+                    state = 1;
+                    break;
+                case "Close":
+                    state = 0;
+                    break;
+                case "Turn On":
+                    state = 1;
+                    break;
+                case "Turn Off":
+                    state = 0;
+                    break;
+            }
+          
             var now = DateTime.Now.ToLocalTime();
-
-            //var _DayOfWeek = now.DayOfWeek;
-            //var _ss = now.Month.ToString();
-            //var dds = now.DayOfYear;
 
             var _DayOfWeek = dateTime.DayOfWeek;
             var _Month = dateTime.Month;
@@ -164,14 +188,14 @@ namespace SHOME
                     break;
             }
 
-            var DeviceID = Divisions[DivisionPicker.SelectedIndex].devices[DevicePicker.SelectedIndex].Id;
-            var ActuatorID = Divisions[DivisionPicker.SelectedIndex].devices[DevicePicker.SelectedIndex].ActuatorID;
+          var DeviceID = Divisions[DivisionPicker.SelectedIndex].devices[DevicePicker.SelectedIndex].Id;
+           var ActuatorID = Divisions[DivisionPicker.SelectedIndex].devices[DevicePicker.SelectedIndex].ActuatorID;
             var dateF = 0 + " " + minutes + " " + hours + " " + _DayOfMonth + " " + _Month + " " + DayOfWeek;
             var datee = year + "-" + _Month + "-" + _DayOfMonth;
 
 
-            WebServicesData.SyncTask("POST", "insertEvent", 1, entName.Text, entDescription.Text, datee, Time, TimeF,
-                DeviceID, ActuatorID, 1, dateF);
+            WebServicesData.SyncTask("POST", "insertEvent", "toggleDevice", 1, entName.Text, entDescription.Text, datee, Time, TimeF,
+                DeviceID, ActuatorID, state, dateF);
 
 
             DisplayAlert("Power", _DayOfWeek.ToString(), "OK");

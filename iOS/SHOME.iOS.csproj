@@ -176,6 +176,22 @@
     <BundleResource Include="Resources\medium_consumption.png" />
     <BundleResource Include="Resources\bedroom_background.png" />
     <BundleResource Include="Resources\lounge_background.png" />
+    <BundleResource Include="Resources\color_picker.png" />
+    <BundleResource Include="Resources\energy_consumption.png" />
+    <BundleResource Include="Resources\energy_management.png" />
+    <BundleResource Include="Resources\garden_background.png" />
+    <BundleResource Include="Resources\header_energyConsumption.png" />
+    <BundleResource Include="Resources\header_events.png" />
+    <BundleResource Include="Resources\header_lock.png" />
+    <BundleResource Include="Resources\icon_addDevice.png" />
+    <BundleResource Include="Resources\icon_events.png" />
+    <BundleResource Include="Resources\icon_settings.png" />
+    <BundleResource Include="Resources\kitchen_background.png" />
+    <BundleResource Include="Resources\locked2.png" />
+    <BundleResource Include="Resources\lockk.png" />
+    <BundleResource Include="Resources\menu_background.png" />
+    <BundleResource Include="Resources\unlock.png" />
+    <BundleResource Include="Resources\unlocked2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.2.3.3.180\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.2.3.3.180\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />

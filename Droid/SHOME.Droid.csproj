@@ -129,6 +129,9 @@
     <AndroidResource Include="Resources\drawable\header_events.png" />
     <AndroidResource Include="Resources\drawable\lockk.png" />
     <AndroidResource Include="Resources\drawable\unlock.png" />
+    <AndroidResource Include="Resources\drawable\icon_events.png" />
+    <AndroidResource Include="Resources\drawable\icon_settings.png" />
+    <AndroidResource Include="Resources\drawable\icon_addDevice.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Tabbar.axml" />
