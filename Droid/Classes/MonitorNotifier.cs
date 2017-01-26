@@ -2,7 +2,7 @@
 using AltBeaconOrg.BoundBeacon;
 using Object = Java.Lang.Object;
 
-namespace SHOME.Droid
+namespace SHOME.Droid.Classes
 {
     public class MonitorEventArgs : EventArgs
     {
@@ -33,20 +33,17 @@ namespace SHOME.Droid
 
         private void OnDetermineStateForRegionComplete(int state, Region region)
         {
-            if (DetermineStateForRegionComplete != null)
-                DetermineStateForRegionComplete(this, new MonitorEventArgs {State = state, Region = region});
+            DetermineStateForRegionComplete?.Invoke(this, new MonitorEventArgs {State = state, Region = region});
         }
 
         private void OnEnterRegionComplete(Region region)
         {
-            if (EnterRegionComplete != null)
-                EnterRegionComplete(this, new MonitorEventArgs {Region = region});
+            EnterRegionComplete?.Invoke(this, new MonitorEventArgs {Region = region});
         }
 
         private void OnExitRegionComplete(Region region)
         {
-            if (ExitRegionComplete != null)
-                ExitRegionComplete(this, new MonitorEventArgs {Region = region});
+            ExitRegionComplete?.Invoke(this, new MonitorEventArgs {Region = region});
         }
     }
 }

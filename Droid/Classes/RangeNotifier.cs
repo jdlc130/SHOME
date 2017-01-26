@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using AltBeaconOrg.BoundBeacon;
 using Object = Java.Lang.Object;
 
-namespace SHOME.Droid
+namespace SHOME.Droid.Classes
 {
     public class RangeEventArgs : EventArgs
     {
@@ -22,8 +22,7 @@ namespace SHOME.Droid
 
         private void OnDidRangeBeaconsInRegion(ICollection<Beacon> beacons, Region region)
         {
-            if (DidRangeBeaconsInRegionComplete != null)
-                DidRangeBeaconsInRegionComplete(this, new RangeEventArgs {Beacons = beacons, Region = region});
+            DidRangeBeaconsInRegionComplete?.Invoke(this, new RangeEventArgs {Beacons = beacons, Region = region});
         }
     }
 }

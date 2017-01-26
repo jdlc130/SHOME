@@ -7,8 +7,6 @@ namespace SHOME
         public MenuPage()
         {
             Title = "SHOME";
-
-
             Children.Add(new ContentMenu("Bedroom")
             {
                 Icon = "bedroom.png"

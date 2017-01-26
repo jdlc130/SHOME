@@ -94,11 +94,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BackgroundActivity.cs" />
-    <Compile Include="BeaconReferenceApplication.cs" />
+    <Compile Include="Classes\iBeacon.cs" />
     <Compile Include="MainActivity.cs" />
-    <Compile Include="MonitorNotifier.cs" />
-    <Compile Include="RangeNotifier.cs" />
+    <Compile Include="Classes\MonitorNotifier.cs" />
+    <Compile Include="Classes\RangeNotifier.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
