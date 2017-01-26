@@ -34,7 +34,7 @@ namespace SHOME.Pages
 
             var configGrid = new Grid
             {
-                Padding = new Thickness(20, 0, 20, 10),
+                Padding = new Thickness(20, 20, 20, 10),
                 BackgroundColor = new Color(0, 0, 0, 0),
                 RowDefinitions = new RowDefinitionCollection
                 {
@@ -42,14 +42,14 @@ namespace SHOME.Pages
                     {
                         Height = new GridLength(1, GridUnitType.Star)
                     }
-                }
+                },
+                RowSpacing = 10
             };
             var clicksLabel = new Label
             {
                 Text = "Sort by number of Clicks",
                 FontFamily = "Roboto",
-                FontAttributes = FontAttributes.Bold,
-                FontSize = 18,
+                FontSize = 14,
                 TextColor = Color.Gray
             };
             var clicks = new Switch
@@ -65,14 +65,13 @@ namespace SHOME.Pages
             {
                 Text = "Beacons Localization",
                 FontFamily = "Roboto",
-                FontAttributes = FontAttributes.Bold,
-                FontSize = 18,
+                FontSize = 14,
                 TextColor = Color.Gray
             };
             var beacons = new Switch
             {
                 HorizontalOptions = LayoutOptions.End,
-                IsToggled = ClicksEnabled
+                IsToggled = BeaconsEnabled
             };
             beacons.Toggled += (sender, e) =>
             {
