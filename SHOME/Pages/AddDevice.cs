@@ -8,7 +8,7 @@ namespace SHOME.Pages
 {
     internal class AddDevice : ContentPage
     {
-        public AddDevice()
+        public AddDevice(int divisionId)
         {
             DeviceConstrutor();
         }
