@@ -1,32 +1,44 @@
 ﻿using System.Collections.Generic;
 using SHOME.Data;
+using SHOME.Pages;
 using Xamarin.Forms;
 
 namespace SHOME
 {
     public class ListEventPage : ContentPage
     {
-        public Button buttons;
-
+        public Button Buttons;
+        public Image Header;
 
         public ListEventPage()
         {
-            buttons = new Button
+            Header = new Image
             {
-                Text = "Add Event",
-                HorizontalOptions = LayoutOptions.Start,
-                VerticalOptions = LayoutOptions.CenterAndExpand
+                Source = new FileImageSource
+                {
+                    File = Device.OnPlatform(
+                        "Images/header_events.png",
+                        "header_events.png",
+                        "Images/header_events.png")
+                },
+                HorizontalOptions = LayoutOptions.Center,
+                VerticalOptions = LayoutOptions.Start
             };
 
-            buttons.Clicked += async (sender, e) => { Navigation.PushModalAsync(new CreateEvent()); };
+            Buttons = new Button
+            {
+                Text = "ADD EVENT",
+                FontFamily = "Roboto",
+                FontSize = 18,
+                VerticalOptions = LayoutOptions.End
+            };
+            Buttons.Clicked += async (sender, e) => { await Navigation.PushModalAsync(new EventPage()); };
 
             GetEvents();
         }
 
 
-        public List<Event> events { get; set; } = new List<Event>();
-
-
+        public List<Event> Events { get; set; } = new List<Event>();
         public async void GetEvents()
         {
             var aux = 0;
@@ -41,11 +53,9 @@ namespace SHOME
                     result["eventName"]
                 );
 
-                events.Add(eventS);
+                Events.Add(eventS);
                 aux++;
             }
-
-
             Constructor();
         }
 
@@ -56,16 +66,24 @@ namespace SHOME
 
             var listView = new ListView
             {
-                ItemsSource = events,
+                ItemsSource = Events,
                 ItemTemplate = dataTemplate
+            };
+
+            var stack = new StackLayout
+            {
+                Padding = new Thickness(20, 0, 20, 10),
+                Children = { Buttons, listView}
+                
             };
 
             Content = new StackLayout
             {
+                Spacing = 20,
                 Children =
                 {
-                    buttons,
-                    listView
+                    Header,
+                    stack
                 }
             };
         }
