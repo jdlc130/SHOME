@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System;
 using System.Diagnostics;
 using System.Linq;
-using SystemConfiguration;
+//using SystemConfiguration;
 
 namespace SHOME
 {
@@ -21,7 +21,15 @@ namespace SHOME
             Ibeacon.EnteredRange += IbeaconEnteredRange;
             Currentbeacon = new IBBeacon() {Proximity = 1};
 
-            MainPage = GetMainPage();
+			MainPage = new NavigationPage(new SHOME.MenuPage());
+			  // if (!IsUserLoggedIn)
+					//{
+					//	MainPage = new NavigationPage(new LoginPage());
+					//}
+					//else {
+					//	MainPage = new NavigationPage(new SHOME.MenuPage());
+					//}
+			
         }
 
         protected override void OnStart()
