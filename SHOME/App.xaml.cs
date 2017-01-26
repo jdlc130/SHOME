@@ -21,14 +21,14 @@ namespace SHOME
             Ibeacon.EnteredRange += IbeaconEnteredRange;
             Currentbeacon = new IBBeacon() {Proximity = 1};
 
-			MainPage = new NavigationPage(new SHOME.MenuPage());
-			  // if (!IsUserLoggedIn)
-					//{
-					//	MainPage = new NavigationPage(new LoginPage());
-					//}
-					//else {
-					//	MainPage = new NavigationPage(new SHOME.MenuPage());
-					//}
+			//MainPage = new NavigationPage(new SHOME.MenuPage());
+			   if (!IsUserLoggedIn)
+					{
+						MainPage = new NavigationPage(new LoginPage());
+					}
+					else {
+						MainPage = new NavigationPage(new SHOME.MenuPage());
+					}
 			
         }
 

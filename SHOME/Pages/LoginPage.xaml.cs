@@ -24,13 +24,13 @@ namespace SHOME
                 Username = usernameEntry.Text,
                 Password = passwordEntry.Text
             };
-			GetUser( user);
+			//GetUser( user);
 			bool correct;
 			if (user.Username != null && user.Password != null)
 			{
-			//	var json = await WebServicesData.SyncTask("GET", "login", usernameEntry.Text, passwordEntry.Text);
+				var json = await WebServicesData.SyncTask("GET", "login", usernameEntry.Text, passwordEntry.Text);
 
-				if ("df" == "correct")
+				if (json == "correct")
 					correct = true;
 				else
 					correct = false;

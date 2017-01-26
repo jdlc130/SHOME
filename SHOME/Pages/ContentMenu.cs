@@ -171,7 +171,7 @@ namespace SHOME
                                 dev.buttons = buttonLight;
 								dev.buttons.GestureRecognizers.Add( new TapGestureRecognizer
 								{
-							Command = new Command(() => { SetClicks("actuator", dev.Id); Navigation.PushAsync(new LightsPage(dev.Id));  })
+							Command = new Command(() => { SetClicks("division", s.Id); SetClicks("actuator", dev.Id); Navigation.PushAsync(new LightsPage(dev.Id));  })
 									
                                 });
                                 grid.Children.Add(buttonLight, columnGrid, rowGrid);
@@ -192,7 +192,7 @@ namespace SHOME
                                 dev.buttons = buttonCctv;
                                 dev.buttons.GestureRecognizers.Add(new TapGestureRecognizer
                                 {
-                                    Command = new Command(() => { SetClicks("actuator", dev.Id); Navigation.PushAsync(new CameraPage()); })
+                                    Command = new Command(() => { SetClicks("division", s.Id); SetClicks("actuator", dev.Id); Navigation.PushAsync(new CameraPage()); })
                                 });
 
 								
@@ -242,7 +242,7 @@ namespace SHOME
                                 dev.buttons = buttonLock;
                                 dev.buttons.GestureRecognizers.Add(new TapGestureRecognizer
                                 {
-                                    Command = new Command(() => { Navigation.PushAsync(new LocksPage(dev.Id)); })
+                                    Command = new Command(() => {SetClicks("division", s.Id); SetClicks("actuator", dev.Id); Navigation.PushAsync(new LocksPage(dev.Id)); })
                                 });
                                 grid.Children.Add(buttonLock, columnGrid, rowGrid);
 

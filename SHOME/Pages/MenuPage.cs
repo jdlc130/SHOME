@@ -31,6 +31,8 @@ namespace SHOME
             {
                 Icon = "kitchen.png"
             });
+
+
         }
     }
 }
