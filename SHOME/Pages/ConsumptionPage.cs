@@ -65,7 +65,7 @@ namespace SHOME.Pages
         {
             var deviceIndex = 1;
             //TODO lento
-            while (deviceIndex <= 5)
+            while (deviceIndex <= 3)
             {
                 var json = await WebServicesData.SyncTask("GET", "lucas/device", deviceIndex, startTime, endTime);
                 var index = 0;

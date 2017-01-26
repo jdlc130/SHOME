@@ -42,7 +42,7 @@ namespace SHOME.Pages
         private double _intensity;
         private bool _state;
 
-        public LightsPage(int id = 17)
+        public LightsPage(int id)
         {
             InitializeView(id);
         }

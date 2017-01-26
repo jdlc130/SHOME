@@ -80,9 +80,9 @@ namespace SHOME
             //DivPicker = new Picker();
             DivPicker.SelectedIndexChanged += (sender, args) =>
             {
+                DevPicker.Items.Clear();
                 var division = Divisions[DivPicker.SelectedIndex];
 
-                DevPicker.Items.Clear();
                 foreach (var device in division.devices)
                     DevPicker.Items.Add(device.Name);
                 
