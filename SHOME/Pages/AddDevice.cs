@@ -10,10 +10,10 @@ namespace SHOME.Pages
     {
         public AddDevice(int divisionId)
         {
-            DeviceConstrutor();
+            DeviceConstrutor(divisionId);
         }
 
-        private void DeviceConstrutor()
+        private void DeviceConstrutor(int divisionId)
         {
             var header = new Image
             {
@@ -43,6 +43,8 @@ namespace SHOME.Pages
 
             var devLabel = new Label{ Text = " Device Name", FontFamily = "Roboto", FontSize = 14, VerticalTextAlignment = TextAlignment.End};
             var devIf = new Entry {FontSize = 12};
+            var deviceDes = new Label { Text = " Device Description", FontFamily = "Roboto", FontSize = 14, VerticalTextAlignment = TextAlignment.End };
+            var devDesIf = new Entry { FontSize = 12 };
             var deviceCode = new Label { Text = " Device Code", FontFamily = "Roboto", FontSize = 14, VerticalTextAlignment = TextAlignment.End };
             var devCodeIf = new Entry { FontSize = 12 };
             var devModel = new Label { Text = " Device Model", FontFamily = "Roboto", FontSize = 14, VerticalTextAlignment = TextAlignment.End };
@@ -60,22 +62,23 @@ namespace SHOME.Pages
             addButton.Clicked += async (sender, e) =>
             {
                 if (!IsValid(devIf, devCodeIf, devOrderIf, devModelIf)) return;
-                /*var json = await WebServicesData.SyncTask("POST", "insertdevice", 
-                    devIf.Text, devCodeIf.Text, devModelIf.Text, devOrder.Text,
-                    0, 1, 0, 0, DateTime.Now.Date, 0, 1);*/
-                //TODO
+                var json = await WebServicesData.SyncTask("POST", "insertdevice", 
+                    devIf.Text, devDesIf.Text, devCodeIf.Text, devModelIf.Text, devOrder.Text,
+                    0, 1, 0, 0, DateTime.Now.Date.Year + "-" + DateTime.Now.Date.Month + "-" + DateTime.Now.Date.Day, 0, 0, divisionId);
                 AtuatorConstrutor(0);
             };
 
             forms.Children.Add(devLabel, 0 , 0);
             forms.Children.Add(devIf, 0, 1);
-            forms.Children.Add(deviceCode, 0, 2);
-            forms.Children.Add(devCodeIf, 0, 3);
-            forms.Children.Add(devModel, 0, 4);
-            forms.Children.Add(devModelIf, 0, 5);
-            forms.Children.Add(devOrder, 0, 6);
-            forms.Children.Add(devOrderIf, 0, 7);
-            forms.Children.Add(addButton, 0, 8);
+            forms.Children.Add(deviceDes, 0, 2);
+            forms.Children.Add(devDesIf, 0, 3);
+            forms.Children.Add(deviceCode, 0, 4);
+            forms.Children.Add(devCodeIf, 0, 5);
+            forms.Children.Add(devModel, 0, 6);
+            forms.Children.Add(devModelIf, 0, 7);
+            forms.Children.Add(devOrder, 0, 8);
+            forms.Children.Add(devOrderIf, 0, 9);
+            forms.Children.Add(addButton, 0, 10);
 
             var scroll = new ScrollView
             {
@@ -136,11 +139,10 @@ namespace SHOME.Pages
             saveButton.Clicked += async (sender, e) =>
             {
                 if (!IsValid(actIf, actDescrIf)) return;
-                /*var json = await WebServicesData.SyncTask("POST", "insertactuator",
+                var json = await WebServicesData.SyncTask("POST", "insertactuator",
                     actIf.Text, actDescrIf.Text, DateTime.Now.Date, DateTime.Now.Date,
-                    0, 0, id, 0);*/
+                    "High", 1, id, 0);
                 await DisplayAlert("SUCCESS", "Actuator " + actIf.Text + " added!", "Ok");
-                //await Navigation.PushModalAsync(new ContentPage());
             };
 
             forms.Children.Add(actName, 0, 0);

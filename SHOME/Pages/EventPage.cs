@@ -280,7 +280,7 @@ namespace SHOME
                 DescrEntry.Text, dateE, time, timeF,
                 deviceId, actuatorId, state, dateF);
                 await DisplayAlert("Success", "You are registered!", "Ok");
-                await Navigation.PushAsync(new ListEventPage());
+                //await Navigation.PushAsync(new ListEventPage());
             }
         }
 
