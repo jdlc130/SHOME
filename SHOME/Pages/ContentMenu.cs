@@ -12,13 +12,13 @@ namespace SHOME
 
         public ContentMenu(string tab)
         {
-            var deviceSettings = new Devices(1009, "Settings", "Settings");
-            var deviceEvents = new Devices(1008, "Events", "Events");
-            var deviceWeather = new Devices(1000, "Weather", "weather");
-            var deviceEnergyConsumption = new Devices(1001, "EnergyConsumption", "EnergyConsumption");
-            var deviceEnergyManagement = new Devices(1002, "EnergyManagement", "EnergyManagement");
-            var deviceCctv = new Devices(1003, "Camaras", "cctv");
-            var deviceIrrigation = new Devices(1004, "irrigation", "irrigation");
+            var deviceSettings = new Devices(1009, "Settings", "Settings", "");
+            var deviceEvents = new Devices(1008, "Events", "Events", "");
+            var deviceWeather = new Devices(1000, "Weather", "weather", "");
+            var deviceEnergyConsumption = new Devices(1001, "EnergyConsumption", "EnergyConsumption", "");
+            var deviceEnergyManagement = new Devices(1002, "EnergyManagement", "EnergyManagement", "");
+            var deviceCctv = new Devices(1003, "Camaras", "cctv", "");
+            var deviceIrrigation = new Devices(1004, "irrigation", "irrigation", "");
 
 
             // Division
@@ -60,6 +60,15 @@ namespace SHOME
             }
         }
 
+		public async void SetClicks(string type, int actuator)
+		{
+			//http://montalegre.m-iti.org:22941/updateClicks/actuator/16
+			var aux = 0;
+			var json = await WebServicesData.SyncTask("GET", "updateClicks", type , actuator);
+
+
+		}
+
         public async void DevicesData(int id, Division division, string tab)
         {
             var json = await WebServicesData.SyncTask("GET", "ActuatorsDevicesByDivision", id);
@@ -72,13 +81,14 @@ namespace SHOME
                 var device = new Devices(
                     result["idActuator"],
                     result["deviceName"],
-                    result["actuatorName"]
+                    result["actuatorName"],
+					result["actuatorDescription"]
                 );
                 division.AddDivice(device);
                 aux++;
                 if (size == aux)
                 {
-                    var deviceAdd = new Devices(1010, "ADD", "ADD");
+                    var deviceAdd = new Devices(1010, "ADD", "ADD" , "");
                     division.AddDivice(deviceAdd);
                 }
             }
@@ -139,8 +149,7 @@ namespace SHOME
                         HorizontalTextAlignment = TextAlignment.Center,
                         BackgroundColor = Color.FromRgba(211, 211, 211, 100),
                         FontSize = 18,
-                        FontFamily = "Roboto",
-                        FontAttributes = FontAttributes.Bold
+                        FontFamily = "Roboto"
                     });
 
 
@@ -158,11 +167,21 @@ namespace SHOME
                                     Opacity = 2
                                 };
                                 dev.buttons = buttonLight;
-                                dev.buttons.GestureRecognizers.Add(new TapGestureRecognizer
-                                {
-                                    Command = new Command(() => { Navigation.PushModalAsync(new LightsPage(dev.Id)); })
+								dev.buttons.GestureRecognizers.Add(new TapGestureRecognizer
+								{
+									Command = new Command(() => { Navigation.PushModalAsync(new LightsPage(dev.Id)); }),
+									
                                 });
                                 grid.Children.Add(buttonLight, columnGrid, rowGrid);
+
+								var lab = (new Label
+								{
+									Text =  dev.Description.Substring(0, 10),
+									TextColor = Color.White,
+									HorizontalTextAlignment = TextAlignment.Center
+								});
+								grid.Children.Add(lab, columnGrid, (rowGrid+1));
+
                                 columnGrid++;
                                 break;
 
@@ -174,7 +193,18 @@ namespace SHOME
                                     Command = new Command(() => { Navigation.PushModalAsync(new CameraPage()); })
                                 });
 
+								
                                 grid.Children.Add(buttonCctv, columnGrid, rowGrid);
+
+
+								var labCCTV = (new Label
+								{
+									Text = dev.Description.Substring(0, 10),
+									TextColor = Color.White,
+									HorizontalTextAlignment = TextAlignment.Center
+								});
+										grid.Children.Add(labCCTV, columnGrid, (rowGrid + 1));
+
                                 columnGrid++;
                                 break;
 
@@ -189,6 +219,8 @@ namespace SHOME
                                 var buttonAudio = new Image {Source = "audio.png", WidthRequest = 7, HeightRequest = 70};
                                 buttonListAudio.Add(buttonAudio);
                                 grid.Children.Add(buttonAudio, columnGrid, rowGrid);
+
+
                                 columnGrid++;
                                 break;
                             case "Blinds":
@@ -200,6 +232,7 @@ namespace SHOME
                                 };
                                 buttonListBlinds.Add(buttonBlinds);
                                 grid.Children.Add(buttonBlinds, columnGrid, rowGrid);
+
                                 columnGrid++;
                                 break;
                             case "Lock":
@@ -210,6 +243,15 @@ namespace SHOME
                                     Command = new Command(() => { Navigation.PushModalAsync(new LocksPage(dev.Id)); })
                                 });
                                 grid.Children.Add(buttonLock, columnGrid, rowGrid);
+
+								var labLock = (new Label
+								{
+									Text = dev.Description.Substring(0, 10),
+									TextColor = Color.White,
+									HorizontalTextAlignment = TextAlignment.Center
+								});
+								grid.Children.Add(labLock, columnGrid, (rowGrid + 1));
+
                                 columnGrid++;
                                 break;
                             case "Irrigations":
@@ -221,6 +263,14 @@ namespace SHOME
                                 };
                                 buttonListIrrigation.Add(buttonIrrigation);
                                 grid.Children.Add(buttonIrrigation, columnGrid, rowGrid);
+
+								var labIrrigations = (new Label
+								{
+									Text = dev.Description.Substring(0, 10),
+									TextColor = Color.White,
+									HorizontalTextAlignment = TextAlignment.Center
+								});
+								grid.Children.Add(labIrrigations, columnGrid, (rowGrid + 1));
                                 columnGrid++;
                                 break;
                             case "weather":
@@ -333,16 +383,18 @@ namespace SHOME
 
         public class Devices
         {
-            public Devices(int id, string name, string type)
+            public Devices(int id, string name, string type, string description)
             {
                 Id = id;
                 Name = name;
                 Type = type;
+				Description = description;
             }
 
             public int Id { get; set; }
             public string Name { get; set; }
             public string Type { get; set; }
+			public string Description { get; set; }
 
             public Image buttons { get; set; } = new Image();
         }

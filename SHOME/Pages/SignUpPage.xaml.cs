@@ -27,10 +27,12 @@ namespace SHOME
 			if (!string.IsNullOrWhiteSpace(user.Username) && !string.IsNullOrWhiteSpace(user.Password) &&
 			   !string.IsNullOrWhiteSpace(user.Email) && user.Email.Contains("@"))
 			{
-					var json = await WebServicesData.SyncTask("POST", "insertuser", user.Username, user.Email, user.Password, "1234656789", "2017-01-18", "B", "0", "2017-01-31", "1", "1");
+					var json = await WebServicesData.SyncTask("POST", "insertuser", user.Username, user.Email, user.Password, token.Text , "2017-01-18", "B", "0", "2017-01-31", "1", "1");
 
 				if (json == "Inserido")
 					signUpSucceeded = true;
+				if(json == "Inserido")
+					signUpSucceeded = false;
 				else
 					signUpSucceeded = false;
 			}

@@ -24,10 +24,22 @@ namespace SHOME
                 Username = usernameEntry.Text,
                 Password = passwordEntry.Text
             };
+			GetUser( user);
+			bool correct;
+			if (user.Username != null && user.Password != null)
+			{
+			//	var json = await WebServicesData.SyncTask("GET", "login", usernameEntry.Text, passwordEntry.Text);
 
-			var json = await WebServicesData.SyncTask("GET", "login", user.Username, user.Password);
+				if ("df" == "correct")
+					correct = true;
+				else
+					correct = false;
+				
+			} 
+			else
+				correct = false;
 
-            if (json == "correct")
+            if (correct)
             {
                 App.IsUserLoggedIn = true;
                 Navigation.InsertPageBefore(new MenuPage(), this);
@@ -36,7 +48,7 @@ namespace SHOME
             else
             {
                 messageLabel.Text = "Login failed";
-                passwordEntry.Text = string.Empty;
+              //  passwordEntry.Text = string.Empty;
             }
         }
 
@@ -49,10 +61,8 @@ namespace SHOME
 		public async void GetUser(User user)
 		{
 			var aux = 0;
-			var json = await WebServicesData.SyncTask("GET", "login", "Leonel", "123456");
-			var size = json.Count;
-
-			var teste = json[0];
+			var json = await WebServicesData.SyncTask("GET", "login", "Leonel", "12356");
+	
 		
 		}
 
