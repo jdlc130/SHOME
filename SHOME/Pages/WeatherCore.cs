@@ -55,7 +55,7 @@ namespace SHOME
                 var fragment = list[5];
                 var rainFr = fragment["rain"];
                 var resultRain = rainFr["3h"];
-                resultRain = resultRain ?? "Nula";
+                resultRain = resultRain ?? "None";
 
                 var forecast = new Weather
                 {

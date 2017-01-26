@@ -88,7 +88,7 @@ namespace SHOME
             };
             var temperatureInside = new Label
             {
-                Text = InsideTemperature + "C",
+                Text = InsideTemperature + " ºC",
                 HorizontalTextAlignment = TextAlignment.Center,
                 FontFamily = "Roboto",
                 FontSize = 14
