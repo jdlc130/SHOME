@@ -12,13 +12,13 @@ namespace SHOME
 
         public ContentMenu(string tab)
         {
-            var deviceSettings = new Devices(1009, "Settings", "Settings", "");
-            var deviceEvents = new Devices(1008, "Events", "Events", "");
-            var deviceWeather = new Devices(1000, "Weather", "weather", "");
-            var deviceEnergyConsumption = new Devices(1001, "EnergyConsumption", "EnergyConsumption", "");
-            var deviceEnergyManagement = new Devices(1002, "EnergyManagement", "EnergyManagement", "");
-            var deviceCctv = new Devices(1003, "Camaras", "cctv", "");
-            var deviceIrrigation = new Devices(1004, "irrigation", "irrigation", "");
+            var deviceSettings = new Devices(1009, "Settings", "Settings", "" , 1);
+            var deviceEvents = new Devices(1008, "Events", "Events", "", 1);
+            var deviceWeather = new Devices(1000, "Weather", "weather", "", 1);
+            var deviceEnergyConsumption = new Devices(1001, "EnergyConsumption", "EnergyConsumption", "", 1);
+            var deviceEnergyManagement = new Devices(1002, "EnergyManagement", "EnergyManagement", "", 1);
+            var deviceCctv = new Devices(1003, "Camaras", "cctv", "", 1);
+            var deviceIrrigation = new Devices(1004, "irrigation", "irrigation", "", 1);
 
 
             // Division
@@ -64,7 +64,7 @@ namespace SHOME
 		{
 			//http://montalegre.m-iti.org:22941/updateClicks/actuator/16
 			var aux = 0;
-			var json = await WebServicesData.SyncTask("GET", "updateClicks", type , actuator);
+			var json = await WebServicesData.SyncTask("POST", "updateClicks", type , actuator);
 
 
 		}
@@ -82,13 +82,15 @@ namespace SHOME
                     result["idActuator"],
                     result["deviceName"],
                     result["actuatorName"],
-					result["actuatorDescription"]
+					result["actuatorDescription"],
+					result["idActuator"]
                 );
+
                 division.AddDivice(device);
                 aux++;
                 if (size == aux)
                 {
-                    var deviceAdd = new Devices(1010, "ADD", "ADD" , "");
+                    var deviceAdd = new Devices(1010, "ADD", "ADD" , "" ,1);
                     division.AddDivice(deviceAdd);
                 }
             }
@@ -167,9 +169,9 @@ namespace SHOME
                                     Opacity = 2
                                 };
                                 dev.buttons = buttonLight;
-								dev.buttons.GestureRecognizers.Add(new TapGestureRecognizer
+								dev.buttons.GestureRecognizers.Add( new TapGestureRecognizer
 								{
-									Command = new Command(() => { Navigation.PushModalAsync(new LightsPage(dev.Id)); }),
+							Command = new Command(() => { SetClicks("actuator", dev.Id); Navigation.PushAsync(new LightsPage(dev.Id));  })
 									
                                 });
                                 grid.Children.Add(buttonLight, columnGrid, rowGrid);
@@ -190,7 +192,7 @@ namespace SHOME
                                 dev.buttons = buttonCctv;
                                 dev.buttons.GestureRecognizers.Add(new TapGestureRecognizer
                                 {
-                                    Command = new Command(() => { Navigation.PushModalAsync(new CameraPage()); })
+                                    Command = new Command(() => { SetClicks("actuator", dev.Id); Navigation.PushAsync(new CameraPage()); })
                                 });
 
 								
@@ -240,7 +242,7 @@ namespace SHOME
                                 dev.buttons = buttonLock;
                                 dev.buttons.GestureRecognizers.Add(new TapGestureRecognizer
                                 {
-                                    Command = new Command(() => { Navigation.PushModalAsync(new LocksPage(dev.Id)); })
+                                    Command = new Command(() => { Navigation.PushAsync(new LocksPage(dev.Id)); })
                                 });
                                 grid.Children.Add(buttonLock, columnGrid, rowGrid);
 
@@ -283,7 +285,7 @@ namespace SHOME
                                 dev.buttons = buttonWeather;
                                 dev.buttons.GestureRecognizers.Add(new TapGestureRecognizer
                                 {
-                                    Command = new Command(() => { Navigation.PushModalAsync(new Weather()); })
+                                    Command = new Command(() => { Navigation.PushAsync(new Weather()); })
                                 });
                                 grid.Children.Add(buttonWeather, columnGrid, rowGrid);
                                 columnGrid++;
@@ -298,7 +300,7 @@ namespace SHOME
                                 dev.buttons = buttonEnergyConsumption;
                                 dev.buttons.GestureRecognizers.Add(new TapGestureRecognizer
                                 {
-                                    Command = new Command(() => { Navigation.PushModalAsync(new ConsumptionPage()); })
+                                    Command = new Command(() => { Navigation.PushAsync(new ConsumptionPage()); })
                                 });
                                 grid.Children.Add(buttonEnergyConsumption, columnGrid, rowGrid);
                                 columnGrid++;
@@ -324,7 +326,8 @@ namespace SHOME
                                 dev.buttons = buttonEvents;
                                 dev.buttons.GestureRecognizers.Add(new TapGestureRecognizer
                                 {
-                                    Command = new Command(() => { Navigation.PushModalAsync(new ListEventPage()); })
+                                    Command = new Command(() => { Navigation.PushAsync(new ListEventPage()); }),
+
                                 });
                                 grid.Children.Add(buttonEvents, columnGrid, rowGrid);
                                 columnGrid++;
@@ -340,7 +343,7 @@ namespace SHOME
                                 dev.buttons = buttonSettings;
                                 dev.buttons.GestureRecognizers.Add(new TapGestureRecognizer
                                 {
-                                    Command = new Command(() => { Navigation.PushModalAsync(new SettingsPage()); })
+                                    Command = new Command(() => { Navigation.PushAsync(new SettingsPage()); })
                                 });
                                 grid.Children.Add(buttonSettings, columnGrid, rowGrid);
                                 columnGrid++;
@@ -378,23 +381,26 @@ namespace SHOME
             };
 
             Content = scollVertical;
+
         }
 
 
         public class Devices
         {
-            public Devices(int id, string name, string type, string description)
+            public Devices(int id, string name, string type, string description , int idActuator)
             {
                 Id = id;
                 Name = name;
                 Type = type;
 				Description = description;
+				IDActuator = idActuator;
             }
 
             public int Id { get; set; }
             public string Name { get; set; }
             public string Type { get; set; }
 			public string Description { get; set; }
+			public int IDActuator { get; set; }
 
             public Image buttons { get; set; } = new Image();
         }
