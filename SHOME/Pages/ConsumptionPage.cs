@@ -38,6 +38,11 @@ namespace SHOME.Pages
             CalculatePower(DateTime.Now.Date.Year + "-01" + "-01", DateTime.Now.Date.Year + "-12" + "-31");
         }
 
+        /// <summary>
+        /// Get all data from Lucas Box; process information ignoring all values equal to zero.
+        /// </summary>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
         private async void CalculatePower(string startTime, string endTime)
         {
             var json = await WebServicesData.SyncTask("GET", "lucas/hourly", startTime, endTime);
@@ -61,10 +66,16 @@ namespace SHOME.Pages
             CalculatePowerDevices(startTime, endTime);
         }
 
+        /// <summary>
+        /// Get the power for devices.
+        /// TODO: The route of the webservices are too slow so this need to be improved in order to present all 19 appliances or more.
+        /// </summary>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
         private async void CalculatePowerDevices(string startTime, string endTime)
         {
             var deviceIndex = 1;
-            //TODO lento
+            //TODO too slow.
             while (deviceIndex <= 3)
             {
                 var json = await WebServicesData.SyncTask("GET", "lucas/device", deviceIndex, startTime, endTime);
@@ -119,9 +130,8 @@ namespace SHOME.Pages
             {
                 Text = "Day",
                 FontFamily = "Roboto",
-                FontSize = 18,
-                BackgroundColor = _day,
-                HeightRequest = 0.5
+                FontSize = 16,
+                BackgroundColor = _day
             };
             day.Clicked += (sender, e) =>
             {
@@ -137,7 +147,7 @@ namespace SHOME.Pages
             {
                 Text = "Month",
                 FontFamily = "Roboto",
-                FontSize = 18,
+                FontSize = 16,
                 BackgroundColor = _month
             };
             month.Clicked += (sender, e) =>
@@ -154,7 +164,7 @@ namespace SHOME.Pages
             {
                 Text = "Year",
                 FontFamily = "Roboto",
-                FontSize = 18,
+                FontSize = 16,
                 BackgroundColor = _year
             };
             year.Clicked += (sender, e) =>

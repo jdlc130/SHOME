@@ -30,6 +30,9 @@ namespace SHOME
             GetState();
         }
 
+        /// <summary>
+        /// To display the current state of the lock when the view is loaded.
+        /// </summary>
         public async void GetState()
         {
             var json = await WebServicesData.SyncTask("GET", "lockState");
@@ -40,6 +43,9 @@ namespace SHOME
             Update();
         }
 
+        /// <summary>
+        /// Construtor.
+        /// </summary>
         public void Update()
         {
             _powerBtn.IsToggled = State;
@@ -67,25 +73,6 @@ namespace SHOME
                     Imagelock
                 }
             };
-        }
-
-        private void power_btn_Toggled(object sender, ToggledEventArgs e)
-        {
-            var lll = new Label
-            {
-                Text = $"Is now {e.Value}"
-            };
-            if (e.Value)
-            {
-                WebServicesData.SyncTask("POST", "Lock", 20, 1);
-                Imagelock.Source = "lockk.png";
-            }
-            else
-            {
-                WebServicesData.SyncTask("POST", "Lock", 20, 0);
-                Imagelock.Source = "unlock.png";
-            }
-            DisplayAlert("Power", lll.Text, "OK");
         }
     }
 }

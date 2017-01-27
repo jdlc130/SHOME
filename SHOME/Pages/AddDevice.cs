@@ -14,6 +14,10 @@ namespace SHOME.Pages
             DeviceConstrutor(divisionId);
         }
 
+        /// <summary>
+        /// Construtor
+        /// </summary>
+        /// <param name="divisionId"></param>
         private void DeviceConstrutor(int divisionId)
         {
             var header = new Image
@@ -56,13 +60,17 @@ namespace SHOME.Pages
             };
             addButton.Clicked += async (sender, e) =>
             {
+                //Checks if all fields are filled
                 if (!IsValid(devIf, devCodeIf, devOrderIf, devModelIf)) return;
                 var refer = DateTime.Now.Date.Year + "-" + DateTime.Now.Date.Month + "-" + DateTime.Now.Date.Day;
                 var division = divisionId;
+                //Saves into DB
                 var json = await WebServicesData.SyncTask("POST", "insertdevice", 
                     devIf.Text, devDesIf.Text, devCodeIf.Text, devModelIf.Text, devOrder.Text,
                     1, 1, 1, 3, DateTime.Now.Date.Year + "-" + DateTime.Now.Date.Month + "-" + DateTime.Now.Date.Day, 1, 1, divisionId);
                 var result = json["id"];
+
+                //After save the Device update the view with actuator form.
                 AtuatorConstrutor(result);
             };
 
@@ -93,6 +101,10 @@ namespace SHOME.Pages
             };
         }
         
+        /// <summary>
+        /// Actuator Constructor
+        /// </summary>
+        /// <param name="id"></param>
         private void AtuatorConstrutor(int id)
         {
             var header = new Image
@@ -137,10 +149,12 @@ namespace SHOME.Pages
             saveButton.Clicked += async (sender, e) =>
             {
                 if (!IsValid(actIf, actDescrIf)) return;
+                //Saves into db.
                 var json = await WebServicesData.SyncTask("POST", "insertactuator",
                     actIf.Text, actDescrIf.Text, DateTime.Now.Date.Year + "-" + DateTime.Now.Date.Month + "-" + DateTime.Now.Date.Day, 
                     DateTime.Now.Date.Year + "-" + DateTime.Now.Date.Month + "-" + DateTime.Now.Date.Day,
                     "High", 1, id, 0);
+                //Informs user
                 await DisplayAlert("SUCCESS", "Actuator " + actIf.Text + " added!", "Ok");
             };
 
@@ -165,7 +179,11 @@ namespace SHOME.Pages
             };
         }
 
-
+        /// <summary>
+        /// To check if the fields are filled
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
         private static bool IsValid(params Entry[] parameters)
         {
             return parameters.All(par => !string.IsNullOrEmpty(par.Text));

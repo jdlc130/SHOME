@@ -9,6 +9,11 @@ namespace SHOME.Pages
 {
     class SettingsPage : ContentPage
     {
+        /// <summary>
+        /// The settings aren't saved in the database because the database isn't
+        /// prepared for that.
+        /// </summary>
+
         public static bool ClicksEnabled;
         public static bool BeaconsEnabled;
 
@@ -19,6 +24,7 @@ namespace SHOME.Pages
 
         private void Construtor()
         {
+            //Header
             var header = new Image
             {
                 Source = "header_settings.png",
@@ -26,6 +32,7 @@ namespace SHOME.Pages
                 VerticalOptions = LayoutOptions.Start
             };
 
+            //Configurations
             var configGrid = new Grid
             {
                 Padding = new Thickness(20, 20, 20, 10),

@@ -156,6 +156,9 @@ namespace SHOME
                 "Ok");
         }
 
+        /// <summary>
+        /// Get all appliances from DB
+        /// </summary>
         public async void GetDevices()
         {
             var aux = 0;

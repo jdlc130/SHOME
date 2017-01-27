@@ -6,6 +6,7 @@ namespace SHOME.Pages
 {
     public class LightsPage : ContentPage
     {
+        // Dictionary to get slider value from color code.
         private readonly Dictionary<int, int> _codeInt = new Dictionary<int, int>
         {
             {46920, 0},
@@ -27,6 +28,7 @@ namespace SHOME.Pages
             {65280, Color.Red}
         };
 
+        // Dictionary to get Color code from slider value.
         private readonly Dictionary<int, int> _intCode = new Dictionary<int, int>
         {
             {0, 46920},
@@ -47,6 +49,10 @@ namespace SHOME.Pages
             InitializeView(id);
         }
 
+        /// <summary>
+        /// Lights page constructor.
+        /// </summary>
+        /// <param name="id"></param>
         private void Construtor(int id)
         {
             var header = new Image
@@ -155,6 +161,10 @@ namespace SHOME.Pages
             };
         }
 
+        /// <summary>
+        /// Get data from Database to know the state of the light to update the view.
+        /// </summary>
+        /// <param name="id"></param>
         private async void InitializeView(int id)
         {
             var json = await WebServicesData.SyncTask("GET", "GetDeviceStatus", id);
