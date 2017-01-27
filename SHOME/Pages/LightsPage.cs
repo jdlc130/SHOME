@@ -72,7 +72,8 @@ namespace SHOME.Pages
                 FontSize = 18,
                 TextColor = Color.Gray
             };
-            //Switch button
+
+            // set values when power is changed
             var powerBtn = new Switch
             {
                 HorizontalOptions = LayoutOptions.End,
@@ -89,7 +90,7 @@ namespace SHOME.Pages
             stateGrid.Children.Add(powerLabel, 0, 0);
             stateGrid.Children.Add(powerBtn, 1, 0);
 
-            //Intensity Button
+            // set values when intensity is changed
             var intensitySlider = new Slider
             {
                 Minimum = 0,
@@ -108,6 +109,7 @@ namespace SHOME.Pages
                 Children = {intensitySlider}
             };
 
+            // set values when color is selected
             var index = _codeInt[_color];
             var colorSlider = new Slider
             {
@@ -127,7 +129,7 @@ namespace SHOME.Pages
                 Scale = 0.965
             };
 
-
+            // A grid is created to display  a list of colors
             var colorGrid = new Grid
             {
                 Padding = new Thickness(10, 10, 10, 10),
@@ -140,6 +142,7 @@ namespace SHOME.Pages
             colorGrid.Children.Add(colorImage, 0, 0);
             colorGrid.Children.Add(colorSlider, 0, 0);
 
+            // Is assigned to the content of the page the header, stategrid, intensity slide and color gird.
             Content = new StackLayout
             {
                 Children =

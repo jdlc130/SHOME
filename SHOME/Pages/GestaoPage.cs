@@ -39,6 +39,8 @@ namespace SHOME
                 HorizontalTextAlignment = TextAlignment.End
             };
 
+
+            // A grid is created to display a produced energy.
             var infoGrid = new Grid
             {
                 Padding = new Thickness(10, 10, 20, 10),
@@ -54,7 +56,9 @@ namespace SHOME
             infoGrid.Children.Add(tittleEnergyLbl, 0, 0);
             infoGrid.Children.Add(energyValue, 1, 0);
 
-            // Create the ListView.
+
+
+            // A ListView is created to display  a list of artifacts  with their respective switch to turn on or off.
             var value = -1;
             var listView = new ListView
             {
@@ -114,6 +118,8 @@ namespace SHOME
             };
             suggestionBtn.Clicked += Onsuggestion;
 
+
+            // Is assigned to the content of the page the header, infogrid, view (content a ListView) and suggestion button.
             Content = new StackLayout
             {
                 Children =
@@ -129,6 +135,8 @@ namespace SHOME
         private void Onsuggestion(object sender, EventArgs e)
         {
             SuggestionCreator();
+
+            //Show a suggestion to plug or unplug an artifact
             var labelTitle = new Label
             {
                 Text = "Please, consider",

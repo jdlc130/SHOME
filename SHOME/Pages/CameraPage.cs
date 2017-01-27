@@ -13,6 +13,7 @@ namespace SHOME
                 Text = "Nest"
             };
 
+            // Create object "WebView" for show the cameras video
             var CameraNest = new WebView
             {
                 Source = new UrlWebViewSource
@@ -22,6 +23,7 @@ namespace SHOME
                 VerticalOptions = LayoutOptions.FillAndExpand
             };
 
+            // Is assigned to the content of the page the title and the webview
             Content = new StackLayout
             {
                 Children =
